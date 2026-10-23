@@ -1,0 +1,51 @@
+/*
+Structural only: no decorative trims.
+*/
+
+.divider {
+  width: 100%;
+  height: var(--border-w);
+  background-color: var(--clr-border);
+  border: none;
+}
+.divider.horizontal {
+  width: 100%;
+  height: var(--border-w);
+}
+.divider.horizontal.thick {
+  height: var(--border-w-thick);
+}
+.divider.vertical {
+  width: var(--border-w);
+  height: 100%;
+  min-height: 50px;
+}
+.divider.vertical.thick {
+  width: var(--border-w-thick);
+}
+.divider.strong {
+  background-color: var(--clr-border-strong);
+}
+
+/* Color utilities */
+.divider.primary {
+  background-color: var(--clr-primary);
+}
+.divider.secondary {
+  background-color: var(--clr-secondary);
+}
+.divider.ink {
+  background-color: var(--clr-ink);
+}
+.divider.soft {
+  background-color: var(--clr-ink-soft);
+}
+.divider.muted {
+  background-color: var(--clr-ink-muted);
+}
+.divider.faint {
+  background-color: var(--clr-ink-faint);
+}
+.divider.on-dark {
+  background-color: var(--clr-ink-on-dark-muted);
+}

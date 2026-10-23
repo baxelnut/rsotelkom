@@ -1,0 +1,139 @@
+/*
+Modern, minimal, token-driven.
+All colors and spacing reference tokens.css.
+*/
+
+/* Box Model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  color-scheme: light;
+}
+html,
+body {
+  overflow-x: clip;
+}
+body.dark {
+  color-scheme: dark;
+}
+
+/* Body */
+body {
+  min-width: 320px;
+  min-height: 100dvh;
+  background-color: var(--clr-canvas);
+  color: var(--clr-ink);
+  font-family: var(--txt-body-font);
+  font-size: var(--txt-body-size);
+  font-weight: var(--txt-body-weight);
+  line-height: var(--txt-body-leading);
+}
+
+/* Media */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+img {
+  object-fit: cover;
+}
+
+/* Forms */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Text */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* Lists */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+ul,
+ol {
+  padding-left: var(--space-4);
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--clr-ink-rgb), 0.25);
+  border-radius: var(--radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--clr-ink-rgb), 0.4);
+}
+
+/* Interaction */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+:focus-visible {
+  outline: 2px solid var(--clr-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Selection */
+::selection {
+  background: var(--clr-primary);
+  color: var(--clr-on-primary);
+}

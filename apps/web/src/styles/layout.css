@@ -1,0 +1,350 @@
+/*
+Structural primitives. Mobile-first. Dashboard shell, page, stack, grid,
+filter bar. All values from tokens.css.
+*/
+
+:root,
+body {
+  width: 100%;
+}
+
+/* App shell (replaces #root / .app-container from the old App.css) */
+#root {
+  width: 100%;
+  min-height: 100dvh;
+}
+.app-container {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Page: base wrapper for all routes */
+.page {
+  z-index: var(--z-base);
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: var(--clr-canvas);
+}
+.page.loading {
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+}
+
+/* Container: max-width wrapper */
+.container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--page-padding);
+}
+.container.content {
+  max-width: var(--content-max);
+}
+.container.narrow {
+  max-width: var(--content-narrow);
+}
+.container.wide {
+  max-width: var(--content-wide);
+}
+.container.full {
+  max-width: 100%;
+  padding-inline: 0;
+}
+
+/* Stack: composable flex container */
+.stack {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--space-3);
+}
+.stack.fit,
+.fit {
+  width: fit-content;
+}
+.stack.row {
+  flex-direction: row;
+}
+.stack.row-reverse {
+  flex-direction: row-reverse;
+}
+.stack.col {
+  flex-direction: column;
+}
+.stack.col-reverse {
+  flex-direction: column-reverse;
+}
+.stack.center {
+  align-items: center;
+  justify-content: center;
+}
+.stack.start {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.stack.end {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.stack.start-end {
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.stack.end-start {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.stack.between {
+  justify-content: space-between;
+}
+.stack.around {
+  justify-content: space-around;
+}
+.stack.evenly {
+  justify-content: space-evenly;
+}
+.stack.nowrap {
+  flex-wrap: nowrap;
+}
+.stack.middle {
+  align-items: center;
+}
+
+/* Responsive stack flips: mobile stacked, desktop row (or reverse) */
+.stack.row-col {
+  flex-direction: column;
+}
+.stack.row-col-reverse {
+  flex-direction: column-reverse;
+}
+.stack.col-row {
+  flex-direction: row;
+}
+.stack.col-row-reverse {
+  flex-direction: row-reverse;
+}
+.stack.center-start {
+  align-items: center;
+  justify-content: start;
+}
+
+/* Grid */
+.grid,
+.grid-2,
+.grid-3,
+.grid-4,
+.grid-5,
+.grid-6,
+.grid-7,
+.grid-8,
+.grid-9,
+.grid-10 {
+  width: 100%;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+.grid-auto {
+  width: 100%;
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.grid-auto-sm {
+  width: 100%;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+/* Filter bar: filters, search, back button */
+.filter-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.filter-container.back-btn {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-above);
+}
+.filter-items {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Status / loading placeholder */
+.status {
+  width: 100%;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--clr-ink-muted);
+}
+
+/* Flex Utilities */
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+.flex-3 {
+  flex: 3;
+}
+.flex-none {
+  flex: none;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+
+/* GAP OVERRIDES */
+.gap-0 {
+  gap: 0 !important;
+}
+.gap-1,
+.gap-2,
+.gap-3 {
+  gap: var(--space-1) !important;
+}
+.gap-4,
+.gap-5,
+.gap-6 {
+  gap: var(--space-3) !important;
+}
+.gap-8,
+.gap-10 {
+  gap: var(--space-4) !important;
+}
+.gap-12 {
+  gap: var(--space-6) !important;
+}
+
+/* Tablet: 768px */
+@media (min-width: 768px) {
+  .stack {
+    gap: var(--space-5);
+  }
+  .stack.row-col,
+  .stack.row-col-reverse {
+    flex-direction: row;
+  }
+  .stack.col-row,
+  .stack.col-row-reverse {
+    flex-direction: column;
+  }
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid,
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .grid-5 {
+    gap: var(--space-5);
+  }
+  .grid-6,
+  .grid-7,
+  .grid-8,
+  .grid-9,
+  .grid-10 {
+    gap: var(--space-5);
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .filter-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .gap-1 {
+    gap: var(--space-1) !important;
+  }
+  .gap-2 {
+    gap: var(--space-2) !important;
+  }
+  .gap-3 {
+    gap: var(--space-3) !important;
+  }
+  .gap-4 {
+    gap: var(--space-4) !important;
+  }
+  .gap-5 {
+    gap: var(--space-5) !important;
+  }
+  .gap-6 {
+    gap: var(--space-6) !important;
+  }
+  .gap-8 {
+    gap: var(--space-8) !important;
+  }
+  .gap-10 {
+    gap: var(--space-10) !important;
+  }
+  .gap-12 {
+    gap: var(--space-12) !important;
+  }
+  .stack.center-start {
+    justify-content: center;
+  }
+}
+
+/* Desktop: 1024px */
+@media (min-width: 1024px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .grid-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .grid-8 {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .grid-9 {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  .grid-10 {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "rso-telkom",
+  "private": true,
+  "version": "3.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n web,api -c cyan,green \"npm run dev -w @rso/web\" \"npm run dev -w @rso/api\"",
+    "dev:web": "npm run dev -w @rso/web",
+    "dev:api": "npm run dev -w @rso/api",
+    "build": "npm run build -w @rso/web && npm run build -w @rso/api",
+    "start": "npm run start -w @rso/api",
+    "typecheck": "npm run typecheck -w @rso/web && npm run typecheck -w @rso/api",
+    "lint": "npm run lint -w @rso/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

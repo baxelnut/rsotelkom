@@ -1,0 +1,285 @@
+/*
+Token-driven type system. All values from tokens.css.
+Poppins: headings, KPI numbers, controls, labels.
+Montserrat: body copy.
+*/
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--clr-ink);
+  text-wrap: balance;
+}
+h1 {
+  font-family: var(--txt-h1-font);
+  font-size: var(--txt-h1-size);
+  font-weight: var(--txt-h1-weight);
+  line-height: var(--txt-h1-leading);
+  letter-spacing: var(--txt-h1-tracking);
+}
+h2 {
+  font-family: var(--txt-h2-font);
+  font-size: var(--txt-h2-size);
+  font-weight: var(--txt-h2-weight);
+  line-height: var(--txt-h2-leading);
+  letter-spacing: var(--txt-h2-tracking);
+}
+h3 {
+  font-family: var(--txt-h3-font);
+  font-size: var(--txt-h3-size);
+  font-weight: var(--txt-h3-weight);
+  line-height: var(--txt-h3-leading);
+}
+h4 {
+  font-family: var(--txt-h4-font);
+  font-size: var(--txt-h4-size);
+  font-weight: var(--txt-h4-weight);
+  line-height: var(--txt-h4-leading);
+}
+h5 {
+  font-family: var(--txt-h5-font);
+  font-size: var(--txt-h5-size);
+  font-weight: var(--txt-h5-weight);
+  line-height: var(--txt-h5-leading);
+}
+h6 {
+  font-family: var(--txt-h6-font);
+  font-size: var(--txt-h6-size);
+  font-weight: var(--txt-h6-weight);
+  line-height: var(--txt-h6-leading);
+}
+
+/* Text Elements */
+p {
+  font-size: var(--txt-body-size);
+  line-height: var(--txt-body-leading);
+  color: var(--clr-ink-soft);
+}
+small {
+  font-family: var(--txt-body-font);
+  font-size: var(--txt-body-sm-size) !important;
+  font-weight: var(--txt-body-weight);
+  line-height: var(--txt-body-leading);
+  color: var(--clr-ink-muted);
+}
+strong {
+  font-weight: var(--fw-semibold) !important;
+  color: var(--clr-ink);
+}
+em {
+  font-style: italic !important;
+}
+code {
+  font-family: var(--txt-mono-font) !important;
+  font-size: var(--txt-mono-size) !important;
+  color: var(--clr-ink);
+  background: var(--clr-surface);
+  padding: 0 0.3em;
+  border-radius: var(--radius-xs);
+  border: var(--border-w) solid var(--clr-border);
+}
+label {
+  font-family: var(--txt-control-font);
+  font-size: var(--fs-small-p);
+  font-weight: var(--fw-medium);
+  color: var(--clr-ink-soft);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: var(--border-w) solid transparent;
+  transition:
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
+}
+a:hover {
+  border-bottom-color: var(--clr-primary);
+}
+
+/* Inline link: opt-in blue for in-copy links */
+a.link,
+.link {
+  color: var(--clr-secondary-text);
+}
+a.link:hover,
+.link:hover {
+  border-bottom-color: currentColor;
+}
+
+/* Controls: Poppins for buttons, inputs, selects */
+button,
+input,
+select,
+textarea {
+  font-family: var(--txt-control-font);
+  font-size: var(--txt-control-size);
+  font-weight: var(--txt-control-weight);
+  line-height: var(--txt-control-leading);
+  letter-spacing: var(--txt-control-tracking);
+}
+
+/* Legacy helpers from the previous dashboard */
+.small-p {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small-p);
+  font-weight: var(--fw-semibold);
+  color: var(--clr-ink-muted);
+}
+.small-h {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small-h);
+  font-weight: var(--fw-semibold);
+}
+
+/* Text Utility Classes */
+.text {
+  width: fit-content;
+  font-family: var(--txt-body-font);
+  font-size: var(--txt-body-size);
+  font-weight: var(--txt-body-weight);
+  line-height: var(--txt-body-leading);
+  color: inherit;
+}
+
+/* Size Variants */
+.text.display {
+  font-family: var(--txt-display-font);
+  font-size: var(--txt-display-size);
+  font-weight: var(--txt-display-weight);
+  line-height: var(--txt-display-leading);
+  letter-spacing: var(--txt-display-tracking);
+  font-variant-numeric: tabular-nums;
+}
+.text.heading {
+  font-family: var(--txt-h3-font);
+  font-size: var(--txt-h3-size);
+  font-weight: var(--txt-h3-weight);
+  line-height: var(--txt-h3-leading);
+}
+.text.control {
+  font-family: var(--txt-control-font);
+  font-size: var(--txt-control-size);
+  font-weight: var(--txt-control-weight);
+  line-height: var(--txt-control-leading);
+  letter-spacing: var(--txt-control-tracking);
+}
+.text.sm {
+  font-family: var(--txt-body-sm-font);
+  font-size: var(--txt-body-sm-size);
+  line-height: var(--txt-body-sm-leading);
+}
+.text.caption {
+  font-family: var(--txt-caption-font);
+  font-size: var(--txt-caption-size);
+  font-weight: var(--txt-caption-weight);
+  line-height: var(--txt-caption-leading);
+  letter-spacing: var(--txt-caption-tracking);
+  color: var(--clr-ink-muted);
+  text-transform: uppercase;
+}
+.text.eyebrow {
+  font-family: var(--txt-eyebrow-font);
+  font-size: var(--txt-eyebrow-size);
+  font-weight: var(--txt-eyebrow-weight);
+  letter-spacing: var(--txt-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--clr-ink-muted);
+}
+.text.eyebrow.primary {
+  color: var(--clr-primary-text);
+}
+.text.eyebrow.on-dark {
+  color: var(--palette-red-light);
+}
+.text.mono {
+  font-family: var(--txt-mono-font);
+  font-size: var(--txt-mono-size);
+  font-weight: var(--txt-mono-weight);
+}
+.text.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Color Variants (text-safe tones: AA contrast on canvas and on cards) */
+.text.ink {
+  color: var(--clr-ink);
+}
+.text.soft {
+  color: var(--clr-ink-soft);
+}
+.text.muted {
+  color: var(--clr-ink-muted);
+}
+.text.faint {
+  color: var(--clr-ink-faint);
+}
+.text.primary {
+  color: var(--clr-primary-text);
+}
+.text.secondary {
+  color: var(--clr-secondary-text);
+}
+.text.danger {
+  color: var(--clr-danger-text);
+}
+.text.safe {
+  color: var(--clr-safe-text);
+}
+.on-dark,
+.text.on-dark {
+  color: var(--clr-ink-on-dark);
+}
+.on-dark.soft,
+.text.on-dark.soft {
+  color: var(--clr-ink-on-dark-soft);
+}
+
+/* Weight Variants */
+.text.medium {
+  font-weight: var(--fw-medium);
+}
+.text.semibold {
+  font-weight: var(--fw-semibold);
+}
+.text.bold {
+  font-weight: var(--fw-bold);
+}
+
+/* Alignment */
+.text.center {
+  text-align: center;
+}
+.text.left {
+  text-align: left;
+}
+.text.right {
+  text-align: right;
+}
+
+/* Truncation */
+.text.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.text.clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.text.caps {
+  text-transform: uppercase;
+}

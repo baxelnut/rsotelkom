@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:wght@400;500;600;700&display=swap");
+
+/* Style Modules (paths are relative to this file, which lives in /styles) */
+@import "./tokens.css";
+@import "./reset.css";
+@import "./typography.css";
+@import "./layout.css";
+@import "./cards.css";
+/* @import "./controls.css"; */
+@import "./motion.css";
+@import "./divider.css";

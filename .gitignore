@@ -1,0 +1,92 @@
+# DEPENDENCIES
+node_modules
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# BUILD OUTPUTS
+dist
+dist-ssr
+build
+out
+.next
+.nuxt
+.svelte-kit
+.vercel
+.netlify
+
+# ENVIRONMENT & SECRETS
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+.env.staging
+.env.staging.local
+_key
+key
+_keys
+keys
+_secret
+secret
+_secrets
+secrets
+_dev/notes
+_playground/
+
+# LOGS
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# CACHE & TEMP
+.cache
+.parcel-cache
+.turbo
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.temp
+.tmp
+
+# TESTING
+coverage
+*.lcov
+.nyc_output
+playwright-report
+test-results
+
+# EDITOR & OS
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.local
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# MISC
+*.pem
+*.key
+*.cert
+.clinic

@@ -1,0 +1,379 @@
+/*
+Single source of truth for all design decisions.
+ARCHITECTURE: Two-layer token system
+  Layer 1  --palette-*   Raw named colors. Never used in components directly.
+  Layer 2  --clr-*       Semantic aliases. Components ONLY reference Layer 2.
+
+THEMING: light by default. Add class "dark" to <body> to switch.
+Semantic colors are declared on ":root, body" so that derived tokens
+(e.g. --clr-card-bg) re-resolve when body.dark overrides the leaf tokens.
+*/
+
+/* Layer 1: Raw Palette */
+:root {
+  /* Base */
+  --palette-white: #f3f4f4;
+  --palette-white-rgb: 243, 244, 244;
+  --palette-pure-white: #ffffff;
+  --palette-pure-white-rgb: 255, 255, 255;
+  --palette-black: #2c2c2c;
+  --palette-black-rgb: 44, 44, 44;
+
+  /* Primary: Telkomsel red (deep = hover/text on light, light = text on dark) */
+  --palette-red: #e81e28;
+  --palette-red-rgb: 232, 30, 40;
+  --palette-red-deep: #c9141e;
+  --palette-red-deep-rgb: 201, 20, 30;
+  --palette-red-light: #ff5a62;
+  --palette-red-light-rgb: 255, 90, 98;
+
+  /* Secondary: blue */
+  --palette-blue: #007dcc;
+  --palette-blue-rgb: 0, 125, 204;
+  --palette-blue-deep: #0065a6;
+  --palette-blue-deep-rgb: 0, 101, 166;
+  --palette-blue-light: #4da9e6;
+  --palette-blue-light-rgb: 77, 169, 230;
+
+  /* Neutrals: cool gray scale anchored on canvas (0) and ink (700) */
+  --palette-gray-0: #f3f4f4;
+  --palette-gray-0-rgb: 243, 244, 244;
+  --palette-gray-50: #e8e9e9;
+  --palette-gray-50-rgb: 232, 233, 233;
+  --palette-gray-100: #d9dbdb;
+  --palette-gray-100-rgb: 217, 219, 219;
+  --palette-gray-200: #bcc0c0;
+  --palette-gray-200-rgb: 188, 192, 192;
+  --palette-gray-300: #959999;
+  --palette-gray-300-rgb: 149, 153, 153;
+  --palette-gray-400: #6a6e6e;
+  --palette-gray-400-rgb: 106, 110, 110;
+  --palette-gray-500: #525555;
+  --palette-gray-500-rgb: 82, 85, 85;
+  --palette-gray-600: #3f4141;
+  --palette-gray-600-rgb: 63, 65, 65;
+  --palette-gray-700: #2c2c2c;
+  --palette-gray-700-rgb: 44, 44, 44;
+  --palette-gray-800: #212121;
+  --palette-gray-800-rgb: 33, 33, 33;
+  --palette-gray-900: #151515;
+  --palette-gray-900-rgb: 21, 21, 21;
+
+  /* Status (deep = readable text color on light surfaces) */
+  --palette-danger: #ffb900;
+  --palette-danger-rgb: 255, 185, 0;
+  --palette-danger-deep: #8a6300;
+  --palette-danger-deep-rgb: 138, 99, 0;
+  --palette-safe: #00c68d;
+  --palette-safe-rgb: 0, 198, 141;
+  --palette-safe-deep: #00795a;
+  --palette-safe-deep-rgb: 0, 121, 90;
+}
+
+/* Layer 2: Semantic Colors */
+:root,
+body {
+  /* Canvas */
+  --clr-canvas: var(--palette-white);
+  --clr-paper: var(--palette-pure-white);
+  --clr-surface: var(--palette-gray-50);
+  --clr-surface-alt: var(--palette-gray-100);
+  --clr-border: rgba(var(--palette-black-rgb), 0.12);
+  --clr-border-strong: rgba(var(--palette-black-rgb), 0.28);
+  --clr-border-brand: rgba(var(--palette-red-rgb), 0.4);
+
+  /* Ink */
+  --clr-ink: var(--palette-black);
+  --clr-ink-soft: var(--palette-gray-600);
+  --clr-ink-muted: var(--palette-gray-400);
+  --clr-ink-faint: var(--palette-gray-300);
+  --clr-ink-rgb: var(--palette-black-rgb);
+
+  /* Dark blocks (sidebar, footer) and text on them */
+  --clr-dark: var(--palette-black);
+  --clr-ink-on-dark: var(--palette-white);
+  --clr-ink-on-dark-soft: rgba(var(--palette-white-rgb), 0.72);
+  --clr-ink-on-dark-muted: rgba(var(--palette-white-rgb), 0.4);
+
+  /* Primary (red). -text = readable as text, on-* = text placed ON the fill */
+  --clr-primary: var(--palette-red);
+  --clr-primary-rgb: var(--palette-red-rgb);
+  --clr-primary-hover: var(--palette-red-deep);
+  --clr-primary-soft: rgba(var(--palette-red-rgb), 0.1);
+  --clr-primary-text: var(--palette-red-deep);
+  --clr-on-primary: var(--palette-pure-white);
+
+  /* Secondary (blue) */
+  --clr-secondary: var(--palette-blue);
+  --clr-secondary-rgb: var(--palette-blue-rgb);
+  --clr-secondary-hover: var(--palette-blue-deep);
+  --clr-secondary-soft: rgba(var(--palette-blue-rgb), 0.1);
+  --clr-secondary-text: var(--palette-blue-deep);
+  --clr-on-secondary: var(--palette-pure-white);
+
+  /* Status: danger (amber) and safe (green) are light fills, so on-* is dark ink */
+  --clr-danger: var(--palette-danger);
+  --clr-danger-rgb: var(--palette-danger-rgb);
+  --clr-danger-soft: rgba(var(--palette-danger-rgb), 0.18);
+  --clr-danger-text: var(--palette-danger-deep);
+  --clr-on-danger: var(--palette-black);
+
+  --clr-safe: var(--palette-safe);
+  --clr-safe-rgb: var(--palette-safe-rgb);
+  --clr-safe-soft: rgba(var(--palette-safe-rgb), 0.14);
+  --clr-safe-text: var(--palette-safe-deep);
+  --clr-on-safe: var(--palette-black);
+
+  /* Card */
+  --clr-card-bg: var(--clr-paper);
+  --clr-card-border: var(--clr-border);
+  --clr-card-hover-border: var(--clr-primary);
+
+  /* Table */
+  --clr-table-head-bg: var(--clr-surface);
+  --clr-row-hover: rgba(var(--clr-ink-rgb), 0.04);
+
+  /* Overlay */
+  --clr-overlay-light: rgba(var(--palette-black-rgb), 0.05);
+  --clr-overlay: rgba(var(--palette-black-rgb), 0.6);
+  --clr-overlay-strong: rgba(var(--palette-black-rgb), 0.88);
+
+  /* Shadow: soft elevation */
+  --shadow-sm: 0 1px 2px rgba(var(--palette-black-rgb), 0.06);
+  --shadow-md: 0 4px 12px rgba(var(--palette-black-rgb), 0.08);
+  --shadow-lg: 0 12px 28px rgba(var(--palette-black-rgb), 0.12);
+  --shadow-card: var(--shadow-sm);
+  --shadow-card-hover: var(--shadow-md);
+
+  /* Focus */
+  --clr-focus-ring: rgba(var(--palette-blue-rgb), 0.7);
+
+  /* Gradients: used sparingly */
+  --gradient-brand: linear-gradient(
+    135deg,
+    var(--palette-red) 0%,
+    var(--palette-red-deep) 100%
+  );
+}
+
+/* Layer 2: Non-color Tokens */
+:root {
+  /* Fonts */
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Montserrat", sans-serif;
+  --font-display: "Poppins", sans-serif;
+  --font-control: "Poppins", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Font Weights (Poppins loaded: 400-700, Montserrat: variable) */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Font Sizes: fixed scale */
+  --fs-3xs: 0.625rem;
+  --fs-2xs: 0.6875rem;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2rem;
+  --fs-4xl: 2.5rem;
+  --fs-5xl: 3rem;
+
+  /* Font Sizes: responsive roles (carried over from the previous dashboard) */
+  --fs-h1: clamp(2.5rem, 5vw, 3rem);
+  --fs-h2: clamp(2rem, 4vw, 2.5rem);
+  --fs-h3: clamp(1.75rem, 3.5vw, 2rem);
+  --fs-h4: clamp(1.5rem, 3vw, 1.75rem);
+  --fs-h5: clamp(1.25rem, 2.5vw, 1.5rem);
+  --fs-h6: clamp(1rem, 2vw, 1.25rem);
+  --fs-body: clamp(0.9rem, 0.9vw, 1rem);
+  --fs-small-h: clamp(0.8rem, 0.9vw, 0.9rem);
+  --fs-small-p: clamp(0.7rem, 0.85vw, 0.8rem);
+  --fs-display: clamp(2rem, 4vw, 3rem);
+
+  /* Line Height */
+  --lh-none: 1;
+  --lh-tight: 1.1;
+  --lh-snug: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  /* Letter Spacing */
+  --ls-tight: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.03em;
+  --ls-wider: 0.08em;
+
+  /* Typography Role Mapping */
+  --txt-display-font: var(--font-display);
+  --txt-display-size: var(--fs-display);
+  --txt-display-weight: var(--fw-semibold);
+  --txt-display-leading: var(--lh-none);
+  --txt-display-tracking: var(--ls-tight);
+
+  --txt-h1-font: var(--font-heading);
+  --txt-h1-size: var(--fs-h1);
+  --txt-h1-weight: var(--fw-semibold);
+  --txt-h1-leading: var(--lh-tight);
+  --txt-h1-tracking: var(--ls-tight);
+
+  --txt-h2-font: var(--font-heading);
+  --txt-h2-size: var(--fs-h2);
+  --txt-h2-weight: var(--fw-semibold);
+  --txt-h2-leading: var(--lh-snug);
+  --txt-h2-tracking: var(--ls-tight);
+
+  --txt-h3-font: var(--font-heading);
+  --txt-h3-size: var(--fs-h3);
+  --txt-h3-weight: var(--fw-semibold);
+  --txt-h3-leading: var(--lh-snug);
+
+  --txt-h4-font: var(--font-heading);
+  --txt-h4-size: var(--fs-h4);
+  --txt-h4-weight: var(--fw-semibold);
+  --txt-h4-leading: var(--lh-snug);
+
+  --txt-h5-font: var(--font-heading);
+  --txt-h5-size: var(--fs-h5);
+  --txt-h5-weight: var(--fw-semibold);
+  --txt-h5-leading: var(--lh-normal);
+
+  --txt-h6-font: var(--font-heading);
+  --txt-h6-size: var(--fs-h6);
+  --txt-h6-weight: var(--fw-semibold);
+  --txt-h6-leading: var(--lh-normal);
+
+  --txt-body-font: var(--font-body);
+  --txt-body-size: var(--fs-body);
+  --txt-body-weight: var(--fw-regular);
+  --txt-body-leading: var(--lh-normal);
+
+  --txt-body-sm-font: var(--font-body);
+  --txt-body-sm-size: var(--fs-sm);
+  --txt-body-sm-weight: var(--fw-regular);
+  --txt-body-sm-leading: var(--lh-normal);
+
+  --txt-caption-font: var(--font-control);
+  --txt-caption-size: var(--fs-2xs);
+  --txt-caption-weight: var(--fw-semibold);
+  --txt-caption-leading: var(--lh-snug);
+  --txt-caption-tracking: var(--ls-wider);
+
+  --txt-control-font: var(--font-control);
+  --txt-control-size: var(--fs-sm);
+  --txt-control-weight: var(--fw-medium);
+  --txt-control-leading: var(--lh-snug);
+  --txt-control-tracking: var(--ls-normal);
+
+  --txt-eyebrow-font: var(--font-control);
+  --txt-eyebrow-size: var(--fs-xs);
+  --txt-eyebrow-weight: var(--fw-semibold);
+  --txt-eyebrow-tracking: var(--ls-wider);
+
+  --txt-mono-font: var(--font-mono);
+  --txt-mono-size: var(--fs-sm);
+  --txt-mono-weight: var(--fw-regular);
+
+  /* Spacing: 4px base grid */
+  --space-px: 1px;
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --topbar-h: 64px;
+  --sidebar-w: 248px;
+  --sidebar-w-collapsed: 64px;
+  --content-max: 1280px;
+  --content-narrow: 720px;
+  --content-wide: 1600px;
+  --page-padding: 1rem;
+  --section-gap: var(--space-8);
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-circle: 9999px;
+  --border-w: 1px;
+  --border-w-thick: 2px;
+
+  /* Transitions: snappy, no bounce */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --duration-instant: 80ms;
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 280ms;
+  --duration-slower: 450ms;
+
+  /* Z-Index */
+  --z-below: -10;
+  --z-before: -1;
+  --z-base: 0;
+  --z-after: 1;
+  --z-above: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* Dark theme: body.dark overrides leaf color tokens only */
+body.dark {
+  --clr-canvas: var(--palette-gray-800);
+  --clr-paper: var(--palette-gray-700);
+  --clr-surface: var(--palette-gray-600);
+  --clr-surface-alt: var(--palette-gray-500);
+  --clr-border: rgba(var(--palette-white-rgb), 0.12);
+  --clr-border-strong: rgba(var(--palette-white-rgb), 0.28);
+
+  --clr-ink: var(--palette-white);
+  --clr-ink-soft: var(--palette-gray-100);
+  --clr-ink-muted: var(--palette-gray-300);
+  --clr-ink-faint: var(--palette-gray-400);
+  --clr-ink-rgb: var(--palette-white-rgb);
+
+  --clr-dark: var(--palette-gray-900);
+
+  --clr-primary-text: var(--palette-red-light);
+  --clr-secondary-text: var(--palette-blue-light);
+  --clr-danger-text: var(--palette-danger);
+  --clr-safe-text: var(--palette-safe);
+
+  --clr-focus-ring: rgba(var(--palette-blue-light-rgb), 0.8);
+}
+
+/* Responsive: mobile first, scale up */
+@media (min-width: 768px) {
+  :root {
+    --page-padding: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --page-padding: 2rem;
+  }
+}
