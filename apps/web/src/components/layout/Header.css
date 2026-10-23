@@ -1,0 +1,106 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-inline: var(--page-padding);
+  background-color: var(--clr-paper);
+  border-bottom: var(--border-w) solid var(--clr-border);
+}
+
+.app-header__left {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.app-header__title {
+  font-size: var(--fs-h6);
+  line-height: var(--lh-snug);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Burger is mobile only; desktop collapses from the sidebar */
+.app-header__menu {
+  margin-left: calc(var(--space-2) * -1);
+}
+
+.app-header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.app-header__theme {
+  display: flex;
+  align-items: center;
+}
+
+.app-header__profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  border-radius: var(--radius-circle);
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+.app-header__profile:hover {
+  background-color: var(--clr-row-hover);
+}
+
+.app-header__avatar {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Unread-style badge: Telegram ID still missing */
+.app-header__dot {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: var(--radius-circle);
+  background: var(--clr-primary);
+  border: var(--border-w-thick) solid var(--clr-paper);
+}
+
+.app-header__name,
+.app-header__chevron {
+  display: none;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .app-header__menu {
+    display: none;
+  }
+
+  .app-header__profile {
+    padding-right: var(--space-3);
+  }
+
+  .app-header__name {
+    display: block;
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--font-heading);
+    font-size: var(--fs-small-h);
+    font-weight: var(--fw-semibold);
+  }
+
+  .app-header__chevron {
+    display: inline-block;
+    color: var(--clr-ink-muted);
+  }
+}
