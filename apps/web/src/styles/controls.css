@@ -1,0 +1,39 @@
+/*
+Form controls shared by every field. All values from tokens.css.
+Buttons live with their component: components/ui/buttons/Button.css
+Inputs:  .field > label + .input
+*/
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--space-3);
+  background: var(--clr-paper);
+  color: var(--clr-ink);
+  border: var(--border-w) solid var(--clr-border-strong);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-default);
+}
+.input::placeholder {
+  color: var(--clr-ink-muted);
+}
+.input:hover:not(:disabled) {
+  border-color: var(--clr-ink-muted);
+}
+.input:focus-visible {
+  border-color: var(--clr-secondary);
+}
+.input:disabled,
+.input[readonly] {
+  background: var(--clr-surface);
+}
+.input[aria-invalid="true"] {
+  border-color: var(--clr-danger);
+}

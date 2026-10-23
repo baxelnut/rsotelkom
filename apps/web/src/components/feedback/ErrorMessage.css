@@ -1,0 +1,22 @@
+.error-message {
+  flex-grow: 1;
+  height: 100%;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  background-color: var(--clr-danger-soft);
+}
+
+/* Icon takes its color from here (Icon fills with currentColor) */
+.error-message__icon {
+  color: var(--clr-danger-text);
+  animation: error-shake 1s var(--ease-default) infinite alternate;
+}
+
+@keyframes error-shake {
+  from {
+    transform: translateY(-2px);
+  }
+  to {
+    transform: translateY(2px);
+  }
+}

@@ -1,0 +1,17 @@
+/* Base look comes from .input (styles/controls.css) */
+.input-field {
+  position: relative;
+  width: 100%;
+}
+
+.input--toggle {
+  padding-right: 2.75rem;
+}
+
+.input-field__toggle {
+  position: absolute;
+  top: 50%;
+  right: var(--space-1);
+  transform: translateY(-50%);
+  color: var(--clr-ink-muted);
+}

@@ -1,0 +1,6 @@
+/* Mobile: full width (.field). Desktop: hug the control unless .block */
+@media (min-width: 768px) {
+  .form-field:not(.block) {
+    width: fit-content;
+  }
+}

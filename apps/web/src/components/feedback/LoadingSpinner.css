@@ -1,0 +1,16 @@
+/* Fills its container, inheriting height and corners */
+.loading {
+  height: 100%;
+  min-height: inherit;
+  border-radius: inherit;
+  background-color: var(--clr-primary-soft);
+}
+
+/* Dimmed cover over content that is reloading */
+.loading--overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-above);
+  background-color: color-mix(in srgb, var(--clr-paper) 70%, transparent);
+  backdrop-filter: blur(2px);
+}

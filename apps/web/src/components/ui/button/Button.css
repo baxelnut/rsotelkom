@@ -1,0 +1,101 @@
+/*
+Owns every .btn style. Variants/sizes are set from Button.tsx:
+  .btn  [.secondary | .outline | .ghost]  [.sm]  [.icon]  [.block]  [.pill]
+Colors come from three custom properties per variant, so hover and
+variants never repeat the same rules.
+*/
+
+.btn {
+  --btn-bg: var(--clr-primary);
+  --btn-fg: var(--clr-on-primary);
+  --btn-bg-hover: var(--clr-primary-hover);
+  --btn-border: transparent;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: 0 var(--space-4);
+  border: var(--border-w) solid var(--btn-border);
+  border-radius: var(--radius-md);
+  color: var(--btn-fg);
+  font-family: var(--txt-control-font);
+  font-size: var(--txt-control-size);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+
+  /* Hover: the hover color sweeps in from the left over the base color */
+  background-color: var(--btn-bg);
+  background-image: linear-gradient(var(--btn-bg-hover), var(--btn-bg-hover));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 0% 100%;
+  transition:
+    background-size var(--duration-slow) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default),
+    transform var(--duration-instant) var(--ease-default);
+}
+
+.btn:hover:not(:disabled) {
+  background-size: 100% 100%;
+}
+a.btn:hover {
+  border-bottom-color: var(--btn-border);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.btn.secondary {
+  --btn-bg: var(--clr-secondary);
+  --btn-fg: var(--clr-on-secondary);
+  --btn-bg-hover: var(--clr-secondary-hover);
+}
+.btn.outline {
+  --btn-bg: transparent;
+  --btn-fg: var(--clr-ink);
+  --btn-bg-hover: var(--clr-row-hover);
+  --btn-border: var(--clr-border-strong);
+}
+.btn.ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--clr-ink);
+  --btn-bg-hover: var(--clr-row-hover);
+}
+
+/* Sizes and shapes */
+.btn.sm {
+  min-height: 2rem;
+  padding: 0 var(--space-3);
+  font-size: var(--fs-xs);
+}
+.btn.icon {
+  width: 2.5rem;
+  padding: 0;
+}
+.btn.icon.sm {
+  width: 2rem;
+}
+.btn.block {
+  width: 100%;
+}
+.btn.pill {
+  border-radius: var(--radius-circle);
+}
+
+/* Inline spinner follows the button's text color */
+.btn .spinner {
+  border-color: color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor;
+}

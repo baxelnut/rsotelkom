@@ -1,0 +1,15 @@
+/* Layout comes from the global .empty-state; this fills the container */
+.empty-message {
+  height: 100%;
+  min-height: inherit;
+  gap: var(--space-2);
+}
+
+.empty-message__icon {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: var(--space-1);
+  border-radius: var(--radius-circle);
+  background-color: var(--clr-surface);
+  color: var(--clr-ink-muted);
+}

@@ -1,0 +1,17 @@
+.checkbox {
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox input {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--clr-primary);
+  cursor: inherit;
+}
+
+.checkbox:has(input:disabled) {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

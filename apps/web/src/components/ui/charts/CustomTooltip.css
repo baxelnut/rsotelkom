@@ -1,0 +1,24 @@
+.chart-tooltip {
+  min-width: 10rem;
+  padding: var(--space-3);
+  border: var(--border-w) solid var(--clr-border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--clr-paper);
+  box-shadow: var(--shadow-md);
+}
+
+.chart-tooltip__list {
+  margin-top: var(--space-2);
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Swatch instead of colored text: legible on any series color */
+.chart-tooltip__swatch {
+  flex: none;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: var(--radius-circle);
+}

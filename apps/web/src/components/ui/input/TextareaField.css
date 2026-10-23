@@ -1,0 +1,10 @@
+.textarea {
+  min-height: 5rem;
+  padding-block: var(--space-2);
+  line-height: var(--lh-normal);
+  resize: none;
+}
+
+.textarea.resizable {
+  resize: vertical;
+}

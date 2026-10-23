@@ -48,8 +48,8 @@ Durations and easings from tokens.css.
 
 /* Loading: spinner */
 .spinner {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: var(--spinner-size, 1.5rem);
+  height: var(--spinner-size, 1.5rem);
   border: var(--border-w-thick) solid var(--clr-border-strong);
   border-top-color: var(--clr-primary);
   border-radius: var(--radius-circle);
@@ -57,6 +57,14 @@ Durations and easings from tokens.css.
 }
 .spin {
   animation: spin 0.8s linear infinite;
+}
+.spinner.sm {
+  --spinner-size: 1rem;
+  border-width: var(--border-w);
+}
+.spinner.lg {
+  --spinner-size: 3rem;
+  border-width: 4px;
 }
 
 /* Loading: skeleton placeholder */

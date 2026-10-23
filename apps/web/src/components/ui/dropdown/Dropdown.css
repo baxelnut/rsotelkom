@@ -1,0 +1,28 @@
+/* Base look comes from .input (styles/controls.css) */
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown__select {
+  appearance: none;
+  padding-right: 2.25rem;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+.dropdown__select.sm {
+  min-height: 2rem;
+  font-size: var(--fs-xs);
+}
+.dropdown__select.pill {
+  border-radius: var(--radius-circle);
+}
+
+.dropdown__icon {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  transform: translateY(-50%);
+  color: var(--clr-ink-muted);
+  pointer-events: none;
+}
