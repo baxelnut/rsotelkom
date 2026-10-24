@@ -1,0 +1,13 @@
+.page.settings-page {
+  align-items: stretch;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .page.settings-page {
+    gap: var(--space-5);
+  }
+  .settings-page .settings-page__top {
+    align-items: flex-start;
+  }
+}

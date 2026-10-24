@@ -1,0 +1,6 @@
+.appearance-card__switch {
+  display: flex;
+  align-items: center;
+  flex: none;
+  color: var(--clr-ink);
+}

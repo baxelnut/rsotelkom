@@ -1,0 +1,22 @@
+.sync-card__list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: var(--border-w) solid var(--clr-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.sync-card__row {
+  padding: var(--space-3);
+}
+
+.sync-card__row + .sync-card__row {
+  border-top: var(--border-w) solid var(--clr-border);
+}
+
+.sync-card__meta {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

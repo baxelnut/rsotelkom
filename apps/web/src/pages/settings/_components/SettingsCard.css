@@ -1,0 +1,8 @@
+.settings-card .settings-card__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  border-radius: var(--radius-md);
+  background: var(--clr-primary-soft);
+  color: var(--clr-primary-text);
+}
