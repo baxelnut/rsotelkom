@@ -8,8 +8,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@googleapis/sheets": "^18.1.1",
     "@rso/shared": "*",
-    "@supabase/supabase-js": "^2.45.0",
+    "@supabase/supabase-js": "^2.118.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "helmet": "^8.0.0",
