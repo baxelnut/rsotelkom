@@ -1,0 +1,14 @@
+name: Send alert report
+
+on:
+  workflow_dispatch:
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post alert to channel
+        run: |
+          curl --fail-with-body -sS -X POST \
+            "${{ secrets.API_URL }}/api/telegram/alert" \
+            -H "x-sync-secret: ${{ secrets.SYNC_SECRET }}"
