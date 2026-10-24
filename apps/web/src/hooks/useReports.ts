@@ -7,6 +7,7 @@ import type {
   Paged,
   PicReport,
   ReportItemsQuery,
+  SubtypeReport,
   WitelReport,
 } from "@rso/shared";
 import { api } from "@/config/api";
@@ -18,6 +19,16 @@ export function useRegionalReport() {
     queryKey: ["reports", "regional-3"],
     queryFn: async () =>
       (await api<ApiResponse<WitelReport[]>>("/reports/regional-3")).data,
+    staleTime: 60_000,
+  });
+}
+
+export function useSubtypeReport() {
+  return useQuery({
+    queryKey: ["reports", "subtype"],
+    queryFn: async () =>
+      (await api<ApiResponse<SubtypeReport[]>>("/reports/regional-3/matrix"))
+        .data,
     staleTime: 60_000,
   });
 }

@@ -6,19 +6,34 @@ import {
   getAlertReport,
   getPicReport,
   getRegionalReport,
+  getSubtypeReport,
+  listAllReportOrders,
   listGalaksi,
   listReportItems,
   resolvePicName,
+  type OrderRow,
 } from "./reports.service";
 
 type Paged<T> = ApiResponse<T> & {
   meta: { total: number; page: number; limit: number };
 };
 
-const itemsQuery = z.object({
-  witel: z.string().min(1),
-  kategori: z.string().min(1),
-  bucket: z.enum(["lt2", "warning", "gt2"]),
+const filterQuery = z.object({
+  witel: z.string().min(1).optional(),
+  subtype: z.string().min(1).optional(),
+  kategori: z
+    .string()
+    .optional()
+    .transform((value) =>
+      value
+        ?.split(",")
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  bucket: z.enum(["lt2", "warning", "gt2", "all"]).default("all"),
+});
+
+const itemsQuery = filterQuery.extend({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(1000).default(100),
 });
@@ -43,12 +58,27 @@ export const regionalReport: RequestHandler = async (_req, res) => {
   res.json(body);
 };
 
+export const subtypeReport: RequestHandler = async (_req, res) => {
+  const body: ApiResponse<Awaited<ReturnType<typeof getSubtypeReport>>> = {
+    data: await getSubtypeReport(),
+  };
+  res.json(body);
+};
+
 export const regionalItems: RequestHandler = async (req, res) => {
   const filter = itemsQuery.parse(req.query);
   const { rows, total } = await listReportItems(filter);
   const body: Paged<typeof rows> = {
     data: rows,
     meta: { total, page: filter.page, limit: filter.limit },
+  };
+  res.json(body);
+};
+
+export const exportItems: RequestHandler = async (req, res) => {
+  const filter = filterQuery.parse(req.query);
+  const body: ApiResponse<OrderRow[]> = {
+    data: await listAllReportOrders(filter),
   };
   res.json(body);
 };

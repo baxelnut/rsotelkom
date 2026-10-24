@@ -6,3 +6,10 @@ export function downloadBlob(blob: Blob, filename: string) {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 0);
 }
+
+export function makeFilename(...parts: string[]): string {
+  const date = new Date().toLocaleDateString("sv-SE", {
+    timeZone: "Asia/Jakarta",
+  });
+  return [...parts, date].join("_").replace(/[<>:"/\\|?*]/g, "_");
+}

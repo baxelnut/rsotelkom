@@ -224,10 +224,19 @@ export interface WitelReport {
   kategori: KategoriReport[];
 }
 
-export interface ReportItemsQuery {
+export type ReportBucketFilter = ReportBucket | "all";
+
+export interface SubtypeReport {
+  subtype: string;
   witel: string;
-  kategori: string;
-  bucket: ReportBucket;
+  kategori: KategoriReport[];
+}
+
+export interface ReportItemsQuery {
+  witel?: string;
+  subtype?: string;
+  kategori?: string;
+  bucket?: ReportBucketFilter;
   page?: number;
   limit?: number;
 }

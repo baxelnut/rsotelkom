@@ -5,14 +5,15 @@ import type { AuthUser } from "../auth/auth.service";
 import { ORDER_SELECT } from "../sheets/sheets.columns";
 
 export type Bucket = "lt2" | "warning" | "gt2";
+export type BucketFilter = Bucket | "all";
 export type Scope = "all" | "warning";
 
 export const WARNING_MIN_DAYS = 20;
 export const OVERDUE_DAYS = 60;
 
 const IN_PROCESS_KEY = "INPROCESS";
+const EXPORT_CHUNK = 1000;
 
-const kategoriKey = (v: string) => v.replace(/\s+/g, "").toUpperCase();
 export const picKey = (v: string) =>
   v.trim().replace(/\s+/g, " ").toUpperCase();
 
@@ -42,6 +43,12 @@ export interface WitelReport {
   kategori: KategoriReport[];
 }
 
+export interface SubtypeReport {
+  subtype: string;
+  witel: string;
+  kategori: KategoriReport[];
+}
+
 export interface AlertGroup {
   pic: string;
   witel: string;
@@ -60,11 +67,27 @@ interface RegionalViewRow {
   gt2_revenue: number;
 }
 
+interface SubtypeViewRow extends Omit<RegionalViewRow, "new_witel"> {
+  subtype: string;
+  witel: string;
+}
+
 interface AlertViewRow {
   pic: string;
   witel: string;
   status: string;
   quantity: number;
+}
+
+function toKategoriReport(
+  r: Omit<RegionalViewRow, "new_witel">,
+): KategoriReport {
+  return {
+    kategori: r.kategori,
+    lt2: { count: r.lt2_count, revenue: r.lt2_revenue },
+    warning: { count: r.warning_count, revenue: r.warning_revenue },
+    gt2: { count: r.gt2_count, revenue: r.gt2_revenue },
+  };
 }
 
 export async function getRegionalReport(): Promise<WitelReport[]> {
@@ -80,59 +103,104 @@ export async function getRegionalReport(): Promise<WitelReport[]> {
 
   for (const r of rows) {
     const list = byWitel.get(r.new_witel) ?? [];
-    list.push({
-      kategori: r.kategori,
-      lt2: { count: r.lt2_count, revenue: r.lt2_revenue },
-      warning: { count: r.warning_count, revenue: r.warning_revenue },
-      gt2: { count: r.gt2_count, revenue: r.gt2_revenue },
-    });
+    list.push(toKategoriReport(r));
     byWitel.set(r.new_witel, list);
   }
   return [...byWitel].map(([witel, kategori]) => ({ witel, kategori }));
 }
 
-export interface ItemsFilter {
-  witel: string;
-  kategori: string;
-  bucket: Bucket;
+export async function getSubtypeReport(): Promise<SubtypeReport[]> {
+  const { data, error } = await supabaseAdmin
+    .from("v_report_subtype_witel_kategori")
+    .select("*")
+    .order("subtype")
+    .order("witel")
+    .order("kategori");
+  throwIfError(error, "subtype report");
+
+  const rows = (data ?? []) as unknown as SubtypeViewRow[];
+  const groups = new Map<string, SubtypeReport>();
+
+  for (const r of rows) {
+    const key = `${r.subtype}|||${r.witel}`;
+    const group = groups.get(key) ?? {
+      subtype: r.subtype,
+      witel: r.witel,
+      kategori: [],
+    };
+    group.kategori.push(toKategoriReport(r));
+    groups.set(key, group);
+  }
+  return [...groups.values()];
+}
+
+export interface ReportFilter {
+  witel?: string | undefined;
+  subtype?: string | undefined;
+  kategori?: string[] | undefined;
+  bucket: BucketFilter;
+}
+
+export interface ItemsFilter extends ReportFilter {
   page: number;
   limit: number;
+}
+
+function reportQuery(f: ReportFilter, withCount: boolean) {
+  let query: any = supabaseAdmin
+    .from("orders")
+    .select(ORDER_SELECT, withCount ? { count: "exact" as const } : undefined)
+    .not("kategori", "is", null);
+
+  if (f.kategori?.length) query = query.in("kategori", f.kategori);
+  if (f.witel) query = query.eq("witel_key", f.witel);
+  if (f.subtype) {
+    query = query.eq(
+      "subtype_key",
+      f.subtype === "N/A" ? "" : f.subtype.toUpperCase(),
+    );
+  }
+
+  if (f.bucket === "warning") query = query.eq("is_warning", true);
+  else if (f.bucket === "all") query = query.not("bucket", "is", null);
+  else query = query.eq("bucket", f.bucket);
+
+  return query;
 }
 
 export async function listReportItems(
   f: ItemsFilter,
 ): Promise<{ rows: OrderRow[]; total: number }> {
   const from = (f.page - 1) * f.limit;
-  const inProcess = kategoriKey(f.kategori) === IN_PROCESS_KEY;
 
-  if (!inProcess && f.bucket === "warning") return { rows: [], total: 0 };
-
-  let query = supabaseAdmin
-    .from("orders")
-    .select(ORDER_SELECT, { count: "exact" })
-    .eq("new_witel", f.witel)
-    .eq("kategori", f.kategori)
+  const { data, count, error } = await reportQuery(f, true)
     .order("umur_order", { ascending: false, nullsFirst: false })
     .order("sheet_row")
     .range(from, from + f.limit - 1);
-
-  if (inProcess) {
-    if (f.bucket === "lt2") {
-      query = query.or(`umur_order.lte.${OVERDUE_DAYS},umur_order.is.null`);
-    } else if (f.bucket === "warning") {
-      query = query
-        .gte("umur_order", WARNING_MIN_DAYS)
-        .lte("umur_order", OVERDUE_DAYS);
-    } else {
-      query = query.gt("umur_order", OVERDUE_DAYS);
-    }
-  } else {
-    query = query.eq("umur_key", f.bucket === "lt2" ? "<2BLN" : ">2BLN");
-  }
-
-  const { data, count, error } = await query;
   throwIfError(error, "report items");
+
   return { rows: (data ?? []) as unknown as OrderRow[], total: count ?? 0 };
+}
+
+export async function listAllReportOrders(
+  f: ReportFilter,
+): Promise<OrderRow[]> {
+  const rows: OrderRow[] = [];
+
+  for (let from = 0; ; from += EXPORT_CHUNK) {
+    const { data, error } = await reportQuery(f, false)
+      .order("subtype_key")
+      .order("witel_key")
+      .order("kategori")
+      .order("umur_order", { ascending: false, nullsFirst: false })
+      .order("sheet_row")
+      .range(from, from + EXPORT_CHUNK - 1);
+    throwIfError(error, "report export");
+
+    const batch = (data ?? []) as unknown as OrderRow[];
+    rows.push(...batch);
+    if (batch.length < EXPORT_CHUNK) return rows;
+  }
 }
 
 export async function getAlertReport(): Promise<AlertGroup[]> {

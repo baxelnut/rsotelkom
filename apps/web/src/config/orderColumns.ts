@@ -1,0 +1,43 @@
+import type { SheetColumn } from "@/types/workbook";
+
+const col = (
+  key: string,
+  header: string,
+  width = 18,
+  format?: SheetColumn["format"],
+): SheetColumn => ({ key, header, width, format });
+
+export const ORDER_SHEET_COLUMNS: SheetColumn[] = [
+  col("order_id", "Order ID", 18),
+  col("order_subtype2", "Sub-type", 10),
+  col("new_witel", "Witel", 18),
+  col("kategori", "Kategori", 18),
+  col("kategori_umur", "Age Category", 13),
+  col("umur_order", "Age (days)", 11, "integer"),
+  col("segmen", "Segmen", 30),
+  col("sub_segmen", "Sub Segmen", 22),
+  col("custaccntname", "Customer", 36),
+  col("standard_name", "Standard Name", 30),
+  col("nipnas", "NIPNAS", 12),
+  col("li_product_name", "Product", 30),
+  col("li_sid", "LI SID", 16),
+  col("sid", "SID", 16),
+  col("revenue", "Revenue (Rp)", 18, "money"),
+  col("pic", "PIC", 24),
+  col("nama_mitra", "Partner", 22),
+  col("li_milestone", "Milestone", 22),
+  col("li_status", "LI Status", 16),
+  col("li_status_date", "LI Status Date", 16),
+  col("li_fulfillment_status", "Fulfillment Status", 20),
+  col("li_billdate", "Bill Date", 14),
+  col("li_created_date", "Created Date", 16),
+  col("order_createdby_name", "Created By", 22),
+  col("action_cd", "Action Code", 12),
+  col("order_subtype", "Order Sub-type (raw)", 16),
+  col("bill_region", "Bill Region", 14),
+  col("bill_witel", "Bill Witel", 16),
+  col("is_nonconn", "Non Conn", 10),
+  col("kategori_umur2", "Age Category 2", 14),
+  col("status", "Action Status", 16),
+  col("notes", "Notes", 30),
+];

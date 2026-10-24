@@ -1,0 +1,8 @@
+.report-page {
+  gap: var(--space-4);
+}
+
+.report-page > * {
+  width: 100%;
+  min-width: 0;
+}

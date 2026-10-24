@@ -1,4 +1,4 @@
-const SUFFIXES = ["", "K", "M", "B"];
+const SUFFIXES = ["", "rb", "jt", "M"];
 
 export function formatCompact(value: number | string): string {
   const sign = Number(value) < 0 ? "-" : "";
@@ -19,4 +19,22 @@ export function formatNumber(value: number | string): string {
 
 export function formatLabel(key: string): string {
   return key.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+export function formatRupiah(value: number | string): string {
+  const amount = Number(value) || 0;
+  return `${amount < 0 ? "-" : ""}Rp${Math.abs(amount).toLocaleString("id-ID")}`;
+}
+
+export function formatRupiahCompact(value: number | string): string {
+  const compact = formatCompact(value);
+  return compact.startsWith("-") ? `-Rp${compact.slice(1)}` : `Rp${compact}`;
+}
+
+export function formatDateTime(value: string): string {
+  return new Date(value).toLocaleString("id-ID", {
+    timeZone: "Asia/Jakarta",
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }

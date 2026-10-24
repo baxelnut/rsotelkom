@@ -4,6 +4,7 @@ export {
   type DataTablePagination,
   type DataTableProps,
 } from "./DataTable";
+export { ExportControls } from "./ExportControls";
 export {
   TableScroll,
   type TableColumn,

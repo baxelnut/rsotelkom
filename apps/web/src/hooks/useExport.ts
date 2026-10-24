@@ -1,11 +1,33 @@
 import { useState } from "react";
 // Config
 import type { ExportFormat } from "@/config/overview";
+// Types
+import type { SheetSpec } from "@/types/workbook";
 // Utils
 import { downloadBlob } from "@/utils/download";
+import { buildCsv, buildXlsx, rowsToSheet } from "@/utils/workbook";
 
 export function useExport() {
   const [isExporting, setIsExporting] = useState(false);
+
+  const exportSheets = async (
+    format: ExportFormat,
+    sheets: SheetSpec[],
+    filename: string,
+  ) => {
+    if (sheets.length === 0) return;
+    setIsExporting(true);
+    try {
+      if (format === "csv") {
+        const sheet = sheets.find((item) => item.csv) ?? sheets[0];
+        downloadBlob(buildCsv(sheet), `${filename}.csv`);
+        return;
+      }
+      downloadBlob(await buildXlsx(sheets), `${filename}.xlsx`);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const exportRows = async (
     format: ExportFormat,
@@ -13,34 +35,8 @@ export function useExport() {
     filename: string,
   ) => {
     if (rows.length === 0) return;
-    setIsExporting(true);
-    try {
-      const XLSX = await import("xlsx");
-      const sheet = XLSX.utils.json_to_sheet(rows);
-
-      if (format === "csv") {
-        downloadBlob(
-          new Blob([XLSX.utils.sheet_to_csv(sheet)], {
-            type: "text/csv;charset=utf-8;",
-          }),
-          `${filename}.csv`,
-        );
-        return;
-      }
-
-      const book = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(book, sheet, "Report");
-      const buffer = XLSX.write(book, { bookType: "xlsx", type: "array" });
-      downloadBlob(
-        new Blob([buffer], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        }),
-        `${filename}.xlsx`,
-      );
-    } finally {
-      setIsExporting(false);
-    }
+    await exportSheets(format, [rowsToSheet(rows)], filename);
   };
 
-  return { exportRows, isExporting };
+  return { exportSheets, exportRows, isExporting };
 }
