@@ -48,4 +48,4 @@ export const ORDER_SELECT = [
 ].join(",");
 
 export const PO_HEADER_ROW = 1;
-export const PO_REQUIRED_HEADERS = ["PO_NAME"];
+export const PO_REQUIRED_HEADERS = ["PO_NAME", "PO_EMAIL"];

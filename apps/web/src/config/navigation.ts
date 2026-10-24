@@ -49,7 +49,7 @@ export const SIDEBAR_MENUS: NavItem[] = [
   },
   {
     label: "Admin Panel",
-    path: "/admin-panel",
+    path: "/admin",
     icon: "peopleFill",
     adminOnly: true,
   },

@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom";
+// Guards
+import { AdminRoute, GuestRoute, ProtectedRoute } from "@/app/routes/guards";
 // Layout
 import { AppLayout } from "@/components/layout";
 // Pages
@@ -13,21 +14,27 @@ import NotFoundPage from "@/pages/404/NotFoundPage";
 
 export const appRoutes = [
   {
-    element: <AppLayout />,
+    element: <ProtectedRoute />,
     children: [
-      { index: true, element: <OverviewPage /> },
-      { path: "report/aosodomoro", element: <ReportPageA /> },
-      { path: "report/galaksi", element: <ReportPageG /> },
-      { path: "action", element: <ActionBasedPage /> },
-      { path: "admin", element: <AdminPage /> },
-      { path: "settings", element: <SettingsPage /> },
+      {
+        element: <AppLayout />,
+        children: [
+          { index: true, element: <OverviewPage /> },
+          { path: "report/aosodomoro", element: <ReportPageA /> },
+          { path: "report/galaksi", element: <ReportPageG /> },
+          { path: "action", element: <ActionBasedPage /> },
+          { path: "settings", element: <SettingsPage /> },
+          {
+            element: <AdminRoute />,
+            children: [{ path: "admin", element: <AdminPage /> }],
+          },
+        ],
+      },
     ],
   },
   {
-    element: <Outlet />,
-    children: [
-      { path: "login", element: <LoginPage /> },
-      { path: "*", element: <NotFoundPage /> },
-    ],
+    element: <GuestRoute />,
+    children: [{ path: "login", element: <LoginPage /> }],
   },
+  { path: "*", element: <NotFoundPage /> },
 ];

@@ -12,8 +12,35 @@ export interface AuthUser {
   telegramId: number | null;
 }
 
+export interface UpdateOwnProfileInput {
+  fullName?: string;
+  telegramId?: number | null;
+}
+
+interface ProfileRow {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: Role;
+  telegram_id: number | null;
+}
+
 const CACHE_MS = 30_000;
 const cache = new Map<string, { user: AuthUser; expires: number }>();
+
+const toAuthUser = (p: ProfileRow): AuthUser => ({
+  id: p.id,
+  email: p.email,
+  fullName: p.full_name,
+  role: p.role,
+  telegramId: p.telegram_id,
+});
+
+const titleCase = (s: string) =>
+  s
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 
 export function invalidateProfile(id: string) {
   cache.delete(id);
@@ -37,13 +64,36 @@ export async function authenticate(token: string): Promise<AuthUser> {
   if (!profile) throw AppError.forbidden("No profile for this account");
   if (!profile.is_active) throw AppError.forbidden("Account is deactivated");
 
-  const user: AuthUser = {
-    id: profile.id,
-    email: profile.email,
-    fullName: profile.full_name,
-    role: profile.role,
-    telegramId: profile.telegram_id,
-  };
+  const user = toAuthUser(profile as ProfileRow);
   cache.set(id, { user, expires: Date.now() + CACHE_MS });
   return user;
+}
+
+export async function updateOwnProfile(
+  id: string,
+  input: UpdateOwnProfileInput,
+): Promise<AuthUser> {
+  const patch: Record<string, unknown> = {};
+  if (input.fullName !== undefined) patch.full_name = titleCase(input.fullName);
+  if (input.telegramId !== undefined) patch.telegram_id = input.telegramId;
+
+  const { data, error } = await supabaseAdmin
+    .from("profiles")
+    .update(patch)
+    .eq("id", id)
+    .select("id,email,full_name,role,telegram_id")
+    .single();
+
+  if (error?.code === "23505") {
+    throw new AppError(
+      409,
+      "Telegram ID is already linked to another user",
+      "TELEGRAM_TAKEN",
+    );
+  }
+  throwIfError(error, "profile update");
+  if (!data) throw AppError.notFound("Profile not found");
+
+  invalidateProfile(id);
+  return toAuthUser(data as ProfileRow);
 }

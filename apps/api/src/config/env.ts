@@ -46,6 +46,14 @@ const schema = z.object({
   ORDERS_SHEET_NAME: z.string().min(1),
   PO_SHEET_NAME: z.string().min(1),
   SYNC_SECRET: z.string().min(16),
+  DASHBOARD_URL: z
+    .string()
+    .url()
+    .transform((v) => v.replace(/\/+$/, "")),
+  TELEGRAM_BOT_TOKEN: z.string().min(1),
+  TELEGRAM_WEBHOOK_SECRET: z.string().regex(/^[A-Za-z0-9_-]{16,256}$/),
+  TELEGRAM_ADMIN_CHAT_ID: z.string().optional(),
+  TELEGRAM_CHANNEL_CHAT_ID: z.string().optional(),
 });
 
 const raw = Object.fromEntries(

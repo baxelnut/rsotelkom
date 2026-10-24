@@ -1,11 +1,12 @@
 import { useEffect, useId, useRef, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 // Style
 import "./UserProfile.css";
 // Components
 import { Avatar, Button } from "@/components";
-// Context
+// Contexts
 import { useAuth } from "@/contexts/auth";
 // Utils
 import { cx } from "@/utils/cx";
@@ -14,14 +15,13 @@ interface UserProfileProps {
   onClose: () => void;
 }
 
-type Notice = { tone: "success" | "error"; message: string } | null;
+type Notice = { tone: "safe" | "danger"; message: string } | null;
 
 interface FieldProps {
   label: string;
   value: string;
   fallback?: string;
   missing?: boolean;
-  /** When set, the field renders as an input */
   name?: string;
   placeholder?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -37,32 +37,31 @@ function ProfileField({
   onChange,
 }: FieldProps) {
   const id = useId();
-  const editing = !!onChange;
 
   return (
     <div className="field">
-      {editing ? (
-        <label className="text caption" htmlFor={id}>
-          {label}
-        </label>
+      {onChange ? (
+        <>
+          <label className="text caption" htmlFor={id}>
+            {label}
+          </label>
+          <input
+            id={id}
+            name={name}
+            className="input"
+            value={value}
+            placeholder={placeholder}
+            onChange={onChange}
+            autoComplete="off"
+          />
+        </>
       ) : (
-        <span className="text caption">{label}</span>
-      )}
-
-      {editing ? (
-        <input
-          id={id}
-          name={name}
-          className="input"
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          autoComplete="off"
-        />
-      ) : (
-        <div className={cx("profile-value", missing && "is-missing")}>
-          {value || fallback}
-        </div>
+        <>
+          <span className="text caption">{label}</span>
+          <div className={cx("profile-value", missing && "is-missing")}>
+            {value || fallback}
+          </div>
+        </>
       )}
     </div>
   );
@@ -79,7 +78,6 @@ export function UserProfile({ onClose }: UserProfileProps) {
   const [notice, setNotice] = useState<Notice>(null);
   const [draft, setDraft] = useState({ fullName: "", telegramId: "" });
 
-  // Focus the dialog on open, close on Escape
   useEffect(() => {
     dialogRef.current?.focus();
     const onKeyDown = (e: KeyboardEvent) => {
@@ -115,7 +113,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
     if (!isEditing || pending) return;
 
     if (!draft.fullName.trim()) {
-      setNotice({ tone: "error", message: "Name can't be empty." });
+      setNotice({ tone: "danger", message: "Name can't be empty." });
       return;
     }
 
@@ -125,11 +123,11 @@ export function UserProfile({ onClose }: UserProfileProps) {
     setPending(false);
 
     if (error) {
-      setNotice({ tone: "error", message: error });
+      setNotice({ tone: "danger", message: error });
       return;
     }
     setIsEditing(false);
-    setNotice({ tone: "success", message: "Profile updated." });
+    setNotice({ tone: "safe", message: "Profile updated." });
   };
 
   const handlePasswordReset = async () => {
@@ -139,9 +137,9 @@ export function UserProfile({ onClose }: UserProfileProps) {
     setPending(false);
     setNotice(
       error
-        ? { tone: "error", message: error }
+        ? { tone: "danger", message: error }
         : {
-            tone: "success",
+            tone: "safe",
             message: `Password reset email sent to ${profile.email}.`,
           },
     );
@@ -152,28 +150,26 @@ export function UserProfile({ onClose }: UserProfileProps) {
     const { error } = await signOut();
     setPending(false);
     if (error) {
-      setNotice({ tone: "error", message: "Couldn't sign out. Try again." });
+      setNotice({ tone: "danger", message: "Couldn't sign out. Try again." });
       return;
     }
     onClose();
     navigate("/login", { replace: true });
   };
 
-  return (
+  return createPortal(
     <div className="profile-overlay" onMouseDown={onClose}>
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="card profile-dialog"
+        className="card profile-dialog stack col gap-4"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         onMouseDown={(e) => e.stopPropagation()}
       >
-        <div className="profile-dialog__header">
-          <h2 id={titleId} className="profile-dialog__title">
-            Profile
-          </h2>
+        <div className="stack row between middle nowrap">
+          <h4 id={titleId}>Profile</h4>
           <Button
             variant="ghost"
             size="sm"
@@ -184,27 +180,24 @@ export function UserProfile({ onClose }: UserProfileProps) {
           />
         </div>
 
-        <div className="profile-dialog__identity">
+        <div className="stack center">
           <Avatar src={profile.imageUrl} name={displayName} size="xl" />
         </div>
 
         {!hasTelegram && !isEditing && (
-          <p className="profile-notice profile-notice--attention" role="status">
+          <p className="card flat danger text sm" role="status">
             Add your Telegram ID so we can reach you.
           </p>
         )}
         {notice && (
-          <p
-            className={cx("profile-notice", `profile-notice--${notice.tone}`)}
-            role="status"
-          >
+          <p className={cx("card flat text sm", notice.tone)} role="status">
             {notice.message}
           </p>
         )}
 
         <form
           id="profile-form"
-          className="profile-dialog__form"
+          className="stack col gap-4"
           onSubmit={handleSubmit}
         >
           <ProfileField
@@ -230,13 +223,13 @@ export function UserProfile({ onClose }: UserProfileProps) {
           />
         </form>
 
-        <div className="profile-dialog__actions">
+        <div className="stack col gap-2">
           {isEditing ? (
             <>
               <Button
                 type="submit"
                 form="profile-form"
-                text={pending ? "Saving..." : "Save"}
+                text="Save"
                 block
                 loading={pending}
               />
@@ -269,12 +262,12 @@ export function UserProfile({ onClose }: UserProfileProps) {
             text="Sign out"
             variant="ghost"
             block
-            className="profile-dialog__signout"
             onClick={handleSignOut}
             disabled={pending}
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

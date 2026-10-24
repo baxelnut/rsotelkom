@@ -1,98 +1,49 @@
-/* TODO: rename legacy variables to new ones */
-.dropdown-overlay {
+.profile-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(var(--clr-ink-rgb), 0.5);
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background-color: var(--clr-overlay);
   backdrop-filter: blur(4px);
-  z-index: 999;
+  animation: fade-in var(--duration-base) var(--ease-out) both;
 }
 
-.dropdown-user {
+.profile-dialog {
+  width: 100%;
+  max-width: 26rem;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: var(--space-5);
+  box-shadow: var(--shadow-lg);
+  animation: slide-up var(--duration-slow) var(--ease-out) both;
+}
+
+.profile-dialog:focus-visible {
+  outline: none;
+}
+
+.profile-value {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: start;
-  gap: 2rem;
-  padding: 1rem;
-  border-radius: 6px;
-  z-index: 999;
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
-
-  background-color: var(--card);
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+  background: var(--clr-surface);
+  border-radius: var(--radius-md);
   color: var(--clr-ink);
-  border: 1px solid var(--neutral);
-  box-shadow: 0 1rem 2rem rgba(var(--clr-ink-rgb), 0.25);
-
-  transform: translate(-50%, -50%);
-  animation: fadeIn 0.2s ease-in-out;
-
-  width: 80%;
+  font-size: var(--txt-body-sm-size);
+  overflow-wrap: anywhere;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -60%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
+.profile-value.is-missing {
+  color: var(--clr-ink-muted);
+  font-style: italic;
 }
 
-.dropdown-user img {
-  width: 80px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--neutral);
-}
-
-.user-info {
-  background-color: var(--bg);
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
-  color: var(--clr-ink);
-  font-family: var(--head);
-}
-
-.user-section {
-  width: 100%;
-}
-
-.user-section-container,
-.drop-btn-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.close-btn-container {
-  width: 100%;
-  display: flex;
-  justify-content: end;
-}
-
-/* Tablet */
 @media (min-width: 768px) {
-  .dropdown-user {
-    width: 50%;
-    left: 60%;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .dropdown-user {
-    width: 30%;
-    left: 50%;
+  .profile-dialog {
+    padding: var(--space-6);
   }
 }

@@ -6,10 +6,12 @@ import * as controller from "./sheets.controller";
 export const sheetsRoutes = Router();
 
 sheetsRoutes.post("/sync", requireSyncSecret, controller.runSync);
-sheetsRoutes.get("/sync/status", requireSyncSecret, controller.syncStatus);
 
-sheetsRoutes.use(requireAuth, requireRole("admin", "user"));
+sheetsRoutes.use(requireAuth);
+sheetsRoutes.post("/sync/run", requireRole("admin"), controller.runSync);
 
+sheetsRoutes.use(requireRole("admin", "user"));
+sheetsRoutes.get("/sync/status", controller.syncStatus);
 sheetsRoutes.get("/orders", controller.getOrders);
 sheetsRoutes.patch("/orders/:uuid", controller.patchOrder);
 sheetsRoutes.get("/po", controller.getPo);

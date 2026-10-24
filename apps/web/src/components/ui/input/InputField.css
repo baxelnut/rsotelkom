@@ -9,9 +9,10 @@
 }
 
 .input-field__toggle {
+  height: 100%;
   position: absolute;
-  top: 50%;
+  top: auto;
+  bottom: auto;
   right: var(--space-1);
-  transform: translateY(-50%);
   color: var(--clr-ink-muted);
 }

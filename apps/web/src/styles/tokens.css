@@ -12,14 +12,22 @@ Semantic colors are declared on ":root, body" so that derived tokens
 /* Layer 1: Raw Palette */
 :root {
   /* Base */
-  --palette-white: #f3f4f4;
+  --palette-white: #d5d9e7;
   --palette-white-rgb: 243, 244, 244;
   --palette-pure-white: #ffffff;
-  --palette-pure-white-rgb: 255, 255, 255;
+  --palette-pure-white-rgb: 213, 217, 231;
   --palette-black: #2c2c2c;
   --palette-black-rgb: 44, 44, 44;
 
-  /* Primary: Telkomsel red (deep = hover/text on light, light = text on dark) */
+  /* Primary: indigo */
+  --palette-blue: #312a68;
+  --palette-blue-rgb: 49, 42, 104;
+  --palette-blue-deep: #25204f;
+  --palette-blue-deep-rgb: 37, 32, 79;
+  --palette-blue-light: #625a9b;
+  --palette-blue-light-rgb: 98, 90, 155;
+
+  /* Secondary: Telkomsel red (deep = hover/text on light, light = text on dark) */
   --palette-red: #e81e28;
   --palette-red-rgb: 232, 30, 40;
   --palette-red-deep: #c9141e;
@@ -27,37 +35,29 @@ Semantic colors are declared on ":root, body" so that derived tokens
   --palette-red-light: #ff5a62;
   --palette-red-light-rgb: 255, 90, 98;
 
-  /* Secondary: blue */
-  --palette-blue: #007dcc;
-  --palette-blue-rgb: 0, 125, 204;
-  --palette-blue-deep: #0065a6;
-  --palette-blue-deep-rgb: 0, 101, 166;
-  --palette-blue-light: #4da9e6;
-  --palette-blue-light-rgb: 77, 169, 230;
-
-  /* Neutrals: cool gray scale anchored on canvas (0) and ink (700) */
-  --palette-gray-0: #f3f4f4;
-  --palette-gray-0-rgb: 243, 244, 244;
-  --palette-gray-50: #e8e9e9;
-  --palette-gray-50-rgb: 232, 233, 233;
-  --palette-gray-100: #d9dbdb;
-  --palette-gray-100-rgb: 217, 219, 219;
-  --palette-gray-200: #bcc0c0;
-  --palette-gray-200-rgb: 188, 192, 192;
-  --palette-gray-300: #959999;
-  --palette-gray-300-rgb: 149, 153, 153;
-  --palette-gray-400: #6a6e6e;
-  --palette-gray-400-rgb: 106, 110, 110;
-  --palette-gray-500: #525555;
-  --palette-gray-500-rgb: 82, 85, 85;
-  --palette-gray-600: #3f4141;
-  --palette-gray-600-rgb: 63, 65, 65;
+  /* Neutrals: cool blue-gray scale anchored on canvas (0) and ink (700) */
+  --palette-gray-0: #f0f3ff;
+  --palette-gray-0-rgb: 240, 243, 255;
+  --palette-gray-50: #e2e7f7;
+  --palette-gray-50-rgb: 226, 231, 247;
+  --palette-gray-100: #d0d7eb;
+  --palette-gray-100-rgb: 208, 215, 235;
+  --palette-gray-200: #b3bdd8;
+  --palette-gray-200-rgb: 179, 189, 216;
+  --palette-gray-300: #929fbe;
+  --palette-gray-300-rgb: 146, 159, 190;
+  --palette-gray-400: #707e9c;
+  --palette-gray-400-rgb: 112, 126, 156;
+  --palette-gray-500: #56627d;
+  --palette-gray-500-rgb: 86, 98, 125;
+  --palette-gray-600: #3f485f;
+  --palette-gray-600-rgb: 63, 72, 95;
   --palette-gray-700: #2c2c2c;
   --palette-gray-700-rgb: 44, 44, 44;
-  --palette-gray-800: #212121;
-  --palette-gray-800-rgb: 33, 33, 33;
-  --palette-gray-900: #151515;
-  --palette-gray-900-rgb: 21, 21, 21;
+  --palette-gray-800: #212126;
+  --palette-gray-800-rgb: 33, 33, 38;
+  --palette-gray-900: #151519;
+  --palette-gray-900-rgb: 21, 21, 25;
 
   /* Status (deep = readable text color on light surfaces) */
   --palette-danger: #ffb900;
@@ -75,11 +75,11 @@ Semantic colors are declared on ":root, body" so that derived tokens
 body {
   /* Canvas */
   --clr-canvas: var(--palette-white);
-  --clr-paper: var(--palette-pure-white);
+  --clr-paper: var(--palette-gray-0);
   --clr-surface: var(--palette-gray-50);
   --clr-surface-alt: var(--palette-gray-100);
-  --clr-border: rgba(var(--palette-black-rgb), 0.12);
-  --clr-border-strong: rgba(var(--palette-black-rgb), 0.28);
+  --clr-border: rgba(var(--palette-black-rgb), 0.5);
+  --clr-border-strong: rgba(var(--palette-black-rgb), 1);
   --clr-border-brand: rgba(var(--palette-red-rgb), 0.4);
 
   /* Ink */
@@ -95,20 +95,20 @@ body {
   --clr-ink-on-dark-soft: rgba(var(--palette-white-rgb), 0.72);
   --clr-ink-on-dark-muted: rgba(var(--palette-white-rgb), 0.4);
 
-  /* Primary (red). -text = readable as text, on-* = text placed ON the fill */
-  --clr-primary: var(--palette-red);
-  --clr-primary-rgb: var(--palette-red-rgb);
-  --clr-primary-hover: var(--palette-red-deep);
-  --clr-primary-soft: rgba(var(--palette-red-rgb), 0.1);
-  --clr-primary-text: var(--palette-red-deep);
+  /* Primary (blue). -text = readable as text, on-* = text placed ON the fill */
+  --clr-primary: var(--palette-blue);
+  --clr-primary-rgb: var(--palette-blue-rgb);
+  --clr-primary-hover: var(--palette-blue-deep);
+  --clr-primary-soft: rgba(var(--palette-blue-rgb), 0.1);
+  --clr-primary-text: var(--palette-blue-deep);
   --clr-on-primary: var(--palette-pure-white);
 
-  /* Secondary (blue) */
-  --clr-secondary: var(--palette-blue);
-  --clr-secondary-rgb: var(--palette-blue-rgb);
-  --clr-secondary-hover: var(--palette-blue-deep);
-  --clr-secondary-soft: rgba(var(--palette-blue-rgb), 0.1);
-  --clr-secondary-text: var(--palette-blue-deep);
+  /* Secondary (red) */
+  --clr-secondary: var(--palette-red);
+  --clr-secondary-rgb: var(--palette-red-rgb);
+  --clr-secondary-hover: var(--palette-red-deep);
+  --clr-secondary-soft: rgba(var(--palette-red-rgb), 0.1);
+  --clr-secondary-text: var(--palette-red-deep);
   --clr-on-secondary: var(--palette-pure-white);
 
   /* Status: danger (amber) and safe (green) are light fills, so on-* is dark ink */
@@ -166,10 +166,10 @@ body {
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Font Weights (Poppins loaded: 400-700, Montserrat: variable) */
-  --fw-regular: 400;
-  --fw-medium: 500;
-  --fw-semibold: 600;
-  --fw-bold: 700;
+  --fw-regular: 500;
+  --fw-medium: 600;
+  --fw-semibold: 700;
+  --fw-bold: 800;
 
   /* Font Sizes: fixed scale */
   --fs-3xs: 0.625rem;
@@ -367,13 +367,13 @@ body.dark {
 }
 
 /* Responsive: mobile first, scale up */
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   :root {
-    --page-padding: 1.5rem;
+   
   }
 }
 @media (min-width: 1024px) {
-  :root {
-    --page-padding: 2rem;
+  :root { 
+
   }
-}
+} */

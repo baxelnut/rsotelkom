@@ -1,0 +1,29 @@
+.login-page {
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: var(--page-padding);
+  gap: var(--space-6);
+}
+
+.login-page__logo {
+  width: 9rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.login-page__card {
+  width: 100%;
+  max-width: 26rem;
+  padding: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .login-page__logo {
+    width: 11rem;
+  }
+
+  .login-page__card {
+    padding: var(--space-8);
+  }
+}

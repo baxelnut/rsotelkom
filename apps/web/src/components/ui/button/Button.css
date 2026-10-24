@@ -71,7 +71,7 @@ a.btn:hover {
 .btn.ghost {
   --btn-bg: transparent;
   --btn-fg: var(--clr-ink);
-  --btn-bg-hover: var(--clr-row-hover);
+  --btn-bg-hover: transparent;
 }
 
 /* Sizes and shapes */

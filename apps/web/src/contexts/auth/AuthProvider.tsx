@@ -2,14 +2,16 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import type { Session } from "@supabase/supabase-js";
 // Config
+import { api } from "@/config/api";
 import { supabase } from "@/config/supabase";
 // Context
 import { AuthContext, type AuthContextValue } from "./AuthContext";
 // Types
 import type { ActionResult, AuthNotice, Profile } from "@/types/auth";
 import type { ProfileRow, ProfileUpdate } from "@/types/auth";
+import type { ApiResponse, AuthUser } from "@rso/shared";
 
-const PROFILE_COLUMNS = "id, email, full_name, telegram_id, image_url, role";
+const PROFILE_COLUMNS = "id, email, full_name, telegram_id, role";
 
 function toProfile(row: ProfileRow): Profile {
   return {
@@ -17,7 +19,7 @@ function toProfile(row: ProfileRow): Profile {
     email: row.email ?? "",
     fullName: row.full_name ?? "",
     telegramId: row.telegram_id ?? "",
-    imageUrl: row.image_url,
+    imageUrl: null,
     role: row.role,
   };
 }
@@ -73,30 +75,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [userId]);
 
-  // Only expose the profile when it belongs to the current session.
   const activeProfile =
     userId !== null && loadedFor === userId ? profile : null;
 
   const updateProfile = useCallback(
     async (patch: ProfileUpdate): Promise<ActionResult> => {
       if (!userId) return { error: "You are not signed in." };
-      const changes: Partial<ProfileRow> = {};
-      if (patch.fullName !== undefined) {
-        changes.full_name = patch.fullName.trim();
-      }
-      if (patch.telegramId !== undefined) {
-        changes.telegram_id = patch.telegramId.trim();
-      }
-      const { data, error } = await supabase
-        .from("profiles")
-        .update(changes)
-        .eq("id", userId)
-        .select(PROFILE_COLUMNS)
-        .single<ProfileRow>();
 
-      if (error) return { error: error.message };
-      setProfile(toProfile(data));
-      return { error: null };
+      const body: { fullName?: string; telegramId?: number | null } = {};
+      if (patch.fullName !== undefined) body.fullName = patch.fullName.trim();
+      if (patch.telegramId !== undefined) {
+        const raw = patch.telegramId.trim();
+        const parsed = raw === "" ? null : Number(raw);
+        if (parsed !== null && !Number.isInteger(parsed)) {
+          return { error: "Telegram ID must be a number." };
+        }
+        body.telegramId = parsed;
+      }
+
+      try {
+        const { data } = await api<ApiResponse<AuthUser>>("/auth/me", {
+          method: "PATCH",
+          body,
+        });
+        setProfile((prev) =>
+          prev
+            ? {
+                ...prev,
+                fullName: data?.fullName ?? "",
+                telegramId: data?.telegramId?.toString() ?? "",
+              }
+            : prev,
+        );
+        return { error: null };
+      } catch (error) {
+        return {
+          error: error instanceof Error ? error.message : "Update failed.",
+        };
+      }
     },
     [userId],
   );
@@ -107,6 +123,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.resetPasswordForEmail(email);
     return { error: error?.message ?? null };
   }, [session]);
+
   const signOut = useCallback(async (): Promise<ActionResult> => {
     const { error } = await supabase.auth.signOut();
     return { error: error?.message ?? null };

@@ -6,6 +6,6 @@
 @import "./typography.css";
 @import "./layout.css";
 @import "./cards.css";
-/* @import "./controls.css"; */
+@import "./controls.css";
 @import "./motion.css";
 @import "./divider.css";

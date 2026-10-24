@@ -6,9 +6,9 @@ export const SEGMEN_COLORS: Record<string, string> = {
   Regional: "#247881",
 };
 
-export const DEFAULT_SERIES_COLOR = "var(--clr-secondary)";
+export const DEFAULT_SERIES_COLOR = "var(--clr-primary)";
 
-/** Segment color, else `fallback` (e.g. the color Recharts assigned), else secondary */
+/** Segment color, else `fallback` (e.g. the color Recharts assigned), else primary */
 export function getSegmenColor(
   name: string | number | undefined,
   fallback?: string,

@@ -32,7 +32,7 @@ export function Sidebar({ links = SIDEBAR_MENUS }: SidebarProps) {
   } = useLayout();
   // Existing hook returns a getter (not a string) and takes no arguments
   const getLogoSrc = useLogoSrc();
-  const logoSrc = isCollapsed ? "/logos/favicon.svg" : getLogoSrc();
+  const logoSrc = isCollapsed ? "/favicon.svg" : getLogoSrc();
 
   const visibleLinks = useMemo(
     () => links.filter((item) => !item.adminOnly || isAdmin),
