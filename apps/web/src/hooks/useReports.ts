@@ -2,6 +2,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type {
   AlertGroup,
   ApiResponse,
+  GalaksiPoRow,
   GalaksiRow,
   Order,
   Paged,
@@ -85,5 +86,14 @@ export function useGalaksi(page = 1, limit = 500) {
     queryFn: () =>
       api<Paged<GalaksiRow[]>>("/reports/galaksi", { query: { page, limit } }),
     placeholderData: keepPreviousData,
+  });
+}
+
+export function useGalaksiSummary() {
+  return useQuery({
+    queryKey: ["reports", "galaksi", "summary"],
+    queryFn: async () =>
+      (await api<ApiResponse<GalaksiPoRow[]>>("/reports/galaksi/summary")).data,
+    staleTime: 60_000,
   });
 }

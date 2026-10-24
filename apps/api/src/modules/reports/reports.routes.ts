@@ -13,4 +13,6 @@ reportsRoutes.get("/regional-3/export", controller.exportItems);
 reportsRoutes.get("/alert", controller.alertReport);
 reportsRoutes.get("/pic", controller.picReport);
 reportsRoutes.get("/me", controller.myReport);
+
 reportsRoutes.get("/galaksi", controller.galaksi);
+reportsRoutes.get("/galaksi/summary", controller.galaksiSummary);

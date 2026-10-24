@@ -40,3 +40,5 @@ export {
   useReportDrilldown,
   type ReportDrilldownApi,
 } from "./useReportDrilldown";
+export { useLastSynced } from "./useLastSynced";
+export { useGalaksiReport, type GalaksiReportApi } from "./useGalaksiReport";

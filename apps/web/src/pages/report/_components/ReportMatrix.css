@@ -1,12 +1,24 @@
 .table-wrapper.report-matrix {
-  --matrix-head-h: 2.75rem;
   min-height: 0;
-  max-height: 72dvh;
 }
 
 .table-wrapper.report-matrix > table {
   width: max-content;
   min-width: 100%;
+}
+
+.table-wrapper.report-matrix thead th {
+  height: var(--matrix-head-h, 2.75rem);
+  text-align: center;
+  background: var(--clr-table-head-bg);
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.table-wrapper.report-matrix thead th.matrix-witel {
+  position: sticky;
+  left: 0;
+  z-index: var(--z-above);
+  text-align: left;
 }
 
 .report-matrix .tone-safe {

@@ -8,6 +8,15 @@ export type Bucket = "lt2" | "warning" | "gt2";
 export type BucketFilter = Bucket | "all";
 export type Scope = "all" | "warning";
 
+export interface GalaksiPoRow {
+  po_name: string;
+  ao: number;
+  so: number;
+  do: number;
+  mo: number;
+  ro: number;
+}
+
 export const WARNING_MIN_DAYS = 20;
 export const OVERDUE_DAYS = 60;
 
@@ -292,4 +301,10 @@ export async function listGalaksi(page: number, limit: number) {
     .range(from, from + limit - 1);
   throwIfError(error, "galaksi list");
   return { rows: data ?? [], total: count ?? 0 };
+}
+
+export async function getGalaksiSummary(): Promise<GalaksiPoRow[]> {
+  const { data, error } = await supabaseAdmin.from("v_galaksi_po").select("*");
+  throwIfError(error, "galaksi summary");
+  return (data ?? []) as unknown as GalaksiPoRow[];
 }

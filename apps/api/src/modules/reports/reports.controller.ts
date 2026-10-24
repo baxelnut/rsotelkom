@@ -4,6 +4,7 @@ import type { ApiResponse } from "@rso/shared";
 import { currentUser } from "../../middleware/auth";
 import {
   getAlertReport,
+  getGalaksiSummary,
   getPicReport,
   getRegionalReport,
   getSubtypeReport,
@@ -111,5 +112,12 @@ export const galaksi: RequestHandler = async (req, res) => {
   const { page, limit } = galaksiQuery.parse(req.query);
   const { rows, total } = await listGalaksi(page, limit);
   const body: Paged<typeof rows> = { data: rows, meta: { total, page, limit } };
+  res.json(body);
+};
+
+export const galaksiSummary: RequestHandler = async (_req, res) => {
+  const body: ApiResponse<Awaited<ReturnType<typeof getGalaksiSummary>>> = {
+    data: await getGalaksiSummary(),
+  };
   res.json(body);
 };

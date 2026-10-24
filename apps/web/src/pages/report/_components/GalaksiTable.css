@@ -1,0 +1,54 @@
+.table-wrapper.galaksi-table {
+  min-height: 0;
+}
+
+.galaksi-table table {
+  min-width: 36rem;
+}
+
+.galaksi-table th,
+.galaksi-table td {
+  text-align: center;
+}
+
+.galaksi-table .galaksi-table__name {
+  position: sticky;
+  left: 0;
+  z-index: var(--z-after);
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-heading);
+  background: var(--clr-paper);
+  box-shadow: 1px 0 0 var(--clr-border);
+}
+
+.galaksi-table thead .galaksi-table__name {
+  background: var(--clr-table-head-bg);
+}
+
+.galaksi-table thead .galaksi-table__group {
+  color: var(--clr-primary-text);
+  box-shadow: inset 0 -3px 0 var(--clr-primary);
+}
+
+.galaksi-table .galaksi-table__num.is-zero {
+  color: var(--clr-ink-faint);
+}
+
+.galaksi-table .galaksi-table__num.is-total {
+  font-weight: var(--fw-semibold);
+  background: var(--clr-surface);
+}
+
+.galaksi-table tbody tr:hover > * {
+  background: var(--clr-row-hover);
+}
+
+.galaksi-table tfoot th,
+.galaksi-table tfoot td {
+  font-weight: var(--fw-semibold);
+  background: var(--clr-dark);
+  color: var(--clr-ink-on-dark);
+  border-bottom: none;
+}

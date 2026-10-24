@@ -270,3 +270,12 @@ export interface GalaksiRow {
   kategori: string | null;
   umur_order: number | null;
 }
+
+export interface GalaksiPoRow {
+  po_name: string;
+  ao: number;
+  so: number;
+  do: number;
+  mo: number;
+  ro: number;
+}
