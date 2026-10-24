@@ -1,0 +1,17 @@
+name: Sync sheets
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 07:00 WIB
+    - cron: "0 7 * * *" # 14:00 WIB
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger sync
+        run: |
+          curl --fail-with-body -sS -X POST \
+            "${{ secrets.API_URL }}/api/sheets/sync?dataset=all" \
+            -H "x-sync-secret: ${{ secrets.SYNC_SECRET }}"
