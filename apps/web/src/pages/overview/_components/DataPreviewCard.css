@@ -1,0 +1,9 @@
+.data-preview-card__group .form-field {
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .data-preview-card__group {
+    width: fit-content;
+  }
+}
