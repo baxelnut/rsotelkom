@@ -1,0 +1,50 @@
+/* Wrapper, header and cell padding come from .table-wrapper (styles/cards.css) */
+.table-scroll__index {
+  width: 1%;
+  text-align: center;
+  color: var(--clr-ink-muted);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* Column alignment (numbers right, status center) */
+.table-scroll .align-center {
+  text-align: center;
+}
+.table-scroll .align-end {
+  text-align: end;
+}
+.table-scroll .align-end .table-scroll__cell {
+  margin-left: auto;
+}
+
+/* Long values are cut off, full text is in the title attribute */
+.table-scroll__cell {
+  display: block;
+  max-width: 12.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.table-scroll__cell.is-empty {
+  color: var(--clr-ink-faint);
+  text-align: center;
+}
+
+/* Mouse users: hovering a cell reveals its full text */
+@media (hover: hover) and (pointer: fine) {
+  .table-scroll td:hover .table-scroll__cell:not(.is-empty) {
+    position: relative;
+    z-index: var(--z-above);
+    width: max-content;
+    max-width: 24rem;
+    margin: calc(var(--space-1) * -1) calc(var(--space-2) * -1);
+    padding: var(--space-1) var(--space-2);
+    overflow: visible;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    border-radius: var(--radius-sm);
+    background-color: var(--clr-paper);
+    box-shadow: var(--shadow-md);
+  }
+}

@@ -42,7 +42,7 @@ export function CustomPagination({
       pageClassName="pagination__item"
       previousClassName="pagination__item"
       nextClassName="pagination__item"
-      breakClassName="pagination__item"
+      breakClassName="pagination__item pagination__break"
       pageLinkClassName="btn outline sm"
       previousLinkClassName="btn outline sm"
       nextLinkClassName="btn outline sm"

@@ -1,0 +1,28 @@
+/* Buttons come from .btn (Button.css); layout from .stack. Only list resets and states here. */
+.pagination {
+  padding: 0;
+  list-style: none;
+}
+
+.pagination__item a {
+  min-width: 2rem;
+}
+
+/* Current page uses the primary button colors */
+.pagination .active a {
+  --btn-bg: var(--clr-primary);
+  --btn-fg: var(--clr-on-primary);
+  --btn-bg-hover: var(--clr-primary);
+  --btn-border: var(--clr-primary);
+  pointer-events: none;
+}
+
+.pagination .disabled a {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Ellipsis is not interactive */
+.pagination__break a {
+  pointer-events: none;
+}

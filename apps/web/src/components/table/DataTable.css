@@ -1,0 +1,11 @@
+/* Positioned so the reload overlay covers only the table */
+.data-table__body {
+  position: relative;
+  width: 100%;
+}
+
+/* Loading / error / empty fill the same box the table would occupy */
+.data-table__state > * {
+  flex: 1;
+  align-self: stretch;
+}

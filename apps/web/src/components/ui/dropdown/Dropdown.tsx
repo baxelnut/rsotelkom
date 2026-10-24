@@ -24,7 +24,7 @@ export type DropdownItem = DropdownOption | DropdownGroup;
 
 interface DropdownProps extends Omit<
   SelectHTMLAttributes<HTMLSelectElement>,
-  "id" | "children"
+  "id" | "children" | "size"
 > {
   name: string;
   options: DropdownItem[];
@@ -34,8 +34,7 @@ interface DropdownProps extends Omit<
   fullWidth?: boolean;
   pill?: boolean;
   size?: "md" | "sm";
-  /** Replaces the default chevron */
-  iconName?: IconsType;
+  iconName?: IconsType; /** Replaces the default chevron */
 }
 
 function isGroup(item: DropdownItem): item is DropdownGroup {

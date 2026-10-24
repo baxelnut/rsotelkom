@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 // Style
 import "./UserProfile.css";
 // Components
-import { Avatar, Icon } from "@/components";
+import { Avatar, Button } from "@/components";
 // Context
 import { useAuth } from "@/contexts/auth";
 // Utils
@@ -174,14 +174,14 @@ export function UserProfile({ onClose }: UserProfileProps) {
           <h2 id={titleId} className="profile-dialog__title">
             Profile
           </h2>
-          <button
-            type="button"
-            className="btn ghost icon sm"
+          <Button
+            variant="ghost"
+            size="sm"
+            iconName="xLg"
+            iconSize={18}
             onClick={onClose}
             aria-label="Close profile"
-          >
-            <Icon iconName="xLg" size={18} />
-          </button>
+          />
         </div>
 
         <div className="profile-dialog__identity">
@@ -233,50 +233,46 @@ export function UserProfile({ onClose }: UserProfileProps) {
         <div className="profile-dialog__actions">
           {isEditing ? (
             <>
-              <button
+              <Button
                 type="submit"
                 form="profile-form"
-                className="btn block"
-                disabled={pending}
-              >
-                {pending ? "Saving..." : "Save"}
-              </button>
-              <button
-                type="button"
-                className="btn ghost block"
+                text={pending ? "Saving..." : "Save"}
+                block
+                loading={pending}
+              />
+              <Button
+                text="Cancel"
+                variant="ghost"
+                block
                 onClick={cancelEditing}
                 disabled={pending}
-              >
-                Cancel
-              </button>
+              />
             </>
           ) : (
-            <button
-              type="button"
-              className={cx("btn block", hasTelegram ? "outline" : "secondary")}
+            <Button
+              text={hasTelegram ? "Edit profile" : "Add Telegram ID"}
+              variant={hasTelegram ? "outline" : "secondary"}
+              block
               onClick={startEditing}
               disabled={pending}
-            >
-              {hasTelegram ? "Edit profile" : "Add Telegram ID"}
-            </button>
+            />
           )}
 
-          <button
-            type="button"
-            className="btn outline block"
+          <Button
+            text="Change password"
+            variant="outline"
+            block
             onClick={handlePasswordReset}
             disabled={pending}
-          >
-            Change password
-          </button>
-          <button
-            type="button"
-            className="btn ghost block profile-dialog__signout"
+          />
+          <Button
+            text="Sign out"
+            variant="ghost"
+            block
+            className="profile-dialog__signout"
             onClick={handleSignOut}
             disabled={pending}
-          >
-            Sign out
-          </button>
+          />
         </div>
       </div>
     </div>

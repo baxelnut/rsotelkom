@@ -81,7 +81,7 @@
 /* Tablet and up */
 @media (min-width: 768px) {
   .app-header__menu {
-    display: none;
+    display: none !important;
   }
 
   .app-header__profile {

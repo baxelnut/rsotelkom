@@ -3,7 +3,7 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 // Style
 import "./Header.css";
 // Components
-import { Avatar, Icon, UserProfile } from "@/components";
+import { Avatar, Button, Icon, UserProfile } from "@/components";
 // Contexts
 import { useAuth } from "@/contexts/auth";
 import { useLayout } from "@/contexts/layout";
@@ -43,16 +43,16 @@ export function Header({ title }: HeaderProps) {
   return (
     <header className="app-header">
       <div className="app-header__left">
-        <button
-          type="button"
-          className="btn ghost icon app-header__menu"
+        <Button
+          variant="ghost"
+          iconName="list"
+          iconSize={22}
+          className="app-header__menu"
           onClick={toggleSidebar}
           aria-label="Toggle navigation"
           aria-controls="app-sidebar"
           aria-expanded={isMobileMenuOpen}
-        >
-          <Icon iconName="list" size={22} />
-        </button>
+        />
         <h1 className="app-header__title">{title}</h1>
       </div>
 
@@ -68,6 +68,7 @@ export function Header({ title }: HeaderProps) {
           />
         </div>
 
+        {/* Not a Button: it is an avatar chip, not a standard action */}
         <button
           type="button"
           className="app-header__profile"

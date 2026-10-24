@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 // Style
 import "./Sidebar.css";
 // Components
-import { Icon } from "../ui/icon/Icon";
+import { Button, Icon } from "@/components";
 // Context & hooks
 import { useAuth } from "@/contexts/auth";
 import { useLayout } from "@/contexts/layout";
@@ -30,8 +30,9 @@ export function Sidebar({ links = SIDEBAR_MENUS }: SidebarProps) {
     setCollapsed,
     closeMobileMenu,
   } = useLayout();
-  const getLogoSrc = useLogoSrc(); // Existing hook returns a getter (not a string) and takes no arguments
-  const logoSrc = isCollapsed ? "/favicon.svg" : getLogoSrc();
+  // Existing hook returns a getter (not a string) and takes no arguments
+  const getLogoSrc = useLogoSrc();
+  const logoSrc = isCollapsed ? "/logos/favicon.svg" : getLogoSrc();
 
   const visibleLinks = useMemo(
     () => links.filter((item) => !item.adminOnly || isAdmin),
@@ -176,19 +177,15 @@ export function Sidebar({ links = SIDEBAR_MENUS }: SidebarProps) {
 
         {isDesktop && (
           <div className="sidebar__footer">
-            <button
-              type="button"
-              className="btn ghost icon sm sidebar__collapse"
+            <Button
+              variant="ghost"
+              size="sm"
+              iconName={isCollapsed ? "chevronRight" : "chevronLeft"}
+              className="sidebar__collapse"
               onClick={toggleSidebar}
               aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
               aria-expanded={!isCollapsed}
-            >
-              <Icon
-                iconName={isCollapsed ? "chevronRight" : "chevronLeft"}
-                size={16}
-                fillRule="evenodd"
-              />
-            </button>
+            />
           </div>
         )}
       </nav>
