@@ -1,0 +1,43 @@
+.user-toolbar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.user-toolbar__filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.user-toolbar__tabs {
+  min-width: 0;
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: var(--space-1);
+}
+
+.user-toolbar__tabs .btn {
+  flex: none;
+}
+
+.user-toolbar__count {
+  margin-left: var(--space-1);
+  opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 768px) {
+  .user-toolbar__filters {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .user-toolbar__search {
+    width: 100%;
+    max-width: 20rem;
+  }
+}

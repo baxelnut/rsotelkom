@@ -1,0 +1,36 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background-color: var(--clr-overlay);
+  backdrop-filter: blur(4px);
+  animation: fade-in var(--duration-base) var(--ease-out) both;
+}
+
+.modal-dialog {
+  width: 100%;
+  max-width: 28rem;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: var(--space-5);
+  box-shadow: var(--shadow-lg);
+  animation: slide-up var(--duration-slow) var(--ease-out) both;
+}
+
+.modal-dialog.sm {
+  max-width: 22rem;
+}
+
+.modal-dialog:focus-visible {
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    padding: var(--space-6);
+  }
+}

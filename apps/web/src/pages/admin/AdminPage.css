@@ -1,0 +1,10 @@
+.page.admin-page {
+  align-items: stretch;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .page.admin-page {
+    gap: var(--space-5);
+  }
+}

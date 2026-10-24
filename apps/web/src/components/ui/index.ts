@@ -5,3 +5,4 @@ export * from "./display";
 export * from "./dropdown";
 export * from "./icon";
 export * from "./input";
+export * from "./modal";

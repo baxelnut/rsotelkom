@@ -46,3 +46,10 @@ export { useNotice, type Notice } from "./useNotice";
 export { useProfileForm, type ProfileFormApi } from "./useProfileForm";
 export { usePasswordReset, type PasswordResetApi } from "./usePasswordReset";
 export { useSyncPanel, type SyncPanelApi } from "./useSyncPanel";
+export {
+  useUserDirectory,
+  type UserDirectoryApi,
+  type UserRow,
+} from "./useUserDirectory";
+export { useUserActions, type UserActionsApi } from "./useUserActions";
+export { useUserEditor, type UserEditorApi } from "./useUserEditor";

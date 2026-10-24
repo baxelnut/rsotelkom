@@ -1,0 +1,8 @@
+.user-identity > :first-child {
+  flex: none;
+}
+
+.user-identity .user-identity__text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
