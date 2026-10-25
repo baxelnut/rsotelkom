@@ -29,7 +29,6 @@ type IconData = string | Array<string | IconShape> | ReactNode;
 interface IconProps {
   /** Raw icon data. Wins over `iconName` */
   path?: IconData;
-  /** Key of SVG_PATHS in @barito-bahalap/icons */
   iconName?: IconsType;
   size?: number | string;
   /** Defaults to currentColor, so the icon follows its parent's text color */
