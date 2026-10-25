@@ -28,9 +28,10 @@ export function CategoryPieCard({
     <div className={cx("card stack col gap-4", className)}>
       <div className="stack col gap-1">
         <h6>Witel Pie Chart</h6>
-        <p className="text sm muted">
-          Showing category of witel in <strong>{categoryLabel}</strong>.
-        </p>
+        <span className="text sm muted">
+          Menampilkan <strong>kategori</strong> witel di{" "}
+          <strong>{categoryLabel}</strong>.
+        </span>
       </div>
 
       <CardContent isLoading={isLoading} error={error} onRetry={onRetry}>

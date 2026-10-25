@@ -1,0 +1,8 @@
+.action-based-page {
+  gap: var(--space-4);
+}
+
+.action-based-page > * {
+  width: 100%;
+  min-width: 0;
+}

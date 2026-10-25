@@ -33,11 +33,11 @@ export function CustomPagination({
       // Mobile first: first, current and last page only; desktop adds neighbours
       marginPagesDisplayed={1}
       pageRangeDisplayed={isDesktop ? 2 : 1}
-      previousLabel={isDesktop ? "← Previous" : "←"}
-      nextLabel={isDesktop ? "Next →" : "→"}
+      previousLabel={isDesktop ? "← Sebelumnya" : "←"}
+      nextLabel={isDesktop ? "Selanjutnya →" : "→"}
       breakLabel="…"
-      previousAriaLabel="Previous page"
-      nextAriaLabel="Next page"
+      previousAriaLabel="Halaman sebelumnya"
+      nextAriaLabel="Halaman selanjutnya"
       containerClassName={cx("pagination stack center gap-2", className)}
       pageClassName="pagination__item"
       previousClassName="pagination__item"

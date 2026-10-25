@@ -74,6 +74,7 @@ export function UserToolbar({
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             autoComplete="off"
+            fullWidth
           />
         </div>
       </div>

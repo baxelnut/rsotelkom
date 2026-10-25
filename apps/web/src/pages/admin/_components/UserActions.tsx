@@ -11,7 +11,7 @@ import { cx } from "@/utils/cx";
 interface UserActionsProps {
   row: UserRow;
   handlers: UserRowHandlers;
-  align?: "start" | "end";
+  align?: "start" | "end" | "center" | "between";
 }
 
 export function UserActions({
@@ -50,7 +50,7 @@ export function UserActions({
     <div className={layout}>
       <Button
         variant="ghost"
-        size="sm"
+        size="md"
         iconName="pencilSquare"
         title="Edit"
         aria-label={`Edit ${row.name}`}
@@ -61,14 +61,14 @@ export function UserActions({
         <>
           <Button
             variant="ghost"
-            size="sm"
+            size="md"
             iconName={row.isActive ? "personDashFill" : "personFillAdd"}
             title={row.isActive ? "Deactivate" : "Reactivate"}
             aria-label={`${row.isActive ? "Deactivate" : "Reactivate"} ${row.name}`}
             disabled={busy}
             onClick={() => handlers.onToggleActive(row)}
           />
-          <Button
+          {/* <Button
             variant="ghost"
             size="sm"
             iconName="trash"
@@ -76,7 +76,7 @@ export function UserActions({
             aria-label={`Delete ${row.name}`}
             disabled={busy}
             onClick={() => handlers.onDelete(row)}
-          />
+          /> */}
         </>
       )}
     </div>

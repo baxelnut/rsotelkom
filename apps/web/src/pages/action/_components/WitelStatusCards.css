@@ -1,0 +1,27 @@
+.witel-card {
+  width: 100%;
+  min-height: 15rem;
+}
+
+.witel-card__chart {
+  width: 100%;
+}
+
+.witel-card__empty {
+  flex: 1;
+}
+
+.witel-card__swatch {
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: var(--radius-circle);
+}
+
+.witel-card--status {
+  padding: 0;
+}
+
+.wc__title {
+  font-size: 1rem;
+}

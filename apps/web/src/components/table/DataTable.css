@@ -9,3 +9,12 @@
   flex: 1;
   align-self: stretch;
 }
+
+.data-table__body {
+  transition: opacity var(--duration-base) var(--ease-default);
+}
+
+.data-table__body.is-refreshing {
+  opacity: 0.55;
+  pointer-events: none;
+}

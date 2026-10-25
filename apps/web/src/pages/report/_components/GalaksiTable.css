@@ -52,3 +52,72 @@
   color: var(--clr-ink-on-dark);
   border-bottom: none;
 }
+
+.galaksi-table__skeleton {
+  display: inline-block;
+  height: 0.875rem;
+  vertical-align: middle;
+  border-radius: var(--radius-sm, 0.25rem);
+  background: linear-gradient(
+    90deg,
+    var(--clr-border) 25%,
+    var(--clr-surface) 50%,
+    var(--clr-border) 75%
+  );
+  background-size: 200% 100%;
+  animation: galaksi-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.galaksi-table__skeleton--name {
+  display: block;
+  width: 9rem;
+  max-width: 100%;
+}
+
+.galaksi-table__skeleton--num {
+  width: 1.75rem;
+}
+
+.galaksi-table__skeleton--badge {
+  width: 3rem;
+  height: 1.25rem;
+  border-radius: 999px;
+}
+
+.galaksi-table__skeleton-body
+  tr:nth-child(3n + 2)
+  .galaksi-table__skeleton--name {
+  width: 7rem;
+}
+.galaksi-table__skeleton-body tr:nth-child(3n) .galaksi-table__skeleton--name {
+  width: 10.5rem;
+}
+
+.galaksi-table__skeleton-body tr:hover > * {
+  background: revert-layer;
+}
+
+.galaksi-table tfoot .galaksi-table__skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--clr-primary-rgb) 25%,
+    var(--clr-primary-rgb) 50%,
+    var(--clr-primary-rgb) 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes galaksi-skeleton-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galaksi-table__skeleton {
+    animation: none;
+  }
+}

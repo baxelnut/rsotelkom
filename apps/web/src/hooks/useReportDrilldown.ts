@@ -1,17 +1,11 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import type { ReportBucketFilter } from "@rso/shared";
 // Hooks
 import type { ReportExporterApi } from "./useReportExport";
 import { useReportItems } from "./useReports";
 // Config
 import { ROWS_PER_PAGE_OPTIONS } from "@/config/overview";
-import {
-  ACTION_COLUMNS,
-  BUCKET_LABEL,
-  IN_PROCESS,
-  PAGE_SIZE_DEFAULT,
-} from "@/config/report";
+import { ACTION_COLUMNS, IN_PROCESS, PAGE_SIZE_DEFAULT } from "@/config/report";
 // Contexts
 import { useAuth } from "@/contexts/auth";
 // Types
@@ -19,33 +13,10 @@ import type { ReportSelection } from "@/types/report";
 // Utils
 import { makeFilename } from "@/utils/download";
 import { toReportRow } from "@/utils/orders";
-import { describeSelection, selectionQuery } from "@/utils/report";
+import { describeSelection, writeSelection } from "@/utils/report";
+import { readSelection, selectionQuery } from "@/utils/report";
 
 const NO_COLUMNS: string[] = [];
-
-const isBucket = (value: string | null): value is ReportBucketFilter =>
-  !!value && value in BUCKET_LABEL;
-
-function readSelection(params: URLSearchParams): ReportSelection | null {
-  const bucket = params.get("bucket");
-  const kategori = (params.get("kategori") ?? "").split(",").filter(Boolean);
-  if (!isBucket(bucket) || kategori.length === 0) return null;
-
-  return {
-    witel: params.get("witel") ?? undefined,
-    subtype: params.get("subtype") ?? undefined,
-    kategori,
-    bucket,
-  };
-}
-
-function writeSelection(selection: ReportSelection): URLSearchParams {
-  const params = new URLSearchParams();
-  for (const [key, value] of Object.entries(selectionQuery(selection))) {
-    if (value) params.set(key, value);
-  }
-  return params;
-}
 
 export function useReportDrilldown(exporter: ReportExporterApi) {
   const { isAdmin } = useAuth();

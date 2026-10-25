@@ -1,5 +1,6 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type {
+  ActionRow,
   AlertGroup,
   ApiResponse,
   GalaksiPoRow,
@@ -95,5 +96,14 @@ export function useGalaksiSummary() {
     queryFn: async () =>
       (await api<ApiResponse<GalaksiPoRow[]>>("/reports/galaksi/summary")).data,
     staleTime: 60_000,
+  });
+}
+
+export function useActionRows() {
+  return useQuery({
+    queryKey: ["reports", "action"],
+    queryFn: async () =>
+      (await api<ApiResponse<ActionRow[]>>("/reports/action")).data,
+    staleTime: 30_000,
   });
 }

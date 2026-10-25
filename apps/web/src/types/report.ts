@@ -1,4 +1,4 @@
-import type { Amount, ReportBucketFilter } from "@rso/shared";
+import type { Amount, ReportAlert, ReportBucketFilter } from "@rso/shared";
 
 export type Tone = "safe" | "primary" | "secondary";
 export type StatTone = Tone | "danger";
@@ -43,3 +43,15 @@ export interface Matrix {
   rows: MatrixRow[];
   stats: ReportStat[];
 }
+
+export interface ReportSelection {
+  witel?: string;
+  subtype?: string;
+  pic?: string;
+  status?: string;
+  alert?: ReportAlert;
+  kategori: string[];
+  bucket: ReportBucketFilter;
+}
+
+export type ActionSelect = Omit<ReportSelection, "kategori">;

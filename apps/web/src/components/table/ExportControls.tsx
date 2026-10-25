@@ -29,7 +29,7 @@ export function ExportControls({
       className={cx("export-controls stack row middle nowrap gap-2", className)}
     >
       <Button
-        text="Export as"
+        text="Ekspor sebagai"
         size="sm"
         loading={loading}
         disabled={disabled}

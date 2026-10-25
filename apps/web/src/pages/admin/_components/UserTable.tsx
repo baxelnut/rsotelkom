@@ -48,7 +48,6 @@ export function UserTable({
       onRetry={retry}
       pagination={pagination}
       getRowKey={(row) => row.id}
-      loadingLabel="Loading users..."
       emptyTitle={emptyTitle}
       emptyMessage={emptyMessage}
     />

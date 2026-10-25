@@ -50,7 +50,7 @@ export const ADMIN_ONLY_COLUMNS: string[] = [
 
 export const ROWS_PER_PAGE_OPTIONS: DropdownOption[] = [
   10, 20, 50, 100, 200, 500,
-].map((value) => ({ value, label: `Show ${value} rows` }));
+].map((value) => ({ value, label: `Tampilkan ${value} rows` }));
 
 export type ExportFormat = "xlsx" | "csv";
 export const EXPORT_OPTIONS: DropdownOption[] = [

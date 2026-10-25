@@ -66,8 +66,8 @@ export function ReportMatrixCard({
       {syncError && <ErrorMessage message={syncError} />}
       {exportError && <ErrorMessage message={exportError} />}
 
-      <CardContent isLoading={isLoading} error={error} onRetry={onRetry}>
-        {kategori.length === 0 ? (
+      <CardContent isLoading={false} error={error} onRetry={onRetry}>
+        {!isLoading && kategori.length === 0 ? (
           <EmptyMessage
             title="No category selected"
             message="Select at least one category above."

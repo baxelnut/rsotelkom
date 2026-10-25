@@ -292,9 +292,40 @@ export function selectionQuery(selection: ReportSelection) {
   return {
     witel: selection.witel,
     subtype: selection.subtype,
+    pic: selection.pic,
+    status: selection.status,
+    alert: selection.alert,
     kategori: selection.kategori.join(","),
     bucket: selection.bucket,
   };
+}
+
+const isBucket = (value: string | null): value is ReportBucketFilter =>
+  !!value && value in BUCKET_LABEL;
+
+export function readSelection(params: URLSearchParams): ReportSelection | null {
+  const bucket = params.get("bucket");
+  const kategori = (params.get("kategori") ?? "").split(",").filter(Boolean);
+  if (!isBucket(bucket) || kategori.length === 0) return null;
+
+  const alert = params.get("alert");
+  return {
+    witel: params.get("witel") ?? undefined,
+    subtype: params.get("subtype") ?? undefined,
+    pic: params.get("pic") ?? undefined,
+    status: params.get("status") ?? undefined,
+    alert: alert === "aman" || alert === "segera" ? alert : undefined,
+    kategori,
+    bucket,
+  };
+}
+
+export function writeSelection(selection: ReportSelection): URLSearchParams {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(selectionQuery(selection))) {
+    if (value) params.set(key, value);
+  }
+  return params;
 }
 
 export function describeSelection(selection: ReportSelection): string[] {

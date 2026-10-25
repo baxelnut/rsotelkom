@@ -232,10 +232,15 @@ export interface SubtypeReport {
   kategori: KategoriReport[];
 }
 
+export type ReportAlert = "aman" | "segera";
+
 export interface ReportItemsQuery {
   witel?: string;
   subtype?: string;
   kategori?: string;
+  pic?: string;
+  status?: string;
+  alert?: ReportAlert;
   bucket?: ReportBucketFilter;
   page?: number;
   limit?: number;
@@ -278,4 +283,19 @@ export interface GalaksiPoRow {
   do: number;
   mo: number;
   ro: number;
+}
+
+export type ActionStatus =
+  | "Lanjut"
+  | "Cancel"
+  | "Bukan Order Reg"
+  | "No Status";
+
+export type ActionCounts = Record<ActionStatus, number>;
+
+export interface ActionRow {
+  po_name: string;
+  witel: string;
+  lt2: ActionCounts;
+  gt2: ActionCounts;
 }

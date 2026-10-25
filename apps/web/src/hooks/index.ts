@@ -53,3 +53,8 @@ export {
 } from "./useUserDirectory";
 export { useUserActions, type UserActionsApi } from "./useUserActions";
 export { useUserEditor, type UserEditorApi } from "./useUserEditor";
+export { useActionReport, type ActionReportApi } from "./useActionReport";
+export {
+  useActionDrilldown,
+  type ActionDrilldownApi,
+} from "./useActionDrilldown";

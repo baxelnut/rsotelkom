@@ -33,7 +33,7 @@ export function DataPreviewCard({
         <div className="stack row between middle nowrap gap-3 data-preview-card__group">
           <div className="stack col gap-1 fit">
             <h6>Data Preview</h6>
-            <p className="text sm muted">{`(Total rows: ${formatNumber(total)})`}</p>
+            <p className="text sm muted">{`Total rows: ${formatNumber(total)}`}</p>
           </div>
           <Dropdown
             name="limit"
@@ -47,7 +47,7 @@ export function DataPreviewCard({
 
         <div className="stack row end middle nowrap gap-2 data-preview-card__group">
           <Button
-            text="Export as"
+            text="Ekspor sebagai"
             size="sm"
             loading={isExporting}
             disabled={rows.length === 0}

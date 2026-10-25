@@ -17,12 +17,80 @@ interface ReportMatrixProps {
   collapsed: string[];
   onToggle: (subtype: string) => void;
   onSelect: SelectHandler;
+  isLoading?: boolean;
 }
 
-interface MatrixBodyProps extends Omit<ReportMatrixProps, "matrix"> {
+interface MatrixBodyProps extends Omit<
+  ReportMatrixProps,
+  "matrix" | "isLoading"
+> {
   rows: Matrix["rows"];
   columns: Matrix["columns"];
   onHover: (col: number | null) => void;
+}
+
+const SKELETON_GROUP_COLS = 3; // columns per group (<2 BLN / >2 BLN)
+const SKELETON_COLS = SKELETON_GROUP_COLS * 2 + 1; // + grand total
+const SKELETON_ROW_KINDS = [
+  "subtype",
+  "witel",
+  "witel",
+  "witel",
+  "subtype",
+  "witel",
+  "witel",
+  "grand",
+] as const;
+
+function SkeletonBar({ className }: { className?: string }) {
+  return <span className={cx("matrix-skeleton", className)} />;
+}
+
+function MatrixSkeleton() {
+  return (
+    <>
+      <thead>
+        <tr>
+          <th rowSpan={2} className="matrix-witel">
+            Witel
+          </th>
+          <th colSpan={SKELETON_GROUP_COLS} className="matrix-group tone-safe">
+            &lt;2 BLN
+          </th>
+          <th
+            colSpan={SKELETON_GROUP_COLS}
+            className="matrix-group tone-primary"
+          >
+            &gt;2 BLN
+          </th>
+          <th rowSpan={2} className="matrix-col tone-secondary">
+            Grand total
+          </th>
+        </tr>
+        <tr>
+          {Array.from({ length: SKELETON_COLS - 1 }, (_, index) => (
+            <th key={index} className="matrix-col">
+              <SkeletonBar className="matrix-skeleton--head" />
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className="matrix-skeleton-body" aria-hidden="true">
+        {SKELETON_ROW_KINDS.map((kind, rowIndex) => (
+          <tr key={rowIndex} className={cx("matrix-row", `is-${kind}`)}>
+            <th scope="row" className="matrix-witel">
+              <SkeletonBar className="matrix-skeleton--label" />
+            </th>
+            {Array.from({ length: SKELETON_COLS }, (_, colIndex) => (
+              <td key={colIndex} className="amount-cell">
+                <SkeletonBar className="matrix-skeleton--num" />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </>
+  );
 }
 
 const MatrixBody = memo(function MatrixBody({
@@ -106,6 +174,7 @@ export function ReportMatrix({
   collapsed,
   onToggle,
   onSelect,
+  isLoading = false,
 }: ReportMatrixProps) {
   const [hoverCol, setHoverCol] = useState<number | null>(null);
   const { columns, rows } = matrix;
@@ -113,53 +182,62 @@ export function ReportMatrix({
   const last = columns.length - 1;
 
   return (
-    <div className="table-wrapper report-matrix">
+    <div
+      className="table-wrapper report-matrix"
+      aria-busy={isLoading || undefined}
+    >
       <table>
-        <thead>
-          <tr>
-            <th rowSpan={2} className="matrix-witel">
-              Witel
-            </th>
-            <th colSpan={span} className="matrix-group tone-safe">
-              &lt;2 BLN
-            </th>
-            <th colSpan={span} className="matrix-group tone-primary">
-              &gt;2 BLN
-            </th>
-            <th
-              rowSpan={2}
-              className={cx(
-                "matrix-col tone-secondary",
-                hoverCol === last && "is-hover",
-              )}
-            >
-              Grand total
-            </th>
-          </tr>
-          <tr>
-            {columns.slice(0, last).map((column, index) => (
-              <th
-                key={column.id}
-                className={cx(
-                  "matrix-col",
-                  `tone-${column.tone}`,
-                  hoverCol === index && "is-hover",
-                )}
-              >
-                {column.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <MatrixBody
-          rows={rows}
-          columns={columns}
-          compact={compact}
-          collapsed={collapsed}
-          onToggle={onToggle}
-          onSelect={onSelect}
-          onHover={setHoverCol}
-        />
+        {isLoading ? (
+          <MatrixSkeleton />
+        ) : (
+          <>
+            <thead>
+              <tr>
+                <th rowSpan={2} className="matrix-witel">
+                  Witel
+                </th>
+                <th colSpan={span} className="matrix-group tone-safe">
+                  &lt;2 BLN
+                </th>
+                <th colSpan={span} className="matrix-group tone-primary">
+                  &gt;2 BLN
+                </th>
+                <th
+                  rowSpan={2}
+                  className={cx(
+                    "matrix-col tone-secondary",
+                    hoverCol === last && "is-hover",
+                  )}
+                >
+                  Grand total
+                </th>
+              </tr>
+              <tr>
+                {columns.slice(0, last).map((column, index) => (
+                  <th
+                    key={column.id}
+                    className={cx(
+                      "matrix-col",
+                      `tone-${column.tone}`,
+                      hoverCol === index && "is-hover",
+                    )}
+                  >
+                    {column.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <MatrixBody
+              rows={rows}
+              columns={columns}
+              compact={compact}
+              collapsed={collapsed}
+              onToggle={onToggle}
+              onSelect={onSelect}
+              onHover={setHoverCol}
+            />
+          </>
+        )}
       </table>
     </div>
   );

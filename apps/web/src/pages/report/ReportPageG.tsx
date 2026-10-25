@@ -30,14 +30,14 @@ export default function ReportPageG() {
 
         <AchievementLegend />
 
-        <CardContent isLoading={isLoading} error={error} onRetry={onRetry}>
-          {rows.length === 0 ? (
+        <CardContent isLoading={false} error={error} onRetry={onRetry}>
+          {!isLoading && rows.length === 0 ? (
             <EmptyMessage
               title="No project operations"
               message="The PO list is empty. Run a sync and try again."
             />
           ) : (
-            <GalaksiTable rows={rows} grand={grand} />
+            <GalaksiTable rows={rows} grand={grand} isLoading={isLoading} />
           )}
         </CardContent>
       </div>

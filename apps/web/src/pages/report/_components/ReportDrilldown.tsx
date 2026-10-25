@@ -10,7 +10,8 @@ import { STATUS_TONE } from "@/config/report";
 import type { ReportDrilldownApi } from "@/hooks";
 // Utils
 import { cx } from "@/utils/cx";
-import { formatNumber, formatRupiah } from "@/utils/format";
+import { formatNumber } from "@/utils/format";
+import { FIELD_COLUMNS } from "@/config/orderTable";
 
 type Row = Record<string, unknown>;
 
@@ -20,23 +21,7 @@ function renderStatus(value: unknown) {
   return <span className={cx("badge", STATUS_TONE[status])}>{status}</span>;
 }
 
-const FIELD_COLUMNS: TableColumn<Row>[] = [
-  { key: "order_id", label: "Order ID" },
-  { key: "order_subtype2", label: "Sub-type" },
-  { key: "new_witel", label: "Witel" },
-  { key: "segmen", label: "Segmen" },
-  { key: "custaccntname", label: "Customer" },
-  { key: "li_product_name", label: "Product" },
-  { key: "kategori", label: "Kategori" },
-  { key: "umur_order", label: "Age (days)", align: "end" },
-  {
-    key: "revenue",
-    label: "Revenue",
-    align: "end",
-    render: (value) => formatRupiah(Number(value)),
-  },
-  { key: "pic", label: "PIC" },
-];
+ 
 
 const COLUMNS_WITH_ACTIONS: TableColumn<Row>[] = [
   { key: "status", label: "Action", render: renderStatus },

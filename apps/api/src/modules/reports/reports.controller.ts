@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { ApiResponse } from "@rso/shared";
 import { currentUser } from "../../middleware/auth";
 import {
+  getActionReport,
   getAlertReport,
   getGalaksiSummary,
   getPicReport,
@@ -31,6 +32,11 @@ const filterQuery = z.object({
         .map((item) => item.trim())
         .filter(Boolean),
     ),
+  pic: z.string().min(1).optional(),
+  status: z
+    .enum(["Lanjut", "Cancel", "Bukan Order Reg", "No Status"])
+    .optional(),
+  alert: z.enum(["aman", "segera"]).optional(),
   bucket: z.enum(["lt2", "warning", "gt2", "all"]).default("all"),
 });
 
@@ -118,6 +124,13 @@ export const galaksi: RequestHandler = async (req, res) => {
 export const galaksiSummary: RequestHandler = async (_req, res) => {
   const body: ApiResponse<Awaited<ReturnType<typeof getGalaksiSummary>>> = {
     data: await getGalaksiSummary(),
+  };
+  res.json(body);
+};
+
+export const actionReport: RequestHandler = async (_req, res) => {
+  const body: ApiResponse<Awaited<ReturnType<typeof getActionReport>>> = {
+    data: await getActionReport(),
   };
   res.json(body);
 };

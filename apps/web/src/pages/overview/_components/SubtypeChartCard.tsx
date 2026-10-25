@@ -107,21 +107,21 @@ export function SubtypeChartCard({
           </BarChart>
         </ResponsiveContainer>
 
-        <p className="text sm muted">
-          Showing {metricLabel} for <strong>{segmen}</strong> segmen in{" "}
-          <strong>{witel}</strong> witel.
-        </p>
+        <span className="text sm muted">
+          Menampilkan <strong>{metricLabel}</strong> untuk segmen{" "}
+          <strong>{segmen}</strong> di witel <strong>{witel}</strong>.
+        </span>
 
         {showSummary && (
           <div className="stack col gap-1">
-            <p className="text semibold">Summary:</p>
+            <p className="text semibold">Ringkasan:</p>
             <p className="text sm muted">
-              <strong>{summary.count}</strong> categories analyzed totaling{" "}
+              <strong>{summary.count}</strong> kategori dianalisis dengan total{" "}
               <strong>{`IDR ${formatCompact(summary.total)}.`}</strong>
               {summary.top.length > 0 && (
                 <>
                   {" "}
-                  Top contributors: <strong>{summary.top.join(" & ")}</strong>.
+                  Kontributor utama: <strong>{summary.top.join(" & ")}</strong>.
                 </>
               )}
             </p>

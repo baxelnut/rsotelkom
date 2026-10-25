@@ -2,7 +2,7 @@
 import "./DataTable.css";
 // Components
 import { CustomPagination, TableScroll, type TableColumn } from "@/components";
-import { EmptyMessage, ErrorMessage, LoadingSpinner } from "@/components";
+import { EmptyMessage, ErrorMessage, SkeletonTable } from "@/components";
 // Utils
 import { cx } from "@/utils/cx";
 
@@ -25,7 +25,6 @@ export interface DataTableProps<T extends Record<string, unknown>> {
   columns?: TableColumn<T>[];
   getRowKey?: (row: T, index: number) => string | number;
   pagination?: DataTablePagination;
-  loadingLabel?: string;
   emptyTitle?: string;
   emptyMessage?: string;
   className?: string;
@@ -50,7 +49,6 @@ export function DataTable<T extends Record<string, unknown>>({
   columns,
   getRowKey,
   pagination,
-  loadingLabel = "Loading data...",
   emptyTitle,
   emptyMessage,
   className,
@@ -75,7 +73,7 @@ export function DataTable<T extends Record<string, unknown>>({
   } else if (!hasRows && isLoading) {
     body = (
       <div className="table-wrapper data-table__state">
-        <LoadingSpinner label={loadingLabel} />
+        <SkeletonTable />
       </div>
     );
   } else if (!hasRows) {
@@ -101,11 +99,13 @@ export function DataTable<T extends Record<string, unknown>>({
       className={cx("data-table stack col gap-3", className)}
       aria-busy={isLoading}
     >
-      <div className="data-table__body">
-        {body}
-        {hasRows && isLoading && !errorMessage && (
-          <LoadingSpinner overlay label={null} />
+      <div
+        className={cx(
+          "data-table__body",
+          hasRows && isLoading && "is-refreshing",
         )}
+      >
+        {body}
       </div>
 
       {pagination && hasRows && !errorMessage && (

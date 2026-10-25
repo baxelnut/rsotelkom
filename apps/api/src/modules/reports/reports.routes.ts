@@ -16,3 +16,5 @@ reportsRoutes.get("/me", controller.myReport);
 
 reportsRoutes.get("/galaksi", controller.galaksi);
 reportsRoutes.get("/galaksi/summary", controller.galaksiSummary);
+
+reportsRoutes.get("/action", controller.actionReport);

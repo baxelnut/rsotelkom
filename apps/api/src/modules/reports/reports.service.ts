@@ -143,16 +143,47 @@ export async function getSubtypeReport(): Promise<SubtypeReport[]> {
   return [...groups.values()];
 }
 
+export type ActionStatus =
+  | "Lanjut"
+  | "Cancel"
+  | "Bukan Order Reg"
+  | "No Status";
+
 export interface ReportFilter {
   witel?: string | undefined;
   subtype?: string | undefined;
   kategori?: string[] | undefined;
+  pic?: string | undefined;
+  status?: ActionStatus | undefined;
+  alert?: "aman" | "segera" | undefined;
   bucket: BucketFilter;
 }
 
 export interface ItemsFilter extends ReportFilter {
   page: number;
   limit: number;
+}
+
+type ActionCounts = Record<ActionStatus, number>;
+
+export interface ActionRow {
+  po_name: string;
+  witel: string;
+  lt2: ActionCounts;
+  gt2: ActionCounts;
+}
+
+interface ActionViewRow {
+  po_name: string;
+  witel: string;
+  lt2_lanjut: number;
+  lt2_cancel: number;
+  lt2_bukan: number;
+  lt2_none: number;
+  gt2_lanjut: number;
+  gt2_cancel: number;
+  gt2_bukan: number;
+  gt2_none: number;
 }
 
 function reportQuery(f: ReportFilter, withCount: boolean) {
@@ -163,6 +194,9 @@ function reportQuery(f: ReportFilter, withCount: boolean) {
 
   if (f.kategori?.length) query = query.in("kategori", f.kategori);
   if (f.witel) query = query.eq("witel_key", f.witel);
+  if (f.pic) query = query.eq("pic_key", picKey(f.pic));
+  if (f.status) query = query.eq("status_label", f.status);
+  if (f.alert) query = query.eq("is_warning", f.alert === "segera");
   if (f.subtype) {
     query = query.eq(
       "subtype_key",
@@ -307,4 +341,26 @@ export async function getGalaksiSummary(): Promise<GalaksiPoRow[]> {
   const { data, error } = await supabaseAdmin.from("v_galaksi_po").select("*");
   throwIfError(error, "galaksi summary");
   return (data ?? []) as unknown as GalaksiPoRow[];
+}
+
+export async function getActionReport(): Promise<ActionRow[]> {
+  const { data, error } = await supabaseAdmin.from("v_action_po").select("*");
+  throwIfError(error, "action report");
+
+  return ((data ?? []) as unknown as ActionViewRow[]).map((r) => ({
+    po_name: r.po_name,
+    witel: r.witel,
+    lt2: {
+      Lanjut: r.lt2_lanjut,
+      Cancel: r.lt2_cancel,
+      "Bukan Order Reg": r.lt2_bukan,
+      "No Status": r.lt2_none,
+    },
+    gt2: {
+      Lanjut: r.gt2_lanjut,
+      Cancel: r.gt2_cancel,
+      "Bukan Order Reg": r.gt2_bukan,
+      "No Status": r.gt2_none,
+    },
+  }));
 }

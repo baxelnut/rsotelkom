@@ -22,7 +22,7 @@ export function SessionCard({
       <div className="stack col gap-1">
         <h6>Session by Sub-type</h6>
         <p className="text sm muted">
-          Showing data for order sub-type (AOSODOMORO).
+          Menampilkan data untuk order sub-type (AOSODOMORO).
         </p>
       </div>
 

@@ -1,0 +1,105 @@
+.action-matrix .table-wrapper {
+  min-height: 0;
+}
+
+.action-matrix table {
+  min-width: 34rem;
+}
+
+.action-matrix th,
+.action-matrix td {
+  text-align: center;
+  padding: 0;
+}
+
+.action-matrix thead th {
+  padding: var(--space-3) var(--space-4);
+  background: var(--clr-table-head-bg);
+}
+
+.action-matrix .tone-safe {
+  --tone-rgb: var(--clr-safe-rgb);
+}
+
+.action-matrix .tone-danger {
+  --tone-rgb: var(--clr-danger-rgb);
+}
+
+.action-matrix .tone-secondary {
+  --tone-rgb: var(--clr-secondary-rgb);
+}
+
+.action-matrix .tone-none {
+  --tone-rgb: var(--clr-ink-rgb);
+}
+
+.action-matrix thead th[class*="tone-"] {
+  background: rgba(var(--tone-rgb), 0.18);
+}
+
+.action-matrix .action-matrix__name {
+  position: sticky;
+  left: 0;
+  z-index: var(--z-after);
+  min-width: 11rem;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-heading);
+  font-size: var(--txt-body-sm-size);
+  color: var(--clr-ink);
+  background: var(--clr-paper);
+  box-shadow: 1px 0 0 var(--clr-border);
+}
+
+.action-matrix thead .action-matrix__name {
+  background: var(--clr-table-head-bg);
+  padding: var(--space-3) var(--space-4);
+}
+
+.action-matrix tfoot .action-matrix__name {
+  padding: var(--space-3) var(--space-4);
+}
+
+.action-matrix tbody tr:hover > * {
+  background: var(--clr-row-hover);
+}
+
+.action-matrix .action-matrix__cell {
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.action-matrix .action-matrix__cell.is-total {
+  background: var(--clr-surface);
+}
+
+.action-matrix .action-matrix__cell.is-clickable:hover {
+  background: rgba(var(--tone-rgb), 0.3);
+}
+
+.action-matrix .btn {
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: 0;
+  justify-content: center;
+  color: inherit;
+}
+
+.action-matrix .btn:hover {
+  background: transparent;
+}
+
+.action-matrix .action-matrix__name .btn {
+  justify-content: flex-start;
+}
+
+.action-matrix__zero {
+  color: var(--clr-ink-faint);
+}
+
+.action-matrix tfoot th,
+.action-matrix tfoot td {
+  font-weight: var(--fw-semibold);
+  border-top: var(--border-w-thick) solid var(--clr-border-strong);
+  border-bottom: none;
+}

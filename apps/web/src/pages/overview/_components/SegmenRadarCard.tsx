@@ -44,7 +44,7 @@ export function SegmenRadarCard({
       <div className="stack col gap-1">
         <h6>Segmen Radar Chart</h6>
         <p className="text sm muted">
-          Showing data for segmen per witel in <strong>{witel}</strong>.
+          Menampilkan <strong>segmen</strong> di witel <strong>{witel}</strong>.
         </p>
       </div>
 
