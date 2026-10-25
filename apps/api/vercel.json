@@ -4,6 +4,6 @@
   "outputDirectory": "public",
   "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
   "functions": {
-    "api/index.js": { "maxDuration": 60 }
+    "api/index.js": { "includeFiles": "assets/fonts/**", "maxDuration": 60 }
   }
 }

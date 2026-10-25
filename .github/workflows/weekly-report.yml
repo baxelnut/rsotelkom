@@ -1,0 +1,16 @@
+name: Weekly report
+
+on:
+  schedule:
+    - cron: "0 2 * * 2" # Selasa 09:00 WIB
+  workflow_dispatch:
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post weekly report to channel
+        run: |
+          curl --fail-with-body -sS -X POST \
+            "${{ secrets.API_URL }}/api/telegram/weekly" \
+            -H "x-sync-secret: ${{ secrets.SYNC_SECRET }}"

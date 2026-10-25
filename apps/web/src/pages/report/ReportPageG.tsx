@@ -3,18 +3,22 @@ import "./ReportPageG.css";
 // Components
 import { CardContent, EmptyMessage, ExportControls, Seo } from "@/components";
 import { AchievementLegend, GalaksiTable } from "./_components";
+import { SendReportButton } from "./_components";
 // Hooks
-import { useGalaksiReport } from "@/hooks";
+import { useGalaksiReport, useSendReport } from "@/hooks";
 // Utils
 import { formatDateTime } from "@/utils/format";
 
 export default function ReportPageG() {
   const { isLoading, error, onRetry, rows, grand, lastSyncedAt, exportProps } =
     useGalaksiReport();
+  const telegram = useSendReport();
 
   return (
     <div className="page report-page">
       <Seo page="galaksi" />
+
+      {telegram.canSend && <SendReportButton {...telegram} />}
 
       <div className="card stack col gap-4">
         <div className="stack row-col between middle gap-3">

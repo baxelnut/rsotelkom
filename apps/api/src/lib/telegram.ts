@@ -34,3 +34,26 @@ export function sendTyping(chatId: number | string) {
     () => undefined,
   );
 }
+
+export async function sendPhoto(
+  chatId: number | string,
+  photo: Uint8Array,
+  caption: string,
+) {
+  const form = new FormData();
+  form.append("chat_id", String(chatId));
+  form.append("caption", caption);
+  form.append("parse_mode", "HTML");
+  form.append("photo", new Blob([photo], { type: "image/png" }), "report.png");
+
+  const res = await fetch(`${base}/sendPhoto`, {
+    method: "POST",
+    body: form,
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!res.ok) {
+    throw new Error(
+      `Telegram sendPhoto failed: ${res.status} ${await res.text()}`,
+    );
+  }
+}

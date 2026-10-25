@@ -58,3 +58,4 @@ export {
   useActionDrilldown,
   type ActionDrilldownApi,
 } from "./useActionDrilldown";
+export { useSendReport, type SendReportApi } from "./useSendReport";

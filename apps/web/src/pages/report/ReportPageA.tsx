@@ -4,13 +4,16 @@ import "./ReportPageA.css";
 import { Seo } from "@/components";
 import { KategoriFilter, ReportDrilldown } from "./_components";
 import { ReportMatrixCard, ReportSummary } from "./_components";
+import { SendReportButton } from "./_components";
 // Hooks
 import { useReportDrilldown, useReportExport, useReportMatrix } from "@/hooks";
+import { useSendReport } from "@/hooks";
 
 export default function ReportPageA() {
   const exporter = useReportExport();
   const matrix = useReportMatrix(exporter);
   const drilldown = useReportDrilldown(exporter);
+  const telegram = useSendReport();
 
   return (
     <div className="page report-page">
@@ -20,6 +23,7 @@ export default function ReportPageA() {
         <ReportDrilldown {...drilldown} />
       ) : (
         <>
+          {telegram.canSend && <SendReportButton {...telegram} />}
           <ReportSummary
             stats={matrix.matrix.stats}
             isLoading={matrix.isLoading}

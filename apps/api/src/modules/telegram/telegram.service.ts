@@ -1,8 +1,12 @@
 import { env } from "../../config/env";
 import { AppError } from "../../lib/errors";
 import { supabaseAdmin } from "../../lib/supabase";
-import { sendMessage, sendTyping } from "../../lib/telegram";
-import { getAlertReport } from "../reports/reports.service";
+import { sendMessage, sendTyping, sendPhoto } from "../../lib/telegram";
+import {
+  renderTablePng,
+  renderTableText,
+  type TableSpec,
+} from "../../lib/table-image";
 import {
   handleFeedback,
   handleHelp,
@@ -13,8 +17,20 @@ import {
 import {
   buildAlertMessages,
   escapeHtml,
+  formatDateId,
   todayJakarta,
 } from "./telegram.format";
+import {
+  aosodomoroCaption,
+  buildAosodomoroTable,
+  buildGalaksiTable,
+  galaksiCaption,
+} from "./telegram.weekly";
+import {
+  getAlertReport,
+  getGalaksiSummary,
+  getRegionalReport,
+} from "../reports/reports.service";
 
 export interface TelegramUpdate {
   update_id?: number;
@@ -55,19 +71,22 @@ export async function processUpdate(update: TelegramUpdate) {
       case "/start":
         await handleStart(ctx);
         break;
+      case "/laporan":
       case "/report":
         await handleReport(ctx);
         break;
+      case "/masukan":
       case "/feedback":
         await handleFeedback(ctx);
         break;
+      case "/bantuan":
       case "/help":
         await handleHelp(ctx);
         break;
       default:
         await sendMessage(
           chatId,
-          "Unknown command. Please use /help for a list of available commands.",
+          "Perintah tidak dikenal. Gunakan /bantuan untuk melihat daftar perintah.",
         );
     }
   } catch (err) {
@@ -75,7 +94,7 @@ export async function processUpdate(update: TelegramUpdate) {
     const reply =
       err instanceof AppError
         ? escapeHtml(err.message)
-        : "Something went wrong. Please try again.";
+        : "Terjadi kesalahan. Silakan coba lagi.";
     await sendMessage(chatId, reply).catch(() => undefined);
   }
 }
@@ -97,4 +116,60 @@ export async function sendAlertToChannel() {
   );
   for (const message of messages) await sendMessage(chatId, message);
   return { messages: messages.length };
+}
+
+async function sendTable(
+  chatId: string,
+  spec: TableSpec,
+  caption: string,
+): Promise<"photo" | "text"> {
+  try {
+    await sendPhoto(chatId, renderTablePng(spec), caption);
+    return "photo";
+  } catch (err) {
+    console.error("table image failed, falling back to text", err);
+    await sendMessage(
+      chatId,
+      `${caption}\n\n<pre>${escapeHtml(renderTableText(spec))}</pre>`,
+    );
+    return "text";
+  }
+}
+
+export async function sendWeeklyReport() {
+  const chatId = env.TELEGRAM_CHANNEL_CHAT_ID;
+  if (!chatId) {
+    throw new AppError(
+      503,
+      "TELEGRAM_CHANNEL_CHAT_ID is not configured",
+      "NOT_CONFIGURED",
+    );
+  }
+
+  const date = formatDateId();
+  const [regional, galaksi, alerts] = await Promise.all([
+    getRegionalReport(),
+    getGalaksiSummary(),
+    getAlertReport(),
+  ]);
+
+  const aosodomoro = await sendTable(
+    chatId,
+    buildAosodomoroTable(regional, date),
+    aosodomoroCaption(date, `${env.DASHBOARD_URL}/report/aosodomoro`),
+  );
+  const galaksiMode = await sendTable(
+    chatId,
+    buildGalaksiTable(galaksi, date),
+    galaksiCaption(date, `${env.DASHBOARD_URL}/report/galaksi`),
+  );
+
+  const messages = buildAlertMessages(
+    alerts,
+    env.DASHBOARD_URL,
+    todayJakarta(),
+  );
+  for (const message of messages) await sendMessage(chatId, message);
+
+  return { aosodomoro, galaksi: galaksiMode, alerts: messages.length };
 }

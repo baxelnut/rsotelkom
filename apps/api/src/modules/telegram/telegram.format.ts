@@ -4,11 +4,11 @@ const ACTION_PATH = "/action";
 const MESSAGE_LIMIT = 3900;
 
 export const COMMAND_LIST =
-  "<b>Available Commands:</b>\n" +
-  "/report - Show all PIC reports\n" +
-  "/report [name] - Summary report for specific PIC (e.g. /report jeremy)\n" +
-  "/feedback - Give feedback (bug or feature)\n" +
-  "\nUse /help to show commands";
+  "<b>Command yang tersedia:</b>\n" +
+  "/laporan - Tampilkan laporan order Anda\n" +
+  "/laporan [nama] - Laporan ringkas untuk PIC tertentu (contoh: /laporan jeremy)\n" +
+  "/masukan - Kirim masukan (bug atau fitur)\n" +
+  "\nGunakan /bantuan untuk menampilkan perintah";
 
 export const escapeHtml = (value: unknown) =>
   String(value ?? "")
@@ -99,3 +99,11 @@ export function buildAlertMessages(
       (i === pages.length - 1 ? footer : ""),
   );
 }
+
+export const formatDateId = () =>
+  new Intl.DateTimeFormat("id-ID", {
+    timeZone: "Asia/Jakarta",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date());

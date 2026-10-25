@@ -8,4 +8,5 @@ export default defineConfig({
   platform: "node",
   clean: true,
   noExternal: ["@rso/shared"],
+  external: ["@resvg/resvg-js"],
 });

@@ -7,3 +7,5 @@ export { ReportSummary } from "./ReportSummary";
 
 export { AchievementLegend } from "./AchievementLegend";
 export { GalaksiTable } from "./GalaksiTable";
+
+export { SendReportButton } from "./SendReportButton";

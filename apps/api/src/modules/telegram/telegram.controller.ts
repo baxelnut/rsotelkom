@@ -1,7 +1,11 @@
 import type { RequestHandler } from "express";
 import { z } from "zod";
 import type { ApiResponse } from "@rso/shared";
-import { processUpdate, sendAlertToChannel } from "./telegram.service";
+import {
+  processUpdate,
+  sendAlertToChannel,
+  sendWeeklyReport,
+} from "./telegram.service";
 
 const updateSchema = z
   .object({
@@ -31,6 +35,13 @@ export const webhook: RequestHandler = async (req, res) => {
 export const alert: RequestHandler = async (_req, res) => {
   const body: ApiResponse<Awaited<ReturnType<typeof sendAlertToChannel>>> = {
     data: await sendAlertToChannel(),
+  };
+  res.json(body);
+};
+
+export const weekly: RequestHandler = async (_req, res) => {
+  const body: ApiResponse<Awaited<ReturnType<typeof sendWeeklyReport>>> = {
+    data: await sendWeeklyReport(),
   };
   res.json(body);
 };

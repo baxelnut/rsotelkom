@@ -32,7 +32,7 @@ export function SyncCard({
   return (
     <SettingsCard
       title="Data sync"
-      description="Data syncs automatically every 15 minutes."
+      description="Data disinkronkan secara otomatis dua kali sehari."
       iconName="repeat"
       notice={notice}
     >

@@ -24,7 +24,7 @@ export interface CommandContext {
 const REPORT_TOP = 10;
 const FEEDBACK_MAX = 2000;
 const NOT_LINKED =
-  "No linked account found. Please go to the Dashboard to connect your Telegram account.";
+  "Akun Anda belum terhubung. Silakan buka Dashboard dan hubungkan akun Telegram Anda.";
 
 async function findProfile(telegramId: number) {
   const { data, error } = await supabaseAdmin
@@ -44,13 +44,13 @@ async function authorize(ctx: CommandContext): Promise<AuthUser | null> {
     return null;
   }
   if (!profile.is_active) {
-    await sendMessage(ctx.chatId, "Your account is deactivated.");
+    await sendMessage(ctx.chatId, "Akun Anda telah dinonaktifkan.");
     return null;
   }
   if (profile.role === "pending") {
     await sendMessage(
       ctx.chatId,
-      "⏳ Your account is still waiting for admin approval.",
+      "⏳ Akun Anda masih menunggu persetujuan admin.",
     );
     return null;
   }
@@ -89,17 +89,15 @@ export async function handleStart(ctx: CommandContext) {
 
   const pendingNote =
     profile.role === "pending"
-      ? "\n\n⏳ Your account is waiting for admin approval."
+      ? "\n\n⏳ Akun Anda masih menunggu persetujuan admin."
       : "";
 
   await sendMessage(
     ctx.chatId,
-    `👋 Welcome, <b>${escapeHtml(profile.full_name || "User")}</b>. Thank you for using the Telkom Dashboard reporting service.${pendingNote}\n\n${COMMAND_LIST}`,
+    `👋 Selamat datang, <b>${escapeHtml(profile.full_name || "Pengguna")}</b>. Terima kasih telah menggunakan layanan laporan Dashboard Telkom.${pendingNote}\n\n${COMMAND_LIST}`,
     {
       replyMarkup: {
-        inline_keyboard: [
-          [{ text: "Go to Dashboard", url: env.DASHBOARD_URL }],
-        ],
+        inline_keyboard: [[{ text: "Buka Dashboard", url: env.DASHBOARD_URL }]],
       },
     },
   );
@@ -114,7 +112,7 @@ export async function handleReport(ctx: CommandContext) {
   if (!user) return;
 
   const query = ctx.rest.trim();
-  await sendMessage(ctx.chatId, "📊 Preparing your report. Please wait...");
+  await sendMessage(ctx.chatId, "📊 Menyiapkan laporan Anda. Mohon tunggu...");
 
   let picName: string;
   if (query) {
@@ -123,7 +121,7 @@ export async function handleReport(ctx: CommandContext) {
     if (matches.length === 0) {
       await sendMessage(
         ctx.chatId,
-        `❌ No report found for <b>${escapeHtml(query)}</b>. Make sure you typed the full name correctly.`,
+        `❌ Laporan untuk <b>${escapeHtml(query)}</b> tidak ditemukan. Pastikan nama diketik dengan benar.`,
       );
       return;
     }
@@ -151,8 +149,8 @@ export async function handleReport(ctx: CommandContext) {
     await sendMessage(
       ctx.chatId,
       query
-        ? `✅ <b>${escapeHtml(picName)}</b> has no <b>In Process</b> orders aged 20-60 days.`
-        : `✅ You don't have any <b>In Process</b> orders aged 20-60 days.`,
+        ? `✅ <b>${escapeHtml(picName)}</b> tidak memiliki order <b>In Process</b> berumur 20-60 hari.`
+        : `✅ Anda tidak memiliki order <b>In Process</b> berumur 20-60 hari.`,
     );
     return;
   }
@@ -164,7 +162,7 @@ export async function handleReport(ctx: CommandContext) {
       witel: report.items[0]?.new_witel ?? "-",
       items: report.items,
       total,
-      dashboardUrl: env.DASHBOARD_URL, // TODO: replace with actual prod url (see apps\api\.env)
+      dashboardUrl: env.DASHBOARD_URL,
       date: todayJakarta(),
     }),
   );
@@ -176,14 +174,14 @@ export async function handleFeedback(ctx: CommandContext) {
   if (!text) {
     await sendMessage(
       ctx.chatId,
-      "Please provide your feedback after the command.\n\n<b>Example:</b>\n<i>/feedback Bot ini membingungkan 😅</i>",
+      "Mohon tulis masukan Anda setelah perintah.\n\n<b>Contoh:</b>\n<i>/masukan Bot ini membingungkan 😅</i>",
     );
     return;
   }
   if (text.length > FEEDBACK_MAX) {
     await sendMessage(
       ctx.chatId,
-      `Your feedback is too long. Please keep it under ${FEEDBACK_MAX} characters.`,
+      `Masukan Anda terlalu panjang. Mohon singkat hingga maksimal ${FEEDBACK_MAX} karakter.`,
     );
     return;
   }
@@ -203,12 +201,12 @@ export async function handleFeedback(ctx: CommandContext) {
       : String(ctx.telegramId);
     await sendMessage(
       env.TELEGRAM_ADMIN_CHAT_ID,
-      `📩 New feedback from <b>${sender}</b>:\n\n${escapeHtml(text)}`,
+      `📩 Masukan baru dari <b>${sender}</b>:\n\n${escapeHtml(text)}`,
     ).catch((err) => console.error("feedback notify failed", err));
   }
 
   await sendMessage(
     ctx.chatId,
-    "✅ Thanks for your feedback! We're building this with you 🚀",
+    "✅ Terima kasih atas masukan Anda! Kami membangun ini bersama Anda 🚀",
   );
 }
