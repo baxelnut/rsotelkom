@@ -123,10 +123,10 @@ function buildStats(
     cells[columns.findIndex((column) => column.id === id)].amount;
 
   return [
-    { label: "Total orders", tone: "secondary", ...at("all") },
-    { label: "Under 2 months", tone: "safe", ...at("lt2-total") },
-    { label: "Over 2 months", tone: "primary", ...at("gt2-total") },
-    { label: "Warning (20 to 60 days)", tone: "danger", ...warning },
+    { label: "Total order", tone: "secondary", ...at("all") },
+    { label: "Kurang dari 2 bulan", tone: "safe", ...at("lt2-total") },
+    { label: "Lebih dari 2 bulan", tone: "primary", ...at("gt2-total") },
+    { label: "Peringatan (20 hingga 60 hari)", tone: "danger", ...warning },
   ];
 }
 
@@ -268,7 +268,7 @@ export function buildSummarySheet(
       },
       {
         key: "totalCount",
-        header: "Total Orders",
+        header: "Total Order",
         width: 14,
         format: "integer",
       },

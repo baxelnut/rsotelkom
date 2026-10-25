@@ -32,11 +32,11 @@ const EMPTY_FIELDS: LoginFields = {
 const NOTICES: Record<Exclude<AuthNotice, null>, LoginMessage> = {
   "pending-approval": {
     kind: "warning",
-    text: "Your account is waiting for admin approval. You can sign in once it is approved.",
+    text: "Akun Anda sedang menunggu persetujuan admin. Anda dapat masuk setelah akun tersebut disetujui.",
   },
   "profile-error": {
     kind: "error",
-    text: "We could not load your profile. Please try again or contact an admin.",
+    text: "Kami tidak dapat memuat profil Anda. Silakan coba lagi atau hubungi admin.",
   },
 };
 

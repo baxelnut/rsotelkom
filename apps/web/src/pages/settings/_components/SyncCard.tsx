@@ -38,9 +38,9 @@ export function SyncCard({
     >
       <div className="stack row between middle gap-3">
         <div className="stack col gap-1 flex-1">
-          <span className="text caption">Last synced</span>
+          <span className="text caption">Terakhir disinkronkan</span>
           <p className="text semibold ink">
-            {lastSynced ? formatDateTime(lastSynced) : "Never"}
+            {lastSynced ? formatDateTime(lastSynced) : "Tidak pernah"}
           </p>
         </div>
         <Button

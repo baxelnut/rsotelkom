@@ -150,7 +150,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
     const { error } = await signOut();
     setPending(false);
     if (error) {
-      setNotice({ tone: "danger", message: "Couldn't sign out. Try again." });
+      setNotice({ tone: "danger", message: "Tidak dapat keluar. Coba lagi." });
       return;
     }
     onClose();

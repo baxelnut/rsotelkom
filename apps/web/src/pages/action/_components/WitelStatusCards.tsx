@@ -28,7 +28,7 @@ export function WitelStatusCards({
   if (error)
     return (
       <div className="grid-4 gap-4">
-        {Array.from({ length: 5 }, (_, index) => (
+        {Array.from({ length: 4 }, (_, index) => (
           <div className="card interactive stack col gap-2 witel-card witel-card--status">
             <ErrorMessage key={index} message={error} />
           </div>
@@ -39,7 +39,7 @@ export function WitelStatusCards({
   if (isLoading) {
     return (
       <div className="grid-4 gap-4">
-        {Array.from({ length: 5 }, (_, index) => (
+        {Array.from({ length: 4 }, (_, index) => (
           <Skeleton key={index} height="15rem" />
         ))}
       </div>

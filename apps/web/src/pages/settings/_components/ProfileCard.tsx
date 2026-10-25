@@ -20,8 +20,8 @@ export function ProfileCard({
 }: ProfileFormApi) {
   return (
     <SettingsCard
-      title="Profile"
-      description="How you appear and how we reach you."
+      title="Profil"
+      description="Bagaimana Anda tampil dan bagaimana kami menghubungi Anda."
       iconName="personFill"
       notice={notice}
     >
@@ -40,7 +40,7 @@ export function ProfileCard({
           label="Telegram ID"
           value={values.telegramId}
           error={errors.telegramId}
-          hint="Numbers only. Leave empty to remove it."
+          hint="Hanya angka. Kosongkan untuk menghapusnya."
           onChange={onChange}
           inputMode="numeric"
           autoComplete="off"
@@ -63,7 +63,7 @@ export function ProfileCard({
           />
           <Button
             type="submit"
-            text="Save changes"
+            text="Simpan perubahan"
             loading={pending}
             disabled={!canSubmit}
           />

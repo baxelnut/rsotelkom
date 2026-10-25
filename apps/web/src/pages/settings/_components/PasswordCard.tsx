@@ -15,16 +15,19 @@ export function PasswordCard({
 }: PasswordResetApi) {
   return (
     <SettingsCard
-      title="Password"
-      description="Change it through a secure link sent to your email."
+      title="Kata Sandi"
+      description="Ubah melalui tautan aman yang dikirim ke email Anda."
       iconName="lockFill"
       notice={notice}
     >
       <p className="text sm">
-        We will email a reset link to <strong>{email}</strong>.
+        Kami akan mengirimkan tautan pengaturan ulang melalui email ke{" "}
+        <strong>{email}</strong>.
       </p>
       <Button
-        text={cooldown > 0 ? `Send again in ${cooldown}s` : "Send reset email"}
+        text={
+          cooldown > 0 ? `Kirim lagi dalam ${cooldown}` : "Kirim reset email"
+        }
         variant="outline"
         iconName="envelope"
         loading={pending}

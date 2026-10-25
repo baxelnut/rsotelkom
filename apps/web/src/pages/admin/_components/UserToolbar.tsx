@@ -30,11 +30,13 @@ export function UserToolbar({
       <div className="stack row between middle nowrap">
         <div className="stack col gap-1 flex-1">
           <h6>User management</h6>
-          <p className="text sm muted">
-            {total} {total === 1 ? "user" : "users"} shown
-          </p>
+          <p className="text sm muted">Menampilkan {total} pengguna</p>
         </div>
-        <Button text="Add user" iconName="personFillPlus" onClick={onCreate} />
+        <Button
+          text="Tambah user"
+          iconName="personFillPlus"
+          onClick={onCreate}
+        />
       </div>
 
       <div className="user-toolbar__filters">
@@ -69,7 +71,7 @@ export function UserToolbar({
           <InputField
             name="search"
             type="search"
-            placeholder="Search name or email"
+            placeholder="Cari nama atau email"
             aria-label="Search users"
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}

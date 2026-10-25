@@ -39,8 +39,9 @@ export function ReportMatrixCard({
         <div className="stack col gap-1 fit">
           <h6>Regional 3 Order Report</h6>
           <p className="text sm muted">
-            Select any number to see its orders.
-            {lastSyncedAt && ` Last synced ${formatDateTime(lastSyncedAt)}.`}
+            Pilih angka mana pun untuk melihat pesanan-pesanannya.
+            {lastSyncedAt &&
+              `Terakhir disinkronkan ${formatDateTime(lastSyncedAt)}.`}
           </p>
         </div>
         <div className="stack row end middle gap-3 fit">

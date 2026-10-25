@@ -45,7 +45,7 @@ export function StatusSelect({ initial, onSave }: StatusSelectProps) {
       options={OPTIONS}
       value={value}
       disabled={saving}
-      error={failed ? "Could not save. Try again." : undefined}
+      error={failed ? "Tidak dapat menyimpan. Coba lagi." : undefined}
       onChange={(e) => void change(e.target.value)}
     />
   );

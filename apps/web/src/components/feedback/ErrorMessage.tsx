@@ -7,7 +7,6 @@ import { cx } from "@/utils/cx";
 
 interface ErrorMessageProps {
   message?: string | null;
-  /** Shows a "Try again" button when provided */
   onRetry?: () => void;
   className?: string;
 }
@@ -17,7 +16,7 @@ export function ErrorMessage({
   onRetry,
   className,
 }: ErrorMessageProps) {
-  const text = message?.trim() || "Something went wrong!";
+  const text = message?.trim() || "Something is wrong!";
 
   return (
     <div
@@ -30,7 +29,7 @@ export function ErrorMessage({
       <p className="text sm semibold center danger">{text}</p>
       {onRetry && (
         <Button
-          text="Try again"
+          text="Coba lagi"
           size="sm"
           variant="outline"
           onClick={onRetry}

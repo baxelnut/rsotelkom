@@ -42,18 +42,18 @@ function validate(form: Form, mode: Mode): FormErrors {
 
   if (mode.kind === "create") {
     if (!EMAIL_PATTERN.test(form.email.trim())) {
-      errors.email = "Enter a valid email address.";
+      errors.email = "Masukkan alamat email yang valid.";
     }
     if (form.password.length < 8 || form.password.length > 72) {
-      errors.password = "Password must be 8 to 72 characters.";
+      errors.password = "Kata sandi harus terdiri dari 8 hingga 72 karakter.";
     }
     if (!name) errors.fullName = "Name is required.";
   } else if (!name && (mode.user.full_name ?? "")) {
-    errors.fullName = "Name can't be empty.";
+    errors.fullName = "Nama tidak boleh kosong.";
   }
 
   if (telegram && (!DIGITS_PATTERN.test(telegram) || Number(telegram) <= 0)) {
-    errors.telegramId = "Telegram ID must be a positive number.";
+    errors.telegramId = "ID Telegram harus berupa angka positif.";
   }
   return errors;
 }
@@ -138,15 +138,17 @@ export function useUserEditor({ meId, onSaved }: Options) {
       }
       setMode(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not save changes.");
+      setError(
+        err instanceof Error ? err.message : "Tidak dapat menyimpan perubahan.",
+      );
     }
   };
 
   return {
     isOpen: mode !== null,
     isCreate,
-    title: isCreate ? "Add user" : "Edit user",
-    submitText: isCreate ? "Create user" : "Save changes",
+    title: isCreate ? "Tambah user" : "Edit user",
+    submitText: isCreate ? "Buat user" : "Simpan user",
     values: form,
     errors: submitted && mode ? validate(form, mode) : ({} as FormErrors),
     error,

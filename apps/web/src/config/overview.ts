@@ -2,7 +2,7 @@ import type { KategoriSimplified, SegmenSimplified } from "@rso/shared";
 import type { DropdownOption } from "@/components";
 import { formatLabel } from "@/utils/format";
 
-export const ALL = "ALL";
+export const ALL = "SEMUA";
 
 export const SUBTYPE_ORDER = ["AO", "SO", "DO", "MO", "RO"];
 export const NEGATIVE_SUBTYPES = ["DO", "SO"];

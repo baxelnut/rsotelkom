@@ -20,7 +20,7 @@ export interface DataTableProps<T extends Record<string, unknown>> {
   data: T[] | null | undefined;
   isLoading?: boolean;
   error?: string | Error | null;
-  /** Shows "Try again" in the error state, e.g. the hook's refetch */
+  /** Shows "Coba lagi" in the error state, e.g. the hook's refetch */
   onRetry?: () => void;
   columns?: TableColumn<T>[];
   getRowKey?: (row: T, index: number) => string | number;

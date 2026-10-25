@@ -25,8 +25,10 @@ export default function ReportPageG() {
           <div className="stack col gap-1 fit">
             <h6>GALAKSI (GApai! kawaL! AKSI!) AOSODOMORO Non Conn</h6>
             <p className="text sm muted">
-              In-process orders older than 60 days, per project operation.
-              {lastSyncedAt && ` Last synced ${formatDateTime(lastSyncedAt)}.`}
+              Pesanan yang sedang diproses dengan usia lebih dari 60 hari, per
+              operasi proyek.
+              {lastSyncedAt &&
+                ` Terakhir disinkronkan ${formatDateTime(lastSyncedAt)}.`}
             </p>
           </div>
           <ExportControls {...exportProps} />
@@ -37,8 +39,8 @@ export default function ReportPageG() {
         <CardContent isLoading={false} error={error} onRetry={onRetry}>
           {!isLoading && rows.length === 0 ? (
             <EmptyMessage
-              title="No project operations"
-              message="The PO list is empty. Run a sync and try again."
+              title="Tidak ada data"
+              message="Daftar PO kosong. Lakukan sinkronisasi lalu coba lagi."
             />
           ) : (
             <GalaksiTable rows={rows} grand={grand} isLoading={isLoading} />

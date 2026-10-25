@@ -48,7 +48,7 @@ export function useCategoryPie() {
     setCategory,
     categoryOptions: CATEGORY_OPTIONS,
     categoryLabel:
-      category === CATEGORY_ALL ? "ALL" : formatLabel(category).toUpperCase(),
+      category === CATEGORY_ALL ? "SEMUA" : formatLabel(category).toUpperCase(),
     witels,
     pieData,
     toggleWitel,

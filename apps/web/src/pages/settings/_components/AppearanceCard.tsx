@@ -12,8 +12,8 @@ interface AppearanceCardProps {
 export function AppearanceCard({ isDarkMode, onChange }: AppearanceCardProps) {
   return (
     <SettingsCard
-      title="Appearance"
-      description="Pick the theme that is easiest on your eyes."
+      title="Tampilan"
+      description="Pilih tema yang paling nyaman di mata Anda."
       iconName="circleHalf"
     >
       <div className="stack row between middle nowrap gap-3">
@@ -22,7 +22,9 @@ export function AppearanceCard({ isDarkMode, onChange }: AppearanceCardProps) {
         </span>
         <div
           className="appearance-card__switch"
-          title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          title={
+            isDarkMode ? "Alihkan ke mode terang" : "Alihkan ke mode gelap"
+          }
         >
           <DarkModeSwitch checked={isDarkMode} onChange={onChange} size={28} />
         </div>

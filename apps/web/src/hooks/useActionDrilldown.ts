@@ -20,7 +20,7 @@ import { toReportRow } from "@/utils/orders";
 import { readSelection, selectionQuery, writeSelection } from "@/utils/report";
 
 const KEEP_COLUMNS = ["uuid", "status", "notes"];
-const ALERT_ALL = "ALL";
+const ALERT_ALL = "SEMUA";
 
 export function useActionDrilldown(exporter: ReportExporterApi) {
   const { isAdmin } = useAuth();
@@ -84,7 +84,7 @@ export function useActionDrilldown(exporter: ReportExporterApi) {
     });
 
   const alertOptions = [
-    { value: ALERT_ALL, label: "ALL" },
+    { value: ALERT_ALL, label: "SEMUA" },
     {
       value: "aman",
       label: `${ALERT_LABEL.aman} (${aman.data?.meta.total ?? 0})`,
