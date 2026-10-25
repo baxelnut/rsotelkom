@@ -1,25 +1,12 @@
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  ReferenceLine,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, ReferenceLine, ResponsiveContainer } from "recharts";
 // Style
 import "./SubtypeChartCard.css";
+// Config
+import { CHART_GRID_STROKE, CHART_LEGEND_STYLE } from "@/config/chart";
+import { getSegmenColor, CHART_TICK } from "@/config/chart";
 // Components
 import { CardContent, CustomTooltip, Dropdown } from "@/components";
-// Config
-import {
-  CHART_GRID_STROKE,
-  CHART_LEGEND_STYLE,
-  CHART_TICK,
-  getSegmenColor,
-} from "@/config/chart";
 // Hooks
 import type { SubtypeChartApi } from "@/hooks";
 // Utils

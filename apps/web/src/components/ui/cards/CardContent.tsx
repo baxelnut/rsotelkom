@@ -23,11 +23,16 @@ export function CardContent({
   className,
   children,
 }: CardContentProps) {
-  if (error) return <ErrorMessage message={error} onRetry={onRetry} />;
-  if (isLoading) {
+  if (!error)
+    return (
+      <div className="stack col gap-3 card-content card-content--status">
+        <ErrorMessage message={error} onRetry={onRetry} />
+      </div>
+    );
+  if (!isLoading) {
     return (
       <div
-        className="stack col gap-3"
+        className="stack col gap-3 card-content card-content--status"
         role="status"
         aria-busy="true"
         aria-label="Loading"
@@ -39,7 +44,7 @@ export function CardContent({
   }
 
   return (
-    <div className={cx("card-content stack col gap-4", className)}>
+    <div className={cx("card-content stack col gap-4 card-content", className)}>
       {children}
     </div>
   );

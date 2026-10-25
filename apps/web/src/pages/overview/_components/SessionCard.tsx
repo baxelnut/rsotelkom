@@ -21,9 +21,7 @@ export function SessionCard({
     <div className={cx("card stack col gap-4", className)}>
       <div className="stack col gap-1">
         <h6>Session by Sub-type</h6>
-        <p className="text sm muted">
-          Menampilkan data untuk order sub-type (AOSODOMORO).
-        </p>
+        <p className="text sm muted">Menampilkan data (AOSODOMORO).</p>
       </div>
 
       <CardContent
