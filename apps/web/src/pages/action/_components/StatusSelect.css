@@ -1,0 +1,17 @@
+.status-select {
+  min-width: 10rem;
+  border-left: 4px solid var(--clr-border-strong);
+  border-radius: var(--radius-md);
+}
+.status-select.tone-safe {
+  border-left-color: var(--clr-safe);
+}
+.status-select.tone-danger {
+  border-left-color: var(--clr-danger);
+}
+.status-select.tone-secondary {
+  border-left-color: var(--clr-secondary);
+}
+.status-select select {
+  font-weight: var(--fw-medium);
+}

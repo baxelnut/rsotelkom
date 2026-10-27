@@ -19,4 +19,5 @@ export const FIELD_COLUMNS: TableColumn<Row>[] = [
     render: (value) => formatRupiah(Number(value)),
   },
   { key: "pic", label: "PIC" },
+  { key: "log", label: "LOG" },
 ];

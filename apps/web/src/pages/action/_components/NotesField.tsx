@@ -31,17 +31,24 @@ export function NotesField({ initial, onSave }: NotesFieldProps) {
   };
 
   return (
-    <TextareaField
-      name="notes"
-      aria-label="Notes"
-      rows={2}
-      fullWidth
-      resizable
-      value={value}
-      disabled={saving}
-      error={failed ? "Could not save. Click away to retry." : undefined}
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={() => void commit()}
-    />
+    <div className="notes-field">
+      <TextareaField
+        name="notes"
+        aria-label="Notes"
+        rows={3}
+        fullWidth
+        resizable
+        value={value}
+        disabled={saving}
+        placeholder="Tulis catatan..."
+        error={
+          failed
+            ? "Tidak dapat menyimpan. Klik di luar area ini untuk mencoba lagi."
+            : undefined
+        }
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={() => void commit()}
+      />
+    </div>
   );
 }

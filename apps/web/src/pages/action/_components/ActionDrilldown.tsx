@@ -4,8 +4,7 @@ import "./ActionDrilldown.css";
 // Components
 import { DataTable, Icon, type TableColumn } from "@/components";
 import { Button, Dropdown, ErrorMessage, ExportControls } from "@/components";
-import { NotesField } from "./NotesField";
-import { StatusSelect } from "./StatusSelect";
+import { NotesField, StatusSelect } from ".";
 // Config
 import { ALERT_LABEL } from "@/config/action";
 import { FIELD_COLUMNS } from "@/config/orderTable";

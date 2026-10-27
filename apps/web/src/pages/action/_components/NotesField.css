@@ -1,0 +1,14 @@
+.table-wrapper td:has(.notes-field) {
+  white-space: normal;
+  min-width: 15rem;
+}
+.notes-field {
+  width: 100%;
+  min-width: 15rem;
+}
+.notes-field textarea {
+  min-height: 4.5rem;
+  padding: var(--space-2) var(--space-3);
+  line-height: var(--lh-normal);
+  font-size: var(--fs-sm);
+}

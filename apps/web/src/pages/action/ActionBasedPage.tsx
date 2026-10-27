@@ -11,6 +11,8 @@ export default function ActionBasedPage() {
   const report = useActionReport();
   const drilldown = useActionDrilldown(exporter);
 
+  console.log(drilldown);
+
   return (
     <div className="page action-based-page">
       <Seo page="action" />
