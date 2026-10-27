@@ -2,8 +2,11 @@ import type { TableSpec } from "../../lib/table-image";
 import type { GalaksiPoRow, WitelReport } from "../reports/reports.service";
 
 const KATEGORI = ["PROVIDE ORDER", "IN PROCESS", "READY TO BILL"];
-const SUBTYPES = ["ao", "so", "do", "mo", "ro"] as const;
+const normalize = (s: string | null | undefined) =>
+  (s ?? "").toUpperCase().replace(/\s+/g, "");
+const KATEGORI_KEYS = new Set(KATEGORI.map(normalize));
 
+const SUBTYPES = ["ao", "so", "do", "mo", "ro"] as const;
 const LEVELS = [
   { max: 0, value: 100 },
   { max: 5, value: 80 },
@@ -22,7 +25,7 @@ export function buildAosodomoroTable(
 ): TableSpec {
   const rows = report.map((entry) => {
     const used = entry.kategori.filter((item) =>
-      KATEGORI.includes(item.kategori),
+      KATEGORI_KEYS.has(normalize(item.kategori)),
     );
     const sum = (pick: (i: (typeof used)[number]) => number) =>
       used.reduce((total, item) => total + pick(item), 0);
