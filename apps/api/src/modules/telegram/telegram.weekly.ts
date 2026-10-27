@@ -92,7 +92,7 @@ const TONE_WITEL: Tone = {
   zero: "#959999",
 };
 const TONE_SUBTYPE: Tone = {
-  fill: "#e81e28",
+  fill: "#312a68",
   color: "#ffffff",
   warn: "#ffffff",
   zero: "#f6b3b6",
@@ -203,7 +203,7 @@ export function buildAosodomoroTable(
       row: 0,
       colSpan: labels.length + 1,
       color: "#c9141e",
-      underline: "#e81e28",
+      underline: "#312a68",
     },
     {
       text: "GRAND TOTAL",
@@ -291,7 +291,7 @@ export function buildGalaksiTable(
         row: 0,
         colSpan: 5,
         color: "#c9141e",
-        underline: "#e81e28",
+        underline: "#312a68",
       },
       ...SUBTYPES.map((k, i) => ({
         text: k.toUpperCase(),
