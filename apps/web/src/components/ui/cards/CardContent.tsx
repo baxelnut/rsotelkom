@@ -23,13 +23,13 @@ export function CardContent({
   className,
   children,
 }: CardContentProps) {
-  if (!error)
+  if (error)
     return (
       <div className="stack col gap-3 card-content card-content--status">
         <ErrorMessage message={error} onRetry={onRetry} />
       </div>
     );
-  if (!isLoading) {
+  if (isLoading) {
     return (
       <div
         className="stack col gap-3 card-content card-content--status"
