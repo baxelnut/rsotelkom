@@ -103,3 +103,7 @@
   border-top: var(--border-w-thick) solid var(--clr-border-strong);
   border-bottom: none;
 }
+
+.action-matrix__thead * {
+  color: var(--clr-ink) !important;
+}

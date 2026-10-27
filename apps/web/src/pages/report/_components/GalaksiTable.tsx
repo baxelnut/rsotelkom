@@ -30,11 +30,10 @@ export function GalaksiTable({
       aria-busy={isLoading || undefined}
     >
       <table>
-        <thead>
-          {/* unchanged */}
+        <thead className="galaksi-table__thead">
           <tr>
             <th rowSpan={2} className="galaksi-table__name">
-              Project Operation
+              PO
             </th>
             <th colSpan={SESSION_KEYS.length} className="galaksi-table__group">
               &gt;2 BLN
@@ -120,7 +119,10 @@ export function GalaksiTable({
             </tbody>
             <tfoot>
               <tr>
-                <th scope="row" className="galaksi-table__name">
+                <th
+                  scope="row"
+                  className="galaksi-table__name galaksi-table__name--grand-total"
+                >
                   GRAND TOTAL
                 </th>
                 {SESSION_KEYS.map((key) => (

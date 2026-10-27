@@ -243,7 +243,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
             </>
           ) : (
             <Button
-              text={hasTelegram ? "Edit profile" : "Add Telegram ID"}
+              text={hasTelegram ? "Edit profil" : "Tambahkan ID Telegram"}
               variant={hasTelegram ? "outline" : "secondary"}
               block
               onClick={startEditing}

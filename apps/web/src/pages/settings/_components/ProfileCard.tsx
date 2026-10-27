@@ -40,7 +40,7 @@ export function ProfileCard({
           label="Telegram ID"
           value={values.telegramId}
           error={errors.telegramId}
-          hint="Hanya angka. Kosongkan untuk menghapusnya."
+          hint="Numbers only. Leave blank to remove."
           onChange={onChange}
           inputMode="numeric"
           autoComplete="off"

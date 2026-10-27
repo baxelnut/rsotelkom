@@ -16,7 +16,7 @@ export function ErrorMessage({
   onRetry,
   className,
 }: ErrorMessageProps) {
-  const text = message?.trim() || "Something is wrong!";
+  const text = message?.trim() || "Gagal memuat data.";
 
   return (
     <div

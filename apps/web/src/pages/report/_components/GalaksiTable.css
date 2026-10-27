@@ -107,6 +107,11 @@
   background-size: 200% 100%;
 }
 
+.galaksi-table__thead *,
+.galaksi-table__name--grand-total {
+  color: var(--clr-ink) !important;
+}
+
 @keyframes galaksi-skeleton-shimmer {
   from {
     background-position: 200% 0;

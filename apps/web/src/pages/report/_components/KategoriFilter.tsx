@@ -16,7 +16,7 @@ export function KategoriFilter({
 }: KategoriFilterProps) {
   return (
     <div className="card flat stack col gap-3">
-      <p className="text eyebrow">Categories</p>
+      <p className="text eyebrow">Kategori</p>
       <div className="stack row gap-4">
         {options.map((name) => (
           <Checkbox

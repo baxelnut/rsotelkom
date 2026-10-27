@@ -41,7 +41,7 @@ export function SendReportButton({
           <Button
             text="Kirim ke Telegram"
             iconName="telegram"
-            variant="outline"
+            variant="secondary"
             size="sm"
             onClick={ask}
           />

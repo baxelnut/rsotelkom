@@ -13,7 +13,7 @@ interface LoadingSpinnerProps {
 }
 
 export function LoadingSpinner({
-  label = "Please wait...",
+  label = "Mohon tunggu...",
   size = "lg",
   overlay = false,
   className,

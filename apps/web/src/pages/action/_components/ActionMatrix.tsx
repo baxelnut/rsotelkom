@@ -46,11 +46,11 @@ export function ActionMatrix({
         skeletonHeight="14rem"
       >
         {rows.length === 0 ? (
-          <EmptyMessage title="No project operations" />
+          <EmptyMessage title="Tidak ada PO" />
         ) : (
           <div className="table-wrapper">
             <table>
-              <thead>
+              <thead className="action-matrix__thead">
                 <tr>
                   <th className="action-matrix__name">PO</th>
                   <th>Witel</th>

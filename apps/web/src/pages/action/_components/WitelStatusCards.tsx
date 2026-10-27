@@ -65,8 +65,10 @@ export function WitelStatusCards({
 
             {total === 0 ? (
               <div className="stack col center gap-2 witel-card__empty">
-                <Icon iconName="check" size={22} />
-                <p className="text sm muted center">No "In Process" orders</p>
+                <Icon iconName="check" size={34} />
+                <p className="text sm muted center">
+                  Tidak ada order "In Process"
+                </p>
               </div>
             ) : (
               <>

@@ -16,7 +16,7 @@ const CHAR_W = 8.6;
 const PAD_X = 16;
 const ROW_H = 36;
 const HEAD_H = 72;
-const BRAND = "#E81E28";
+const BRAND = "#312A68";
 const DARK = "#2C2C2C";
 
 const xml = (value: string) =>

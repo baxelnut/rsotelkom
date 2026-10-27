@@ -53,7 +53,7 @@ export function useUserActions(meId?: string) {
       await task();
       success(message);
     } catch (error) {
-      failure(error instanceof Error ? error.message : "Something went wrong.");
+      failure(error instanceof Error ? error.message : "Gagal memuat data.");
     } finally {
       setBusyId(null);
     }

@@ -60,7 +60,7 @@ export function buildGalaksiSheet(
     })),
     footer: { name: "GRAND TOTAL", ...grand },
     columns: [
-      { key: "name", header: "Project Operation", width: 28 },
+      { key: "name", header: "PO", width: 28 },
       ...SESSION_KEYS.map((key) => ({
         key,
         header: key.toUpperCase(),

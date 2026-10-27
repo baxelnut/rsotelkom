@@ -97,8 +97,8 @@ export function useActionDrilldown(exporter: ReportExporterApi) {
 
   const crumbs = selection
     ? [
-        selection.pic ?? "All PO",
-        selection.status ?? "All status",
+        selection.pic ?? "Semua PO",
+        selection.status ?? "Semua status",
         BUCKET_LABEL[selection.bucket],
       ]
     : [];

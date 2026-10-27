@@ -72,7 +72,7 @@ export function buildGalaksiTable(
     title: "GALAKSI PO AOSODOMORO Non Conn",
     subtitle: `Order In Process >2 BLN | ${date}`,
     columns: [
-      { header: "PROJECT OPERATION" },
+      { header: "PO" },
       ...SUBTYPES.map((key) => ({
         header: key.toUpperCase(),
         align: "right" as const,

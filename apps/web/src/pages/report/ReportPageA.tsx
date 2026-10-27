@@ -23,11 +23,11 @@ export default function ReportPageA() {
         <ReportDrilldown {...drilldown} />
       ) : (
         <>
-          {telegram.canSend && <SendReportButton {...telegram} />}
           <ReportSummary
             stats={matrix.matrix.stats}
             isLoading={matrix.isLoading}
           />
+          {telegram.canSend && <SendReportButton {...telegram} />}
           <KategoriFilter
             options={matrix.kategoriOptions}
             selected={matrix.kategori}
