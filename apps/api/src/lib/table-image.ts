@@ -170,11 +170,14 @@ export function renderGridPng(spec: GridSpec): Uint8Array {
 // Plain-text fallback if the image fails
 export function renderGridText(spec: GridSpec): string {
   const lines = spec.rows.map((r) =>
-    r.cells
-      .map((c) => [c.text, c.warn ? `(!${c.warn})` : ""].join(""))
-      .join(" | "),
+    r.cells.map((c) => (c.warn ? `${c.text}(!${c.warn})` : c.text)).join(" | "),
   );
-  return [spec.title, spec.subtitle, "", ...lines].join("\n");
+  const header = spec.head
+    .filter((h) => h.row === spec.headRows - 1 || h.rowSpan === spec.headRows)
+    .sort((a, b) => a.col - b.col)
+    .map((h) => h.text)
+    .join(" | ");
+  return [spec.title, spec.subtitle, "", header, ...lines].join("\n");
 }
 
 function widths(spec: TableSpec): number[] {

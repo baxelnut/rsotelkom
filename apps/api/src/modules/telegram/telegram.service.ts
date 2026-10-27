@@ -1,36 +1,35 @@
-import { env } from "../../config/env";
+import { env } from "process";
 import { AppError } from "../../lib/errors";
 import { supabaseAdmin } from "../../lib/supabase";
-import { sendMessage, sendTyping, sendPhoto } from "../../lib/telegram";
+import { renderGridPng, renderGridText } from "../../lib/table-image";
+import { sendMessage, sendPhoto, sendTyping } from "../../lib/telegram";
+import { GridSpec } from "../../types/table-image.types";
 import {
-  renderTablePng,
-  renderTableText,
-  type TableSpec,
-} from "../../lib/table-image";
+  getAlertReport,
+  getGalaksiSummary,
+  getSubtypeReport,
+} from "../reports/reports.service";
 import {
+  CommandContext,
   handleFeedback,
   handleHelp,
   handleReport,
   handleStart,
-  type CommandContext,
 } from "./telegram.commands";
 import {
-  buildAlertMessages,
   escapeHtml,
-  formatDateId,
+  buildAlertMessages,
   todayJakarta,
+  formatDateId,
 } from "./telegram.format";
 import {
-  aosodomoroCaption,
   buildAosodomoroTable,
+  aosodomoroCaption,
   buildGalaksiTable,
   galaksiCaption,
 } from "./telegram.weekly";
-import {
-  getAlertReport,
-  getGalaksiSummary,
-  getRegionalReport,
-} from "../reports/reports.service";
+
+const DASHBOARD_URL = env.DASHBOARD_URL ?? "https://rso-web.vercel.app";
 
 export interface TelegramUpdate {
   update_id?: number;
@@ -111,28 +110,24 @@ export async function sendAlertToChannel() {
 
   const messages = buildAlertMessages(
     await getAlertReport(),
-    env.DASHBOARD_URL,
+    DASHBOARD_URL,
     todayJakarta(),
   );
   for (const message of messages) await sendMessage(chatId, message);
   return { messages: messages.length };
 }
 
-async function sendTable(
-  chatId: string,
-  spec: TableSpec,
-  caption: string,
-): Promise<"photo" | "text"> {
+async function sendTable(chatId: string, spec: GridSpec, caption: string) {
   try {
-    await sendPhoto(chatId, renderTablePng(spec), caption);
-    return "photo";
+    await sendPhoto(chatId, renderGridPng(spec), caption);
+    return "photo" as const;
   } catch (err) {
     console.error("table image failed, falling back to text", err);
     await sendMessage(
       chatId,
-      `${caption}\n\n<pre>${escapeHtml(renderTableText(spec))}</pre>`,
+      `${caption}\n\n<pre>${escapeHtml(renderGridText(spec))}</pre>`,
     );
-    return "text";
+    return "text" as const;
   }
 }
 
@@ -145,30 +140,24 @@ export async function sendWeeklyReport() {
       "NOT_CONFIGURED",
     );
   }
-
   const date = formatDateId();
-  const [regional, galaksi, alerts] = await Promise.all([
-    getRegionalReport(),
+  const [subtype, galaksi, alerts] = await Promise.all([
+    getSubtypeReport(),
     getGalaksiSummary(),
     getAlertReport(),
   ]);
-
   const aosodomoro = await sendTable(
     chatId,
-    buildAosodomoroTable(regional, date),
+    buildAosodomoroTable(subtype, date),
     aosodomoroCaption(date, `${env.DASHBOARD_URL}/report/aosodomoro`),
   );
   const galaksiMode = await sendTable(
     chatId,
     buildGalaksiTable(galaksi, date),
-    galaksiCaption(date, `${env.DASHBOARD_URL}/report/galaksi`),
+    galaksiCaption(date, `${DASHBOARD_URL}/report/galaksi`),
   );
 
-  const messages = buildAlertMessages(
-    alerts,
-    env.DASHBOARD_URL,
-    todayJakarta(),
-  );
+  const messages = buildAlertMessages(alerts, DASHBOARD_URL, todayJakarta());
   for (const message of messages) await sendMessage(chatId, message);
 
   return { aosodomoro, galaksi: galaksiMode, alerts: messages.length };
