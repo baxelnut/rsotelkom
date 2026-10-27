@@ -25,7 +25,7 @@ export async function api<T>(path: string, options: Options = {}): Promise<T> {
   const token = data.session?.access_token;
 
   const url = new URL(
-    `${import.meta.env.VITE_API_URL ?? ""}/api${path}`,
+    `${import.meta.env.VITE_API_URL ?? "http://localhost:3000"}/api${path}`,
     window.location.origin,
   );
   for (const [key, value] of Object.entries(options.query ?? {})) {
