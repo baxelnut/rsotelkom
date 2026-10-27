@@ -1,4 +1,6 @@
+import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { Resvg } from "@resvg/resvg-js";
 
 type Align = "left" | "right" | "center";
@@ -11,7 +13,13 @@ export interface TableSpec {
   footer?: string[];
 }
 
-const FONT_DIR = path.join(process.cwd(), "assets", "fonts");
+const FONT_DIR = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../../assets/fonts",
+);
+const FONT_FILES = ["Inter-Regular.ttf", "Inter-Bold.ttf"].map((f) =>
+  path.join(FONT_DIR, f),
+);
 const CHAR_W = 8.6;
 const PAD_X = 16;
 const ROW_H = 36;
@@ -112,15 +120,16 @@ function buildSvg(spec: TableSpec): string {
 }
 
 export function renderTablePng(spec: TableSpec): Uint8Array {
+  const missing = FONT_FILES.filter((f) => !fs.existsSync(f));
+  if (missing.length) {
+    throw new Error(`table fonts missing: ${missing.join(", ")}`);
+  }
   const resvg = new Resvg(buildSvg(spec), {
     fitTo: { mode: "zoom", value: 2 },
     font: {
       loadSystemFonts: false,
       defaultFontFamily: "Inter",
-      fontFiles: [
-        path.join(FONT_DIR, "Inter-Regular.ttf"),
-        path.join(FONT_DIR, "Inter-Bold.ttf"),
-      ],
+      fontFiles: FONT_FILES,
     },
   });
   return resvg.render().asPng();
