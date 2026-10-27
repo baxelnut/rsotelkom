@@ -3,23 +3,27 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Resvg } from "@resvg/resvg-js";
 
-type Align = "left" | "right" | "center";
+const here = path.dirname(fileURLToPath(import.meta.url));
 
-export interface TableSpec {
-  title: string;
-  subtitle: string;
-  columns: { header: string; align?: Align }[];
-  rows: string[][];
-  footer?: string[];
+const FONT_DIR_CANDIDATES = [
+  path.resolve(process.cwd(), "assets/fonts"), // cwd = apps/api
+  path.resolve(process.cwd(), "apps/api/assets/fonts"), // cwd = repo root
+  path.resolve(here, "../../assets/fonts"), // src/lib or dist/lib
+  path.resolve(here, "../assets/fonts"), // bundled dist/index.js
+  path.resolve(here, "../../../assets/fonts"), // dist/src/lib
+];
+
+function findFonts(): string[] {
+  const names = ["Inter-Regular.ttf", "Inter-Bold.ttf"];
+  for (const dir of FONT_DIR_CANDIDATES) {
+    const files = names.map((n) => path.join(dir, n));
+    if (files.every((f) => fs.existsSync(f))) return files;
+  }
+  throw new Error(
+    `table fonts not found. cwd=${process.cwd()} tried:\n${FONT_DIR_CANDIDATES.join("\n")}`,
+  );
 }
 
-const FONT_DIR = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../../assets/fonts",
-);
-const FONT_FILES = ["Inter-Regular.ttf", "Inter-Bold.ttf"].map((f) =>
-  path.join(FONT_DIR, f),
-);
 const CHAR_W = 8.6;
 const PAD_X = 16;
 const ROW_H = 36;
@@ -33,6 +37,16 @@ const xml = (value: string) =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+
+type Align = "left" | "right" | "center";
+
+export interface TableSpec {
+  title: string;
+  subtitle: string;
+  columns: { header: string; align?: Align }[];
+  rows: string[][];
+  footer?: string[];
+}
 
 function widths(spec: TableSpec): number[] {
   return spec.columns.map((column, index) => {
@@ -120,16 +134,12 @@ function buildSvg(spec: TableSpec): string {
 }
 
 export function renderTablePng(spec: TableSpec): Uint8Array {
-  const missing = FONT_FILES.filter((f) => !fs.existsSync(f));
-  if (missing.length) {
-    throw new Error(`table fonts missing: ${missing.join(", ")}`);
-  }
   const resvg = new Resvg(buildSvg(spec), {
     fitTo: { mode: "zoom", value: 2 },
     font: {
       loadSystemFonts: false,
       defaultFontFamily: "Inter",
-      fontFiles: FONT_FILES,
+      fontFiles: findFonts(),
     },
   });
   return resvg.render().asPng();
