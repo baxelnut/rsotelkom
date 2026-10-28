@@ -49,10 +49,10 @@ export function UserActions({
   return (
     <div className={layout}>
       <Button
-        variant="ghost"
-        size="md"
+        variant="outline"
+        size="sm"
         iconName="pencilSquare"
-        title="Edit"
+        text="Edit"
         aria-label={`Edit ${row.name}`}
         disabled={busy}
         onClick={() => handlers.onEdit(row)}
@@ -60,23 +60,23 @@ export function UserActions({
       {!row.isSelf && (
         <>
           <Button
-            variant="ghost"
-            size="md"
+            variant="outline"
+            size="sm"
             iconName={row.isActive ? "personDashFill" : "personFillAdd"}
-            title={row.isActive ? "Deactivate" : "Reactivate"}
+            text={row.isActive ? "Deactivate" : "Reactivate"}
             aria-label={`${row.isActive ? "Deactivate" : "Reactivate"} ${row.name}`}
             disabled={busy}
             onClick={() => handlers.onToggleActive(row)}
           />
-          {/* <Button
-            variant="ghost"
+          <Button
+            variant="secondary"
             size="sm"
             iconName="trash"
-            title="Delete"
+            text="Hapus"
             aria-label={`Delete ${row.name}`}
             disabled={busy}
             onClick={() => handlers.onDelete(row)}
-          /> */}
+          />
         </>
       )}
     </div>

@@ -30,7 +30,7 @@ export function UserTable({
     },
     { key: "telegramId", label: "Telegram ID" },
     { key: "lastLogin", label: "Last login" },
-    { key: "created", label: "Joined" },
+    // { key: "created", label: "Joined" },
     {
       key: "id",
       label: "Actions",

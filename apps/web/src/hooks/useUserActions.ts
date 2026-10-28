@@ -15,21 +15,21 @@ const COPY: Record<
   { title: string; confirmText: string; message: (name: string) => string }
 > = {
   decline: {
-    title: "Decline sign-up",
-    confirmText: "Decline",
-    message: (name) =>
-      `${name} will be removed and would have to sign up again.`,
+    title: "Tolak sign-up",
+    confirmText: "Tolak",
+    message: (name) => `${name} akan dihapus dan harus mendaftar kembali.`,
   },
   delete: {
-    title: "Delete user",
-    confirmText: "Delete",
-    message: (name) => `Permanently delete ${name}? This cannot be undone.`,
+    title: "Hapus user",
+    confirmText: "Hapus",
+    message: (name) =>
+      `Hapus permanen ${name}? Tindakan ini tidak dapat dibatalkan.`,
   },
   deactivate: {
     title: "Deactivate user",
     confirmText: "Deactivate",
     message: (name) =>
-      `${name} will be blocked from signing in. You can reactivate them later.`,
+      `${name} akan diblokir agar tidak bisa masuk. Anda dapat mengaktifkannya kembali nanti.`,
   },
 };
 
