@@ -1,0 +1,29 @@
+name: Weekly DB backup
+on:
+  schedule:
+    - cron: "0 20 * * 0" # Monday 03:00 WIB
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    environment: Workflow ENV
+    steps:
+      - name: Dump and encrypt
+        shell: bash
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          PASS: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          docker run --rm postgres:17 \
+            pg_dump "$DB_URL" --schema=public --no-owner --no-privileges \
+            | gzip \
+            | gpg --batch --pinentry-mode loopback --symmetric \
+                  --cipher-algo AES256 --passphrase "$PASS" \
+                  -o "backup-$(date +%F).sql.gz.gpg"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: db-backup-${{ github.run_id }}
+          path: backup-*.gpg
+          retention-days: 56
