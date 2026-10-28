@@ -209,7 +209,6 @@ export function UserProfile({ onClose }: UserProfileProps) {
             name="telegramId"
             label="Telegram ID"
             value={isEditing ? draft.telegramId : profile.telegramId}
-            fallback="Silakan tambahkan Telegram ID Anda"
             missing={!hasTelegram}
             placeholder="Masukkan Telegram ID Anda"
             onChange={isEditing ? handleChange : undefined}
@@ -242,7 +241,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
           ) : (
             <Button
               text={hasTelegram ? "Edit profil" : "Tambahkan ID Telegram"}
-              variant={hasTelegram ? "outline" : "secondary"}
+              variant={hasTelegram ? "outline" : "primary"}
               block
               onClick={startEditing}
               disabled={pending}
