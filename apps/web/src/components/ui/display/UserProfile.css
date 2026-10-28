@@ -25,23 +25,6 @@
   outline: none;
 }
 
-.profile-value {
-  display: flex;
-  align-items: center;
-  min-height: 2.5rem;
-  padding: var(--space-2) var(--space-3);
-  background: var(--clr-surface);
-  border-radius: var(--radius-md);
-  color: var(--clr-ink);
-  font-size: var(--txt-body-sm-size);
-  overflow-wrap: anywhere;
-}
-
-.profile-value.is-missing {
-  color: var(--clr-ink-muted);
-  font-style: italic;
-}
-
 @media (min-width: 768px) {
   .profile-dialog {
     padding: var(--space-6);

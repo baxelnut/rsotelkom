@@ -18,13 +18,14 @@ export function LoginForm({
   submitting,
   submit,
   forgotPassword,
+  toggleMode,
 }: LoginFormApi) {
   return (
     <form className="stack col gap-4" onSubmit={submit}>
       <div className="stack col gap-1">
         <Greetings />
         <p className="text sm muted">
-          {isSignup ? "Create your account" : "Please login to continue"}
+          {isSignup ? "Buat akun" : "Silakan masuk untuk melanjutkan"}
         </p>
       </div>
 
@@ -33,7 +34,7 @@ export function LoginForm({
           <InputField
             name="full_name"
             label="Full name"
-            placeholder="Enter your full name"
+            placeholder="Masukkan nama lengkap"
             autoComplete="name"
             value={fields.fullName}
             onChange={(e) => setField("fullName", e.target.value)}
@@ -43,7 +44,7 @@ export function LoginForm({
           <InputField
             name="telegram_id"
             label="Telegram ID"
-            placeholder="Enter your Telegram ID"
+            placeholder="Masukkan Telegram ID"
             inputMode="numeric"
             value={fields.telegramId}
             onChange={(e) => setField("telegramId", e.target.value)}
@@ -57,7 +58,7 @@ export function LoginForm({
         name="email"
         type="email"
         label="Email"
-        placeholder="Enter your email"
+        placeholder="Masukkan email"
         autoComplete="email"
         value={fields.email}
         onChange={(e) => setField("email", e.target.value)}
@@ -67,8 +68,8 @@ export function LoginForm({
       <InputField
         name="password"
         type="password"
-        label="Password"
-        placeholder="Enter your password"
+        label="Kata sandi"
+        placeholder="Masukkan kata sandi"
         autoComplete={isSignup ? "new-password" : "current-password"}
         minLength={isSignup ? 6 : undefined}
         value={fields.password}
@@ -81,12 +82,12 @@ export function LoginForm({
       {!isSignup && (
         <div className="stack row between middle nowrap">
           <Checkbox
-            label="Remember me"
+            label="Ingat saya"
             checked={remember}
             onChange={setRemember}
           />
           <Button
-            text="Forgot password?"
+            text="Lupa kata sandi?"
             variant="ghost"
             size="sm"
             onClick={forgotPassword}
@@ -106,6 +107,15 @@ export function LoginForm({
           <p className="text sm">{message.text}</p>
         </div>
       )}
+
+      <div className="stack row center middle gap-1">
+        <p className="text sm muted">
+          {isSignup ? "Sudah punya akun?" : "Belum punya akun?"}
+        </p>
+        <u className="text sm bold auth-toggle" onClick={toggleMode}>
+          {isSignup ? "Masuk" : "Daftar"}
+        </u>
+      </div>
 
       <Button
         type="submit"

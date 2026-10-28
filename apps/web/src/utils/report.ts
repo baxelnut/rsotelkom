@@ -126,7 +126,7 @@ function buildStats(
     { label: "Total", tone: "secondary", ...at("all") },
     { label: "Kurang dari 2 bulan", tone: "safe", ...at("lt2-total") },
     { label: "Lebih dari 2 bulan", tone: "primary", ...at("gt2-total") },
-    { label: "Warning (20 hingga 60 hari)", tone: "danger", ...warning },
+    { label: "Warning (20 - 60 hari)", tone: "danger", ...warning },
   ];
 }
 

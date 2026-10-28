@@ -87,22 +87,43 @@ export function useLoginForm() {
     const email = fields.email.trim();
     const { password } = fields;
 
-    const { error } = isSignup
-      ? await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: fields.fullName.trim(),
-              telegram_id: fields.telegramId.trim(),
-            },
-          },
-        })
-      : await supabase.auth.signInWithPassword({ email, password });
+    if (isSignup) {
+      const telegramId = fields.telegramId.trim();
+      if (!/^\d+$/.test(telegramId)) {
+        setMessage({ kind: "error", text: "Telegram ID harus berupa angka." });
+        setSubmitting(false);
+        return;
+      }
 
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: fields.fullName.trim(), telegram_id: telegramId },
+        },
+      });
+
+      if (error) {
+        setMessage({ kind: "error", text: error.message });
+      } else {
+        if (data.session) await supabase.auth.signOut(); // Don't keep a session for an unapproved account
+        setMode("login");
+        setFields({ ...EMPTY_FIELDS, email });
+        setMessage({
+          kind: "success",
+          text: "Pendaftaran berhasil. Akun Anda menunggu persetujuan admin sebelum dapat digunakan.",
+        });
+      }
+      setSubmitting(false);
+      return;
+    }
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error) setMessage({ kind: "error", text: error.message });
     else writeRememberedEmail(remember ? email : null);
-
     setSubmitting(false);
   };
 

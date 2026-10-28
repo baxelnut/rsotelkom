@@ -28,7 +28,7 @@ export function ProfileCard({
       <form className="stack col gap-4" onSubmit={submit} noValidate>
         <InputField
           name="fullName"
-          label="Name"
+          label="Nama"
           value={values.fullName}
           error={errors.fullName}
           onChange={onChange}
@@ -40,7 +40,7 @@ export function ProfileCard({
           label="Telegram ID"
           value={values.telegramId}
           error={errors.telegramId}
-          hint="Numbers only. Leave blank to remove."
+          hint="Angka saja. Kosongkan untuk menghapus."
           onChange={onChange}
           inputMode="numeric"
           autoComplete="off"

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 function greetingFor() {
   const hour = new Date().getHours();
-  if (hour < 12) return "Good morning!";
-  if (hour < 17) return "Good afternoon!";
-  return "Good evening!";
+  if (hour < 12) return "Semangat pagi!";
+  if (hour < 17) return "Selamat siang!";
+  return "Selamat malam!";
 }
 
 export function useGreeting() {

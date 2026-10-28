@@ -7,9 +7,9 @@
 }
 
 .login-page__logo {
-  width: 9rem;
-  height: auto;
-  object-fit: contain;
+  width: 12rem !important;
+  height: auto !important;
+  object-fit: contain !important;
 }
 
 .login-page__card {

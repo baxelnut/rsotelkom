@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // Style
 import "./UserProfile.css";
 // Components
-import { Avatar, Button } from "@/components";
+import { Avatar, Button, InputField } from "@/components";
 // Contexts
 import { useAuth } from "@/contexts/auth";
 // Utils
@@ -36,32 +36,30 @@ function ProfileField({
   placeholder,
   onChange,
 }: FieldProps) {
-  const id = useId();
-
   return (
     <div className="field">
-      {onChange ? (
-        <>
-          <label className="text caption" htmlFor={id}>
-            {label}
-          </label>
-          <input
-            id={id}
-            name={name}
-            className="input"
-            value={value}
-            placeholder={placeholder}
-            onChange={onChange}
-            autoComplete="off"
-          />
-        </>
+      {!onChange ? (
+        <InputField
+          label={label}
+          name={name ?? ""}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          autoComplete="off"
+          fullWidth
+        />
       ) : (
-        <>
-          <span className="text caption">{label}</span>
-          <div className={cx("profile-value", missing && "is-missing")}>
-            {value || fallback}
-          </div>
-        </>
+        <InputField
+          name={name ?? "User"}
+          label={label}
+          value={value || fallback}
+          placeholder={placeholder}
+          onChange={onChange}
+          autoComplete="off"
+          className={cx("profile-value", missing && "is-missing")}
+          readOnly
+          fullWidth
+        />
       )}
     </div>
   );
@@ -169,7 +167,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="stack row between middle nowrap">
-          <h4 id={titleId}>Profile</h4>
+          <h5 id={titleId}>Profil</h5>
           <Button
             variant="ghost"
             size="sm"
@@ -186,7 +184,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
 
         {!hasTelegram && !isEditing && (
           <p className="card flat danger text sm" role="status">
-            Add your Telegram ID so we can reach you.
+            Tambahkan Telegram ID Anda agar kami dapat menghubungi Anda.
           </p>
         )}
         {notice && (
@@ -202,7 +200,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
         >
           <ProfileField
             name="fullName"
-            label="Name"
+            label="Nama"
             value={isEditing ? draft.fullName : profile.fullName}
             fallback="Guest"
             onChange={isEditing ? handleChange : undefined}
@@ -211,9 +209,9 @@ export function UserProfile({ onClose }: UserProfileProps) {
             name="telegramId"
             label="Telegram ID"
             value={isEditing ? draft.telegramId : profile.telegramId}
-            fallback="Please add your Telegram ID"
+            fallback="Silakan tambahkan Telegram ID Anda"
             missing={!hasTelegram}
-            placeholder="Enter your Telegram ID"
+            placeholder="Masukkan Telegram ID Anda"
             onChange={isEditing ? handleChange : undefined}
           />
           <ProfileField
@@ -229,12 +227,12 @@ export function UserProfile({ onClose }: UserProfileProps) {
               <Button
                 type="submit"
                 form="profile-form"
-                text="Save"
+                text="Simpan"
                 block
                 loading={pending}
               />
               <Button
-                text="Cancel"
+                text="Batal"
                 variant="ghost"
                 block
                 onClick={cancelEditing}
@@ -252,7 +250,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
           )}
 
           <Button
-            text="Change password"
+            text="Ubah kata sandi"
             variant="outline"
             block
             onClick={handlePasswordReset}
@@ -260,7 +258,7 @@ export function UserProfile({ onClose }: UserProfileProps) {
           />
           <Button
             text="Sign out"
-            variant="ghost"
+            variant="secondary"
             block
             onClick={handleSignOut}
             disabled={pending}

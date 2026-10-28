@@ -25,7 +25,7 @@ export function ConfirmDialog({
       <p className="text sm">{message}</p>
       <div className="stack row end gap-2">
         <Button
-          text="Cancel"
+          text="Batal"
           variant="ghost"
           onClick={onCancel}
           disabled={loading}

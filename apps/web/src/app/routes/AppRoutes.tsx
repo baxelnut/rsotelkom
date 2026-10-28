@@ -11,6 +11,7 @@ import ActionBasedPage from "@/pages/action/ActionBasedPage";
 import AdminPage from "@/pages/admin/AdminPage";
 import SettingsPage from "@/pages/settings/SettingsPage";
 import NotFoundPage from "@/pages/404/NotFoundPage";
+import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
 
 export const appRoutes = [
   {
@@ -36,5 +37,6 @@ export const appRoutes = [
     element: <GuestRoute />,
     children: [{ path: "login", element: <LoginPage /> }],
   },
+  { path: "reset-password", element: <ResetPasswordPage /> },
   { path: "*", element: <NotFoundPage /> },
 ];

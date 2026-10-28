@@ -18,6 +18,7 @@ interface InputFieldProps extends Omit<
   fullWidth?: boolean;
   /** type="password" only: adds a show/hide button */
   obscurial?: boolean;
+  readonly?: boolean;
 }
 
 export function InputField({
@@ -29,6 +30,7 @@ export function InputField({
   obscurial = false,
   type = "text",
   className,
+  readOnly = false,
   ...rest
 }: InputFieldProps) {
   const id = useId();
@@ -48,7 +50,12 @@ export function InputField({
           id={id}
           name={name}
           type={hasToggle && showPassword ? "text" : type}
-          className={cx("input", hasToggle && "input--toggle", className)}
+          className={cx(
+            "input",
+            hasToggle && "input--toggle",
+            readOnly && "input--read-only",
+            className,
+          )}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy(id, hint, error)}
           {...rest}

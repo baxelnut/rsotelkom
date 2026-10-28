@@ -1,4 +1,13 @@
-export type UserRole = "admin" | "user" | "waiting approval";
+export type UserRole = "admin" | "user" | "pending";
+
+export interface ProfileRow {
+  id: string;
+  email: string | null;
+  full_name: string | null;
+  telegram_id: number | string | null; // bigint column
+  image_url: string | null;
+  role: UserRole | null;
+}
 
 /** App-facing profile (camelCase) */
 export interface Profile {
@@ -15,7 +24,7 @@ export interface ProfileRow {
   id: string;
   email: string | null;
   full_name: string | null;
-  telegram_id: string | null;
+  telegram_id: number | string | null; // bigint column
   image_url: string | null;
   role: UserRole | null;
 }

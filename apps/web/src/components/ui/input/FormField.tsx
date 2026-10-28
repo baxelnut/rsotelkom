@@ -28,7 +28,11 @@ export function FormField({
 }: FormFieldProps) {
   return (
     <div className={cx("field form-field", fullWidth && "block", className)}>
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && (
+        <label htmlFor={id} className="text caption">
+          {label}
+        </label>
+      )}
       {children}
       {error ? (
         <p id={`${id}-error`} className="text sm danger" role="alert">

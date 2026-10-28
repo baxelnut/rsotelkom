@@ -18,7 +18,7 @@ function toProfile(row: ProfileRow): Profile {
     id: row.id,
     email: row.email ?? "",
     fullName: row.full_name ?? "",
-    telegramId: row.telegram_id ?? "",
+    telegramId: row.telegram_id != null ? String(row.telegram_id) : "",
     imageUrl: null,
     role: row.role,
   };
@@ -120,7 +120,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const resetPassword = useCallback(async (): Promise<ActionResult> => {
     const email = session?.user.email;
     if (!email) return { error: "No email found for this account." };
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
     return { error: error?.message ?? null };
   }, [session]);
 

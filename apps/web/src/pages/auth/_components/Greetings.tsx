@@ -5,5 +5,5 @@ import { useGreeting } from "@/hooks";
 
 export function Greetings() {
   const greeting = useGreeting();
-  return <h4 className="greetings-text">{greeting}</h4>;
+  return <h5 className="greetings-text">{greeting}</h5>;
 }

@@ -21,8 +21,8 @@ export function PasswordCard({
       notice={notice}
     >
       <p className="text sm">
-        Kami akan mengirimkan tautan pengaturan ulang melalui email ke{" "}
-        <strong>{email}</strong>.
+        Kami akan mengirimkan tautan pengaturan reset ke{" "}
+        <strong>{email}</strong>
       </p>
       <Button
         text={

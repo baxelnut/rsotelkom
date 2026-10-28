@@ -33,11 +33,12 @@ export function UserFormModal({
 
         <InputField
           name="fullName"
-          label="Name"
+          label="Nama"
           value={values.fullName}
           error={errors.fullName}
           onChange={onChange}
           autoComplete="off"
+          fullWidth
         />
         <InputField
           name="email"
@@ -45,22 +46,24 @@ export function UserFormModal({
           label="Email"
           value={values.email}
           error={errors.email}
-          hint={isCreate ? undefined : "Email cannot be changed."}
+          hint={isCreate ? undefined : "Email tidak dapat diubah."}
           onChange={onChange}
           readOnly={!isCreate}
           autoComplete="off"
+          fullWidth
         />
         {isCreate && (
           <InputField
             name="password"
             type="password"
-            label="Password"
+            label="Kata sandi"
             value={values.password}
             error={errors.password}
-            hint="At least 8 characters."
+            hint="Minimal 8 karakter."
             onChange={onChange}
             obscurial
             autoComplete="new-password"
+            fullWidth
           />
         )}
         <InputField
@@ -68,24 +71,30 @@ export function UserFormModal({
           label="Telegram ID"
           value={values.telegramId}
           error={errors.telegramId}
-          hint="Optional. Numbers only."
+          hint="Hanya angka."
           onChange={onChange}
           inputMode="numeric"
           autoComplete="off"
+          fullWidth
         />
         <Dropdown
           name="role"
           label="Role"
           options={roleOptions}
           value={values.role}
-          hint={roleLocked ? "You cannot change your own role." : undefined}
+          hint={
+            roleLocked
+              ? "Anda tidak dapat mengubah role Anda sendiri."
+              : undefined
+          }
           onChange={onChange}
           disabled={roleLocked}
+          fullWidth
         />
 
         <div className="stack row end gap-2">
           <Button
-            text="Cancel"
+            text="Batal"
             variant="ghost"
             onClick={close}
             disabled={pending}
