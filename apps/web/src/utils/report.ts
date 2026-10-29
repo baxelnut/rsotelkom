@@ -1,17 +1,13 @@
 import type { Amount, KategoriReport, SubtypeReport } from "@rso/shared";
 import type { ReportBucketFilter } from "@rso/shared";
 // Config
+import { witelKey } from "@/config/galaksi";
+import { BUCKET_LABEL, IN_PROCESS } from "@/config/report";
+import { SUBTYPE_ROWS, WITEL_ORDER } from "@/config/report";
 import { SUBTYPE_ORDER } from "@/config/overview";
-import { BUCKET_LABEL, IN_PROCESS, WITEL_ORDER } from "@/config/report";
 // Types
-import type {
-  Matrix,
-  MatrixCell,
-  MatrixColumn,
-  MatrixRow,
-  ReportSelection,
-  ReportStat,
-} from "@/types/report";
+import type { Matrix, ReportSelection, ReportStat } from "@/types/report";
+import type { MatrixCell, MatrixColumn, MatrixRow } from "@/types/report";
 import type { SheetSpec } from "@/types/workbook";
 
 const EMPTY: Amount = { count: 0, revenue: 0 };
@@ -130,10 +126,31 @@ function buildStats(
   ];
 }
 
+function scopeToWitels(report: SubtypeReport[], witels: string[]) {
+  const keys = witels.map(witelKey);
+  if (keys.length === 0) return { report, keys: WITEL_ORDER };
+  const allowed = new Set(keys);
+  return {
+    report: report.filter((e) => allowed.has(e.witel)),
+    keys: WITEL_ORDER.filter((w) => allowed.has(w)),
+  };
+}
+function fillGaps(report: SubtypeReport[], witels: string[]): SubtypeReport[] {
+  const seen = new Set(report.map((e) => `${e.subtype}|${e.witel}`));
+  const filled = [...report];
+  for (const subtype of SUBTYPE_ROWS)
+    for (const witel of witels)
+      if (!seen.has(`${subtype}|${witel}`))
+        filled.push({ subtype, witel, kategori: [] });
+  return filled;
+}
+
 export function buildMatrix(
   report: SubtypeReport[],
   kategori: string[],
+  witels: string[] = [],
 ): Matrix {
+  const scoped = scopeToWitels(report, witels);
   const columns = buildColumns(kategori);
   const grand = new Map<string, KategoriReport>();
   const groups = new Map<
@@ -141,7 +158,7 @@ export function buildMatrix(
     { totals: Map<string, KategoriReport>; rows: MatrixRow[] }
   >();
 
-  for (const entry of sortReport(report)) {
+  for (const entry of sortReport(fillGaps(scoped.report, scoped.keys))) {
     const own = new Map<string, KategoriReport>();
     mergeInto(own, entry.kategori);
     mergeInto(grand, entry.kategori);
@@ -198,8 +215,9 @@ export function buildMatrix(
 export function buildSummarySheet(
   report: SubtypeReport[],
   kategori: string[],
+  witels: string[] = [],
 ): SheetSpec {
-  const rows = sortReport(report)
+  const rows = sortReport(scopeToWitels(report, witels).report)
     .flatMap((entry) =>
       kategori.flatMap((name) => {
         const item = entry.kategori.find((i) => i.kategori === name);
@@ -291,6 +309,7 @@ export function buildSummarySheet(
 export function selectionQuery(selection: ReportSelection) {
   return {
     witel: selection.witel,
+    witels: selection.witels?.join(","),
     subtype: selection.subtype,
     pic: selection.pic,
     status: selection.status,
@@ -311,6 +330,7 @@ export function readSelection(params: URLSearchParams): ReportSelection | null {
   const alert = params.get("alert");
   return {
     witel: params.get("witel") ?? undefined,
+    witels: (params.get("witels") ?? "").split(",").filter(Boolean),
     subtype: params.get("subtype") ?? undefined,
     pic: params.get("pic") ?? undefined,
     status: params.get("status") ?? undefined,
@@ -331,7 +351,10 @@ export function writeSelection(selection: ReportSelection): URLSearchParams {
 export function describeSelection(selection: ReportSelection): string[] {
   return [
     selection.subtype ?? "All sub-types",
-    selection.witel ?? "All witels",
+    selection.witel ??
+      (selection.witels?.length
+        ? `${selection.witels.length} witels`
+        : "All witels"),
     selection.kategori.length === 1
       ? selection.kategori[0]
       : "Selected categories",

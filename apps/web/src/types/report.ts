@@ -8,6 +8,7 @@ export interface ReportSelection {
   subtype?: string;
   kategori: string[];
   bucket: ReportBucketFilter;
+  witels?: string[];
 }
 
 export interface MatrixColumn {

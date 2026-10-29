@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { witelKey } from "@/config/galaksi";
 // Hooks
 import { queryState } from "./queryState";
 import { useSubtypeReport, useStoredState, type ReportExporterApi } from ".";
@@ -33,15 +34,21 @@ export function useReportMatrix(exporter: ReportExporterApi) {
     isBoolean,
   );
   const [collapsed, setCollapsed] = useState<string[]>([]);
+  const [witel, setWitel] = useStoredState(
+    "report.aosodomoro.witel",
+    [] as string[],
+    isStringArray,
+  );
 
+  const witelKeys = useMemo(() => witel.map(witelKey), [witel]);
   const kategori = useMemo(
     () => REPORT_KATEGORI.filter((name) => selected.includes(name)),
     [selected],
   );
   const report = query.data;
   const matrix = useMemo(
-    () => buildMatrix(report ?? [], kategori),
-    [report, kategori],
+    () => buildMatrix(report ?? [], kategori, witelKeys),
+    [report, kategori, witelKeys],
   );
 
   const lastSyncedAt = useMemo(
@@ -70,6 +77,9 @@ export function useReportMatrix(exporter: ReportExporterApi) {
     );
 
   return {
+    witel,
+    witelKeys,
+    setWitel,
     ...queryState(query),
     kategori,
     kategoriOptions: REPORT_KATEGORI,
@@ -87,9 +97,9 @@ export function useReportMatrix(exporter: ReportExporterApi) {
     exportProps: exporter.controls(
       () =>
         exporter.run({
-          filter: { kategori, bucket: "all" },
+          filter: { kategori, bucket: "all", witels: witelKeys },
           filename: makeFilename("AOSODOMORO", "report"),
-          summary: buildSummarySheet(report ?? [], kategori),
+          summary: buildSummarySheet(report ?? [], kategori, witelKeys),
         }),
       kategori.length === 0 || !report?.length,
     ),

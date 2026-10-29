@@ -236,6 +236,7 @@ export type ReportAlert = "aman" | "segera";
 
 export interface ReportItemsQuery {
   witel?: string;
+  witels?: string;
   subtype?: string;
   kategori?: string;
   pic?: string;

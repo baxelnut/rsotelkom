@@ -151,6 +151,7 @@ export type ActionStatus =
 
 export interface ReportFilter {
   witel?: string | undefined;
+  witels?: string[] | undefined;
   subtype?: string | undefined;
   kategori?: string[] | undefined;
   pic?: string | undefined;
@@ -194,6 +195,7 @@ function reportQuery(f: ReportFilter, withCount: boolean) {
 
   if (f.kategori?.length) query = query.in("kategori", f.kategori);
   if (f.witel) query = query.eq("witel_key", f.witel);
+  if (f.witels?.length) query = query.in("witel_key", f.witels);
   if (f.pic) query = query.eq("pic_key", picKey(f.pic));
   if (f.status) query = query.eq("status_label", f.status);
   if (f.alert) query = query.eq("is_warning", f.alert === "segera");

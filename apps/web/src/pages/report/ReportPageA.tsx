@@ -2,7 +2,7 @@
 import "./ReportPageA.css";
 // Components
 import { Seo } from "@/components";
-import { KategoriFilter, ReportDrilldown } from "./_components";
+import { KategoriFilter, ReportDrilldown, WitelFilter } from "./_components";
 import { ReportMatrixCard, ReportSummary } from "./_components";
 import { SendReportButton } from "./_components";
 // Hooks
@@ -33,7 +33,18 @@ export default function ReportPageA() {
             selected={matrix.kategori}
             onToggle={matrix.toggleKategori}
           />
-          <ReportMatrixCard {...matrix} onSelect={drilldown.select} />
+          <div className="card flat">
+            <WitelFilter selected={matrix.witel} onChange={matrix.setWitel} />
+          </div>
+          <ReportMatrixCard
+            {...matrix}
+            onSelect={(s) =>
+              drilldown.select({
+                ...s,
+                witels: s.witel ? undefined : matrix.witelKeys,
+              })
+            }
+          />
         </>
       )}
     </div>
