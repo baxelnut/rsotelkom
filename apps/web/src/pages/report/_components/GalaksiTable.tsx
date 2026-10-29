@@ -51,7 +51,7 @@ export function GalaksiTable({
           </tr>
         </thead>
 
-        {isLoading ? (
+        {!isLoading ? (
           <>
             <tbody className="galaksi-table__skeleton-body" aria-hidden="true">
               {Array.from({ length: SKELETON_ROWS }, (_, index) => (
@@ -81,6 +81,7 @@ export function GalaksiTable({
                 <th scope="row" className="galaksi-table__name">
                   <SkeletonBar className="galaksi-table__skeleton--name" />
                 </th>
+                <td className="galaksi-table__witel" />
                 {SESSION_KEYS.map((key) => (
                   <td key={key} className="galaksi-table__num">
                     <SkeletonBar className="galaksi-table__skeleton--num" />
@@ -132,6 +133,7 @@ export function GalaksiTable({
                 >
                   GRAND TOTAL
                 </th>
+                <td className="galaksi-table__witel" />
                 {SESSION_KEYS.map((key) => (
                   <td key={key} className="galaksi-table__num">
                     {formatNumber(grand[key])}

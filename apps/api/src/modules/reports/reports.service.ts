@@ -15,6 +15,7 @@ export interface GalaksiPoRow {
   do: number;
   mo: number;
   ro: number;
+  witel: string | null;
 }
 
 export const WARNING_MIN_DAYS = 20;

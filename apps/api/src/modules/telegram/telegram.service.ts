@@ -29,7 +29,7 @@ import {
   galaksiCaption,
 } from "./telegram.weekly";
 
-const DASHBOARD_URL = env.DASHBOARD_URL ?? "https://rso-web.vercel.app";
+const DASHBOARD_URL = env.DASHBOARD_URL ?? "https://galaksi-rsoregional3.com";
 
 export interface TelegramUpdate {
   update_id?: number;
@@ -149,7 +149,7 @@ export async function sendWeeklyReport() {
   const aosodomoro = await sendTable(
     chatId,
     buildAosodomoroTable(subtype, date),
-    aosodomoroCaption(date, `${env.DASHBOARD_URL}/report/aosodomoro`),
+    aosodomoroCaption(date, `${DASHBOARD_URL}/report/aosodomoro`),
   );
   const galaksiMode = await sendTable(
     chatId,
