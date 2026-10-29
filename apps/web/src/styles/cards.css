@@ -181,23 +181,6 @@ All values from tokens.css.
   color: var(--clr-safe-text);
 }
 
-.badge.green {
-  background: green;
-  color: white;
-}
-.badge.yellow {
-  background: yellow;
-  color: black;
-}
-.badge.red {
-  background: red;
-  color: white;
-}
-.badge.grey {
-  background: grey;
-  color: black;
-}
-
 /* Breakpoints: scale up */
 @media (min-width: 500px) {
   .cards-container.grid {

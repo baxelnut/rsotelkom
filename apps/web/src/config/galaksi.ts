@@ -8,11 +8,11 @@ export interface AchievementLevel {
 }
 
 export const ACHIEVEMENT_LEVELS: AchievementLevel[] = [
-  { max: 0, value: 100, range: "0", tone: "green" },
-  { max: 5, value: 80, range: "1–5", tone: "yellow" },
-  { max: 10, value: 60, range: "6–10", tone: "yellow" },
-  { max: 20, value: 40, range: "11–20", tone: "red" },
-  { max: Infinity, value: 20, range: ">20", tone: "red" },
+  { max: 0, value: 100, range: "0", tone: "primary" },
+  { max: 5, value: 80, range: "1–5", tone: "secondary" },
+  { max: 10, value: 60, range: "6–10", tone: "secondary" },
+  { max: 20, value: 40, range: "11–20", tone: "danger" },
+  { max: Infinity, value: 20, range: ">20", tone: "danger" },
 ];
 
 export const WITEL_ORDER = [
