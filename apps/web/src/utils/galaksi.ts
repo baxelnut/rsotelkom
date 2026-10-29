@@ -1,5 +1,6 @@
 import type { GalaksiPoRow } from "@rso/shared";
 // Config
+import { witelRank, witelKey } from "@/config/galaksi";
 import { ACHIEVEMENT_LEVELS, type AchievementLevel } from "@/config/galaksi";
 import { SESSION_KEYS } from "@/config/overview";
 // Types
@@ -12,6 +13,7 @@ export interface GalaksiRow {
   name: string;
   counts: GalaksiCounts;
   level: AchievementLevel;
+  witel: string | null;
 }
 
 function levelFor(total: number): AchievementLevel {
@@ -40,7 +42,12 @@ export function buildGalaksi(rows: GalaksiPoRow[]) {
       grand[key] += value;
     }
     grand.total += counts.total;
-    return { name: row.po_name, counts, level: levelFor(counts.total) };
+    return {
+      name: row.po_name,
+      witel: row.witel ?? null,
+      counts,
+      level: levelFor(counts.total),
+    };
   });
 
   return { rows: list, grand };
@@ -53,14 +60,16 @@ export function buildGalaksiSheet(
   return {
     name: "GALAKSI",
     csv: true,
-    rows: rows.map(({ name, counts, level }) => ({
+    rows: rows.map(({ name, witel, counts, level }) => ({
       name,
+      witel: witel ?? "-",
       ...counts,
       achievement: `${level.value}%`,
     })),
     footer: { name: "GRAND TOTAL", ...grand },
     columns: [
       { key: "name", header: "PO", width: 28 },
+      { key: "witel", header: "Witel", width: 22 },
       ...SESSION_KEYS.map((key) => ({
         key,
         header: key.toUpperCase(),
@@ -71,4 +80,32 @@ export function buildGalaksiSheet(
       { key: "achievement", header: "Achievement (%)", width: 16 },
     ],
   };
+}
+
+export function sortByWitel(rows: GalaksiRow[]): GalaksiRow[] {
+  return [...rows].sort(
+    (a, b) =>
+      witelRank(a.witel) - witelRank(b.witel) || a.name.localeCompare(b.name),
+  );
+}
+
+export function filterByWitel(rows: GalaksiRow[], selected: string[]) {
+  if (selected.length === 0) return rows;
+  const set = new Set(selected.map(witelKey));
+  return rows.filter((r) => r.witel && set.has(witelKey(r.witel)));
+}
+
+export function sumCounts(rows: GalaksiRow[]): GalaksiCounts {
+  const total = {
+    total: 0,
+    ao: 0,
+    so: 0,
+    do: 0,
+    mo: 0,
+    ro: 0,
+  } as GalaksiCounts;
+  for (const r of rows)
+    for (const k of Object.keys(total) as (keyof GalaksiCounts)[])
+      total[k] += r.counts[k];
+  return total;
 }

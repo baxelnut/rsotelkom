@@ -35,6 +35,9 @@ export function GalaksiTable({
             <th rowSpan={2} className="galaksi-table__name">
               PO
             </th>
+            <th rowSpan={2} className="galaksi-table__witel">
+              Witel
+            </th>
             <th colSpan={SESSION_KEYS.length} className="galaksi-table__group">
               &gt;2 BLN
             </th>
@@ -56,6 +59,9 @@ export function GalaksiTable({
                   <th scope="row" className="galaksi-table__name">
                     <SkeletonBar className="galaksi-table__skeleton--name" />
                   </th>
+                  <td className="galaksi-table__witel">
+                    <SkeletonBar className="galaksi-table__skeleton--num" />
+                  </td>
                   {SESSION_KEYS.map((key) => (
                     <td key={key} className="galaksi-table__num">
                       <SkeletonBar className="galaksi-table__skeleton--num" />
@@ -90,11 +96,12 @@ export function GalaksiTable({
         ) : (
           <>
             <tbody>
-              {rows.map(({ name, counts, level }, index) => (
+              {rows.map(({ name, witel, counts, level }, index) => (
                 <tr key={`${name}-${index}`}>
                   <th scope="row" className="galaksi-table__name">
                     {name}
                   </th>
+                  <td className="galaksi-table__witel">{witel ?? "-"}</td>
                   {SESSION_KEYS.map((key) => (
                     <td
                       key={key}

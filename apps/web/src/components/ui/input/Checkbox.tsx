@@ -36,7 +36,7 @@ export function Checkbox({
         onChange={(e) => onChange?.(e.target.checked)}
         {...rest}
       />
-      <span className="text">{label}</span>
+      <span className="text sm">{label}</span>
     </label>
   );
 }

@@ -283,6 +283,7 @@ export interface GalaksiPoRow {
   do: number;
   mo: number;
   ro: number;
+  witel: string | null;
 }
 
 export type ActionStatus =

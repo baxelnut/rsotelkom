@@ -1,7 +1,7 @@
 import type { Amount, ReportAlert, ReportBucketFilter } from "@rso/shared";
 
-export type Tone = "safe" | "primary" | "secondary";
-export type StatTone = Tone | "danger";
+export type Tone = "green" | "yellow" | "red";
+export type StatTone = Tone | "grey";
 
 export interface ReportSelection {
   witel?: string;
