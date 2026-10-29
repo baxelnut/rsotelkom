@@ -117,7 +117,7 @@ export function GalaksiTable({
                     {formatNumber(counts.total)}
                   </td>
                   <td className="galaksi-table__num">
-                    <span className={cx("badge", level.tone)}>
+                    <span className={cx("badge", `ach--${level.tone}`)}>
                       {level.value}%
                     </span>
                   </td>

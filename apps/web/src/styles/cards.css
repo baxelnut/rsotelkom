@@ -181,6 +181,19 @@ All values from tokens.css.
   color: var(--clr-safe-text);
 }
 
+.badge.ach--primary {
+  background: green;
+  color: white;
+}
+.badge.ach--secondary {
+  background: yellow;
+  color: black;
+}
+.badge.ach--danger {
+  background: red;
+  color: white;
+}
+
 /* Breakpoints: scale up */
 @media (min-width: 500px) {
   .cards-container.grid {
