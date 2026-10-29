@@ -51,7 +51,7 @@ export function GalaksiTable({
           </tr>
         </thead>
 
-        {!isLoading ? (
+        {isLoading ? (
           <>
             <tbody className="galaksi-table__skeleton-body" aria-hidden="true">
               {Array.from({ length: SKELETON_ROWS }, (_, index) => (
