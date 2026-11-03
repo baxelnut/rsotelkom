@@ -68,25 +68,28 @@ export async function sendPhoto(
   });
 }
 
-async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
-  let lastError: unknown;
-  for (let i = 0; i < attempts; i++) {
+async function withRetry<T>(fn: () => Promise<T>, attempts = 2): Promise<T> {
+  for (let i = 0; ; i++) {
     try {
       return await fn();
     } catch (err) {
-      lastError = err;
       const msg = err instanceof Error ? err.message : String(err);
+      console.error(`telegram attempt ${i + 1} failed:`, msg);
+
       const retryable =
         (err instanceof Error &&
-          (err.name === "TimeoutError" || err.name === "TypeError")) || // fetch failed
+          (err.name === "TimeoutError" || err.name === "TypeError")) ||
         /failed: (429|5\d\d)/.test(msg);
-      if (!retryable || i === attempts - 1) break;
-      await sleep(1000 * 2 ** i); // 1s, 2s
+
+      if (!retryable) throw err; // 401/400/403: surface the real error
+      if (i >= attempts - 1) {
+        throw new AppError(
+          502,
+          `Telegram unreachable: ${msg}`,
+          "TELEGRAM_UNAVAILABLE",
+        );
+      }
+      await sleep(1000 * 2 ** i);
     }
   }
-  throw new AppError(
-    502,
-    "Telegram is unreachable or not responding. Try again shortly.",
-    "TELEGRAM_UNAVAILABLE",
-  );
 }
