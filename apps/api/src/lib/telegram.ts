@@ -1,7 +1,7 @@
 import { env } from "../config/env";
 import { AppError } from "./errors";
 
-const base = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}`;
+const base = `${env.TELEGRAM_API_BASE}/bot${env.TELEGRAM_BOT_TOKEN}`;
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 async function call(method: string, body: Record<string, unknown>) {

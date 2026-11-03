@@ -51,6 +51,11 @@ const schema = z.object({
     .url()
     .transform((v) => v.replace(/\/+$/, "")),
   TELEGRAM_BOT_TOKEN: z.string().min(1),
+  TELEGRAM_API_BASE: z
+    .string()
+    .url()
+    .transform((v) => v.replace(/\/+$/, ""))
+    .default("https://api.telegram.org"),
   TELEGRAM_WEBHOOK_SECRET: z.string().regex(/^[A-Za-z0-9_-]{16,256}$/),
   TELEGRAM_ADMIN_CHAT_ID: z.string().optional(),
   TELEGRAM_CHANNEL_CHAT_ID: z.string().optional(),
