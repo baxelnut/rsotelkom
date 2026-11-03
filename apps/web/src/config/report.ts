@@ -27,7 +27,7 @@ export const BUCKET_LABEL: Record<ReportBucketFilter, string> = {
   lt2: "<2 BLN",
   warning: "Warning (20 to 60 days)",
   gt2: ">2 BLN",
-  all: "All ages",
+  all: "Semua umur",
 };
 
 export const STATUS_TONE: Record<string, string> = {
