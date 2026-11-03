@@ -39,7 +39,7 @@ export function ReportMatrixCard({
         <div className="stack col gap-1 fit">
           <h6>Regional 3 Order Report</h6>
           <p className="text sm muted">
-            Pilih angka mana pun untuk melihat pesanan-pesanannya.
+            Pilih angka mana pun untuk melihat pesanan-pesanannya.{" "}
             {lastSyncedAt &&
               `Terakhir disinkronkan ${formatDateTime(lastSyncedAt)}.`}
           </p>

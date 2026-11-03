@@ -37,9 +37,9 @@ export default function ReportPageG() {
           <div className="stack col gap-1 fit">
             <h6>GALAKSI (GApai! kawaL! AKSI!) AOSODOMORO Non Conn</h6>
             <p className="text sm muted">
-              Pesanan "In Process" dengan usia &gt;2 bln.
+              Pesanan "In Process" dengan usia &gt;2 bln.{" "}
               {lastSyncedAt &&
-                ` Terakhir disinkronkan ${formatDateTime(lastSyncedAt)}.`}
+                `Terakhir disinkronkan ${formatDateTime(lastSyncedAt)}.`}
             </p>
           </div>
           <ExportControls {...exportProps} />
