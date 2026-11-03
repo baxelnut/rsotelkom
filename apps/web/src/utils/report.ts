@@ -350,14 +350,12 @@ export function writeSelection(selection: ReportSelection): URLSearchParams {
 
 export function describeSelection(selection: ReportSelection): string[] {
   return [
-    selection.subtype ?? "All sub-types",
+    selection.subtype ?? "Semua sub-types",
     selection.witel ??
       (selection.witels?.length
-        ? `${selection.witels.length} witels`
-        : "All witels"),
-    selection.kategori.length === 1
-      ? selection.kategori[0]
-      : "Selected categories",
+        ? `${selection.witels.length} witel`
+        : "Semua witel"),
+    selection.kategori.length === 1 ? selection.kategori[0] : "Semua kategori",
     BUCKET_LABEL[selection.bucket],
   ];
 }

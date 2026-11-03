@@ -21,6 +21,7 @@ type Paged<T> = ApiResponse<T> & {
 };
 
 const filterQuery = z.object({
+  witel: z.string().min(1).optional(),
   witels: z
     .string()
     .optional()
