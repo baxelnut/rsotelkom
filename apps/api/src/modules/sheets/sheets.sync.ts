@@ -81,6 +81,20 @@ async function syncOrders(force: boolean): Promise<JobResult> {
 
   const syncId = randomUUID();
   const syncedAt = new Date().toISOString();
+  const payload: Record<string, unknown>[] = [];
+
+  for (const rec of records) {
+    const row: Record<string, unknown> = {
+      sheet_row: rec.sheetRow,
+      sync_id: syncId,
+      synced_at: syncedAt,
+    };
+    for (const [header, kind] of Object.entries(ORDER_COLUMNS)) {
+      row[header.toLowerCase()] = coerce(kind, rec.values[header]);
+    }
+    payload.push(row);
+  }
+
   const byUuid = new Map<string, Record<string, unknown>>();
   let skipped = 0;
   let blank = 0,
@@ -114,7 +128,7 @@ async function syncOrders(force: boolean): Promise<JobResult> {
     .select("uuid", { count: "exact", head: true });
   throwIfError(error, "orders count");
 
-  if (!force && existing && byUuid.size < existing * 0.5) {
+  if (!force && existing && payload.length < existing * 0.5) {
     throw new AppError(
       422,
       `Sheet has ${byUuid.size} rows but the database has ${existing}. Run with force=true if this is intended.`,
@@ -122,9 +136,9 @@ async function syncOrders(force: boolean): Promise<JobResult> {
     );
   }
 
-  await writeChunks("orders", [...byUuid.values()], "uuid");
+  await writeChunks("orders", payload, "sheet_row");
   const deleted = await deleteStale("orders", syncId);
-  return { rows: byUuid.size, deleted, skipped };
+  return { rows: payload.length, deleted, skipped: 0 };
 }
 
 async function syncPo(): Promise<JobResult> {
