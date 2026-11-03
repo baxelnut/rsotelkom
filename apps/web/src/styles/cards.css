@@ -76,9 +76,6 @@ All values from tokens.css.
   align-items: stretch;
   gap: var(--space-4);
 }
-.cards-container.row-1-1 > * {
-  flex: 1;
-}
 .cards-container.grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
