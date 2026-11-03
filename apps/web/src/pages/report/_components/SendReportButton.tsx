@@ -1,7 +1,7 @@
 // Style
 import "./SendReportButton.css";
 // Components
-import { Button, ErrorMessage } from "@/components";
+import { Button } from "@/components";
 // Hooks
 import type { SendReportApi } from "@/hooks";
 
@@ -46,14 +46,18 @@ export function SendReportButton({
             onClick={ask}
           />
         )}
-      </div>
 
-      {notice && (
-        <p className="card flat safe text sm" role="status">
-          {notice}
-        </p>
-      )}
-      {error && <ErrorMessage message={error} />}
+        {notice && (
+          <p className="card flat safe text sm" role="status">
+            {notice}
+          </p>
+        )}
+        {error && (
+          <p className="card flat danger text sm" role="status">
+            {error}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
