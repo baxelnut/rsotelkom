@@ -83,12 +83,19 @@ async function syncOrders(force: boolean): Promise<JobResult> {
   const syncedAt = new Date().toISOString();
   const byUuid = new Map<string, Record<string, unknown>>();
   let skipped = 0;
+  let blank = 0,
+    dupes: string[] = [];
 
   for (const rec of records) {
     const uuid = toText(rec.values.UUID);
     if (!uuid) {
+      blank++;
       skipped++;
       continue;
+    }
+    if (byUuid.has(uuid)) {
+      dupes.push(uuid);
+      skipped++;
     }
     const row: Record<string, unknown> = {
       sheet_row: rec.sheetRow,

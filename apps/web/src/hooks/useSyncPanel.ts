@@ -27,7 +27,13 @@ export function useSyncPanel() {
     try {
       const outcomes = await mutateAsync({});
       const rows = (outcomes ?? []).reduce((sum, o) => sum + (o.rows ?? 0), 0);
-      success(`Sync complete. ${formatNumber(rows)} rows processed.`);
+      const skipped = (outcomes ?? []).reduce(
+        (s, o) => s + (o.skipped ?? 0),
+        0,
+      );
+      success(
+        `Sync complete. ${formatNumber(rows)} rows processed, ${skipped} skipped.`,
+      );
     } catch (error) {
       failure(describeSyncError(error));
     }
