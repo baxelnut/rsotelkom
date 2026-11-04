@@ -1,8 +1,9 @@
 name: Weekly report
 
 on:
-  schedule:
-    - cron: "0 2 * * 2" # Selasa 09:00 WIB
+  # DISABLED
+  # schedule:
+  #   - cron: "0 2 * * 2" # Selasa 09:00 WIB
   workflow_dispatch:
 
 jobs:
