@@ -61,6 +61,7 @@ const schema = z.object({
   TELEGRAM_CHANNEL_CHAT_ID: z.string().optional(),
   GAS_WEBAPP_URL: z.string().url().optional(),
   GAS_SECRET: z.string().min(1).optional(),
+  GAS_SCRIPT_ID: z.string().optional(),
 });
 
 const raw = Object.fromEntries(

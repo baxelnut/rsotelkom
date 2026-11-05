@@ -83,36 +83,19 @@ async function syncOrders(force: boolean): Promise<JobResult> {
 
   const syncId = randomUUID();
   const syncedAt = new Date().toISOString();
-  const payload: Record<string, unknown>[] = [];
-
-  for (const rec of records) {
-    const row: Record<string, unknown> = {
-      sheet_row: rec.sheetRow,
-      sync_id: syncId,
-      synced_at: syncedAt,
-    };
-    for (const [header, kind] of Object.entries(ORDER_COLUMNS)) {
-      row[header.toLowerCase()] = coerce(kind, rec.values[header]);
-    }
-    payload.push(row);
-  }
-
   const byUuid = new Map<string, Record<string, unknown>>();
+  const blank: number[] = [];
+  const dupes: string[] = [];
   let skipped = 0;
-  let blank = 0,
-    dupes: string[] = [];
 
   for (const rec of records) {
     const uuid = toText(rec.values.UUID);
     if (!uuid) {
-      blank++;
-      skipped++;
+      blank.push(rec.sheetRow);
       continue;
     }
-    if (byUuid.has(uuid)) {
-      dupes.push(uuid);
-      skipped++;
-    }
+    if (byUuid.has(uuid)) dupes.push(uuid);
+
     const row: Record<string, unknown> = {
       sheet_row: rec.sheetRow,
       sync_id: syncId,
@@ -121,9 +104,16 @@ async function syncOrders(force: boolean): Promise<JobResult> {
     for (const [header, kind] of Object.entries(ORDER_COLUMNS)) {
       row[header.toLowerCase()] = coerce(kind, rec.values[header]);
     }
-    if (byUuid.has(uuid)) skipped++;
-    byUuid.set(uuid, row);
+    byUuid.set(uuid, row); // last row wins
   }
+
+  if (blank.length || dupes.length) {
+    console.warn(
+      `orders sync: ${blank.length} blank UUID rows (sheet rows ${blank.slice(0, 20).join(", ")}), ${dupes.length} duplicate UUIDs (${dupes.slice(0, 10).join(", ")})`,
+    );
+  }
+
+  const payload = [...byUuid.values()];
 
   const { count: existing, error } = await supabaseAdmin
     .from("orders")
@@ -133,14 +123,18 @@ async function syncOrders(force: boolean): Promise<JobResult> {
   if (!force && existing && payload.length < existing * 0.5) {
     throw new AppError(
       422,
-      `Sheet has ${byUuid.size} rows but the database has ${existing}. Run with force=true if this is intended.`,
+      `Sheet has ${payload.length} rows but the database has ${existing}. Run with force=true if this is intended.`,
       "SUSPICIOUS_SHRINK",
     );
   }
 
-  await writeChunks("orders", [...byUuid.values()], "sheet_row");
+  await writeChunks("orders", payload, "uuid");
   const deleted = await deleteStale("orders", syncId);
-  return { rows: byUuid.size, deleted, skipped };
+  return {
+    rows: payload.length,
+    deleted,
+    skipped: blank.length + dupes.length,
+  };
 }
 
 async function syncPo(): Promise<JobResult> {
