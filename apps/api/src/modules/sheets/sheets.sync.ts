@@ -17,6 +17,7 @@ import {
   toText,
   type SheetRecord,
 } from "./sheets.parse";
+import { refreshNMinus1 } from "./sheets.gas";
 
 export type Dataset = "orders" | "po";
 
@@ -60,6 +61,7 @@ async function deleteStale(table: string, syncId: string) {
 }
 
 async function syncOrders(force: boolean): Promise<JobResult> {
+  await refreshNMinus1(); // rebuild N-1 first, then read it
   const { headers, rows } = await readTab(
     env.ORDERS_SHEET_NAME,
     ORDERS_HEADER_ROW,
@@ -136,9 +138,9 @@ async function syncOrders(force: boolean): Promise<JobResult> {
     );
   }
 
-  await writeChunks("orders", payload, "sheet_row");
+  await writeChunks("orders", [...byUuid.values()], "sheet_row");
   const deleted = await deleteStale("orders", syncId);
-  return { rows: payload.length, deleted, skipped: 0 };
+  return { rows: byUuid.size, deleted, skipped };
 }
 
 async function syncPo(): Promise<JobResult> {

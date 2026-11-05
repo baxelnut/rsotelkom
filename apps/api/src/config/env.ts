@@ -59,6 +59,8 @@ const schema = z.object({
   TELEGRAM_WEBHOOK_SECRET: z.string().regex(/^[A-Za-z0-9_-]{16,256}$/),
   TELEGRAM_ADMIN_CHAT_ID: z.string().optional(),
   TELEGRAM_CHANNEL_CHAT_ID: z.string().optional(),
+  GAS_WEBAPP_URL: z.string().url().optional(),
+  GAS_SECRET: z.string().min(1).optional(),
 });
 
 const raw = Object.fromEntries(
